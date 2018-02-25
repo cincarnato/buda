@@ -1,26 +1,12 @@
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" >
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">TEMPLATE</a>
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-            <?php
-            echo $this->renderMenu();
-            ?>
-
-            <ul class="nav navbar-nav navbar-right">
-                <?php echo $this->partial('zf-metal/security/menu/menu'); ?> 
-            </ul>
-
-        </div>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light justify-content-between">
+    <a class="navbar-brand" href="/">BUDA BS AS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <?= $this->renderMenu(); ?>
 
 
     </div>
+    <?= $this->partial('zf-metal/security/menu/menu'); ?>
 </nav>

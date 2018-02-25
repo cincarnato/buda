@@ -1,156 +1,17 @@
-/*BODY FIXED MENU*/
-body {
-    min-height: 2000px;
+.avatar {
+    margin: 0 auto;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 2px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, .14), 0 1px 6px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2)
+}
+
+.avatar img {
+    width: 100%
+}
+
+body{
     padding-top: 70px;
-    background-color: #FFFFFF;
 }
-
-.main-content{
-    min-height: 500px;
-}
-
-@media (min-width: 1300px){
-    .container {
-        width: 1300px;
-    }
-}
-
-@media (min-width: 1600px){
-    .container {
-        width: 1600px;
-    }
-}
-
-@media (min-width: 1900px){
-    .container {
-        width: 1900px;
-    }
-}
-
-/*CENTER LOGIN*/
-.login-block {
-    width: 300px;
-    margin: 100px auto 0px;
-}
-.block {
-    margin-bottom: 20px;
-    float: left;
-    width: 100%;
-    position: relative;
-}
-
-.block .head {
-    padding: 8px 10px;
-    float: left;
-    width: 100%;
-}
-.block .user .user-change {
-    position: relative;
-}
-.block .user .info {
-    margin: 0px auto;
-    width: 100px;
-}
-
-/*CURSOR*/
-.cursor-pointer{
-    cursor: pointer;   
-}
-
-/*PADDING*/
-.nopadding{
-    padding: 0;  
-}
-.padding2{
-    padding:2px ! important;
-
-}
-
-.padding5{
-    padding:5px ! important;
-}
-
-.paddingRight5{
-    padding-right:5px;
-}
-
-/*MARGIN*/
-.nomargin{
-    margin: 0;  
-}
-
-.margin2{
-    margin:2px;
-}
-
-.margin5{
-    margin:5px;
-}
-
-.margin6{
-    margin:6px;
-}
-
-
-/* BOOTSTRAP PANELS*/
-.panel-heading-min{
-    padding: 5px 15px 5px 15px;
-}
-
-.panel-heading.active {
-    background-color: #dee7fa;
-}
-
-.huge {
-    font-size: 40px;
-}
-
-.panel-green {
-    border-color: #5cb85c;
-}
-.panel-green > .panel-heading {
-    border-color: #5cb85c;
-    color: white;
-    background-color: #5cb85c;
-}
-.panel-green > a {
-    color: #5cb85c;
-}
-.panel-green > a:hover {
-    color: #3d8b3d;
-}
-.panel-red {
-    border-color: #d9534f;
-}
-.panel-red > .panel-heading {
-    border-color: #d9534f;
-    color: white;
-    background-color: #d9534f;
-}
-.panel-red > a {
-    color: #d9534f;
-}
-.panel-red > a:hover {
-    color: #b52b27;
-}
-.panel-yellow {
-    border-color: #f0ad4e;
-}
-.panel-yellow > .panel-heading {
-    border-color: #f0ad4e;
-    color: white;
-    background-color: #f0ad4e;
-}
-.panel-yellow > a {
-    color: #f0ad4e;
-}
-.panel-yellow > a:hover {
-    color: #df8a13;
-}
-
-/*HEXA FONTAWESOME*/
-.cdicmfasave:before{
-    content: '\f0c7';
-    font-family: FontAwesome;
-}
-

@@ -2,9 +2,11 @@
 
 <html lang="UTF-8">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <?php echo $this->headTitle($this->translate('TEMPLATE'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle($this->translate('BUDA BS AS'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php
         echo $this->headMeta()
@@ -20,7 +22,7 @@
     <body>
         <?php echo $this->partial('layout/menu'); ?>
 
-        <div class="container main-content" >
+        <div class="main-content" >
 
             <?php echo $this->content; ?>
 
