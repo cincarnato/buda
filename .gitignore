@@ -2,6 +2,7 @@
 .idea/
 vendor/
 config/development.config.php
+!data/zf-metal-generator/generator.db
 data/*
 !data/cache/.gitkeep
 phpunit.xml
