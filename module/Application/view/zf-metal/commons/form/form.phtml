@@ -57,6 +57,7 @@ $elementsReady = array();
 <?php endif; ?>
 
 <!--OTHERS-->
+<div class="row">
 <?php foreach ($form as $element) : ?>
     <?php if (!in_array($element->getName(), $elementsReady) && $element->getAttribute('type') !== "submit" && $element->getAttribute('type') !== "button"): ?>
         <div class="<?php echo ($element->getAttribute('type') !== "hidden") ? $this->columnClass : "input-hidden"; ?>">
@@ -66,6 +67,7 @@ $elementsReady = array();
     <?php endif; ?>
 
 <?php endforeach; ?>
+</div>
 <br>
 <div class="clearfix"></div>
 <br>

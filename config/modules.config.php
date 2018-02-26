@@ -33,4 +33,5 @@ return [
     //'ZfMetal\SecuritySocial',
     //MODULES
     'Application',
+    'Eventos'
 ];
