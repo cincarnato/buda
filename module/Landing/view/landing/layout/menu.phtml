@@ -1,0 +1,18 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light justify-content-between">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">
+        <img src="/img/buda-logo.jpg" style="width: 120px; height: 40px;" class="" ALT="BUDA BS AS">
+
+
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <?= $this->renderMenu(); ?>
+
+
+    </div>
+    <?= $this->partial('zf-metal/security/menu/menu'); ?>
+</nav>

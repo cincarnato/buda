@@ -10,7 +10,7 @@ return [
                 'type' => 'Literal',
                 'mayTerminate' => true,
                 'options' => [
-                    'route' => '/',
+                    'route' => '/home',
                     'defaults' => [
                         'controller' => \Application\Controller\IndexController::class,
                         'action' => 'index',

@@ -1,0 +1,10 @@
+
+
+<?php
+echo $this->headScript()
+    ->appendFile('https://code.jquery.com/jquery-3.2.1.slim.min.js', 'text/javascript')
+    ->appendFile('https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js', 'text/javascript')
+    ->appendFile('https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js', 'text/javascript');
+?>
+
+<script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
