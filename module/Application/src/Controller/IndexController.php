@@ -9,6 +9,8 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        
+        if (!$this->identity()) {
+            $this->redirect()->toUrl("/user/login");
+        }
     }
 }
