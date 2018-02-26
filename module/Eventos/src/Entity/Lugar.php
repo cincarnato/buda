@@ -10,9 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Lugar
- *
- *
- *
+ * 
+ * 
+ * 
  * @author
  * @license
  * @link
@@ -36,7 +36,7 @@ class Lugar
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"nombre", "description":"", "addon":""})
-     * @ORM\Column(type="string", length=200, unique=true, nullable=true,
+     * @ORM\Column(type="string", length=200, unique=true, nullable=false,
      * name="nombre")
      */
     public $nombre = null;

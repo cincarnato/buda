@@ -23,13 +23,13 @@ return [
     'DoctrineORMModule',
     'SwissEngine\Tools\Doctrine\Extension',
     //ZFMETAL
-    'ZfcRbac',
     'ZfMetal\Log',
     'ZfMetal\Mail',
     'ZfMetal\Commons',
     'ZfMetal\Datagrid',
     'ZfMetal\Generator',
     'ZfMetal\Security',
+    'ZfcRbac',
     //'ZfMetal\SecuritySocial',
     //MODULES
     'Application',

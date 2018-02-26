@@ -36,7 +36,7 @@ class Flyer
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"nombre", "description":"", "addon":""})
-     * @ORM\Column(type="string", length=200, unique=true, nullable=true,
+     * @ORM\Column(type="string", length=200, unique=false, nullable=true,
      * name="nombre")
      */
     public $nombre = null;
@@ -44,10 +44,10 @@ class Flyer
     /**
      * @Annotation\Type("Zend\Form\Element\File")
      * @Annotation\Attributes({"type":"file"})
-     * @Annotation\Options({"label":"imagen","absolutepath":"C:\Users\crist\Documents\NetBeansProjects\buda\public\media\flyer\","webpath":"media/flyer/",
+     * @Annotation\Options({"label":"imagen","absolutepath":"/var/www/buda/public/media/flyer/","webpath":"/media/flyer/",
      * "description":""})
-     * @Annotation\Filter({"name":"\ZfMetal\Security\Filter\RenameUpload",
-     * "options":{"target":"C:\Users\crist\Documents\NetBeansProjects\buda\public\media\flyer\","use_upload_name":1,"overwrite":1}})
+     * @Annotation\Filter({"name":"filerenameupload",
+     * "options":{"target":"/var/www/buda/public/media/flyer/","use_upload_name":1,"overwrite":1}})
      * @ORM\Column(type="string", length=200, unique=false, nullable=true,
      * name="imagen")
      */
@@ -85,22 +85,19 @@ class Flyer
 
     public function getImagen_ap()
     {
-        return "C:\Users\crist\Documents\NetBeansProjects\buda\public\media\flyer";
+        return "/var/www/buda/public/media/flyer/";
     }
 
     public function getImagen_wp()
     {
-        return "media/flyer/";
+        return "/media/flyer/";
     }
 
     public function getImagen_fp()
     {
-        return "media/flyer/".$this->imagen;
+        return "/media/flyer/".$this->imagen;
     }
 
-    /**
-     * @return null
-     */
     public function __toString()
     {
         return  $this->nombre;
