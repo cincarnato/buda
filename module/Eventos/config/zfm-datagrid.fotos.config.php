@@ -25,6 +25,13 @@ return [
                 'lugar' => [
                     'type' => 'relational',
                 ],
+                'imagen' => [
+                    'type' => 'file',
+                    'webpath' => '/media/fotos/',
+                    'showFile' => true,
+                    'width' => '50px',
+                    'height' => '50px',
+                ],
             ],
             'crudConfig' => [
                 'enable' => true,
