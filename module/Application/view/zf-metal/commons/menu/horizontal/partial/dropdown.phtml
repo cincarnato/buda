@@ -1,10 +1,10 @@
-<li class=" dropdown pull-xs-right <?php if ($page->isActive(true)) echo ' active' ?>">
-    <button class="btn dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<li class=" nav-item dropdown pull-xs-right <?php if ($page->isActive(true)) echo ' active' ?>">
+    <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <?php if ($page->get("icon") !== ""): ?>
             <span class="<?php echo $page->get("icon"); ?>"></span>
         <?php endif; ?>
         <?php echo $page->getLabel() ?>
-    </button>
+    </a>
     <ul class="dropdown-menu dropdown-menu-left">
         <?php foreach ($page->getPages() as $child): ?>
             <?php if (!$this->navigation()->accept($child)) continue; ?>

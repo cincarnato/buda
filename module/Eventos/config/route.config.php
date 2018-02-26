@@ -86,6 +86,78 @@ return [
                             ],
                         ],
                     ],
+                    'DetalleEvento' => [
+                        'type' => 'Literal',
+                        'mayTerminate' => false,
+                        'options' => [
+                            'route' => '/detalle-evento',
+                            'defaults' => [
+                                'controller' => \Eventos\Controller\DetalleEventoController::CLASS,
+                                'action' => 'grid',
+                            ],
+                        ],
+                        'child_routes' => [
+                            'Grid' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/grid',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\DetalleEventoController::CLASS,
+                                        'action' => 'grid',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'Evento' => [
+                        'type' => 'Literal',
+                        'mayTerminate' => false,
+                        'options' => [
+                            'route' => '/evento',
+                            'defaults' => [
+                                'controller' => \Eventos\Controller\EventoController::CLASS,
+                                'action' => 'grid',
+                            ],
+                        ],
+                        'child_routes' => [
+                            'Grid' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/grid',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\EventoController::CLASS,
+                                        'action' => 'grid',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'Contacto' => [
+                        'type' => 'Literal',
+                        'mayTerminate' => false,
+                        'options' => [
+                            'route' => '/contacto',
+                            'defaults' => [
+                                'controller' => \Eventos\Controller\ContactoController::CLASS,
+                                'action' => 'grid',
+                            ],
+                        ],
+                        'child_routes' => [
+                            'Grid' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/grid',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\ContactoController::CLASS,
+                                        'action' => 'grid',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],

@@ -1,6 +1,6 @@
-<li<?php if ($this->page->isActive()) echo ' class="active"' ?>>
+<li <?php if ($this->page->isActive()){ echo ' class="nav-item active"'; }else{ echo ' class="nav-item"'; } ?> >
     <a 
-        class="nav-header" 
+        class="nav-link"
         href="<?php echo $this->page->getHref() ?>"
         <?php if ($this->page->getTarget() != ""): ?>
             target="<?php echo $this->page->getTarget(); ?>"

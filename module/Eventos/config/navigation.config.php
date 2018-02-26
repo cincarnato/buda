@@ -4,7 +4,7 @@ return [
     'navigation' => [
         'default' => [
             [
-                'label' => 'Gestion',
+                'label' => 'Configuración',
                 'detail' => '',
                 'icon' => '',
                 'permission' => 'general-admin',
@@ -32,7 +32,28 @@ return [
                         'permission' => 'general-admin',
                         'route' => 'Eventos/Fotos/Grid',
                     ],
+                    [
+                        'label' => 'Detalle de Evento',
+                        'detail' => '',
+                        'icon' => '',
+                        'permission' => 'general-admin',
+                        'route' => 'Eventos/DetalleEvento/Grid',
+                    ],
                 ],
+            ],
+            [
+                'label' => 'Contactos',
+                'detail' => '',
+                'icon' => '',
+                'permission' => 'general-admin',
+                'route' => 'Eventos/Contacto/Grid',
+            ],
+            [
+                'label' => 'Eventos',
+                'detail' => '',
+                'icon' => '',
+                'permission' => 'general-admin',
+                'route' => 'Eventos/Evento/Grid',
             ],
         ],
     ],

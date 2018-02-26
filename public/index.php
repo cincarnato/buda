@@ -4,7 +4,7 @@ use Zend\Mvc\Application;
 use Zend\Stdlib\ArrayUtils;
 
 error_reporting(E_ALL|E_STRICT);
-ini_set('display_errors', 'off');
+ini_set('display_errors', 'on');
   
 
 /**
