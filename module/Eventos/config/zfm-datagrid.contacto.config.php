@@ -26,6 +26,24 @@ return [
                     'type' => 'date',
                     'format' => 'Y-m-d',
                 ],
+                'cumpleTexto' => [
+                    'hidden' => true
+                ],
+                'cumple' => [
+                    'hidden' => true
+                ],
+                'nombre' => [
+                    'hidden' => true
+                ],
+                'apellido' => [
+                    'hidden' => true
+                ],
+                'facebookUrl' => [
+                    'hidden' => true
+                ],
+                'facebookId' => [
+                    'hidden' => true
+                ],
             ],
             'crudConfig' => [
                 'enable' => true,
