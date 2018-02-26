@@ -30,23 +30,28 @@ return [
                 'enable' => true,
                 'add' => [
                     'enable' => true,
-                    'class' => ' glyphicon glyphicon-plus cursor-pointer',
-                    'value' => '',
+                    'class' => 'material-icons text-primary cursor-pointer',
+                    'value' => 'add',
                 ],
                 'edit' => [
                     'enable' => true,
-                    'class' => ' glyphicon glyphicon-edit cursor-pointer',
-                    'value' => '',
+                    'class' => 'material-icons text-primary cursor-pointer',
+                    'value' => 'mode_edit'
                 ],
                 'del' => [
                     'enable' => true,
-                    'class' => ' glyphicon glyphicon-trash cursor-pointer',
-                    'value' => '',
+                    'class' => 'material-icons text-danger cursor-pointer',
+                    'value' => 'delete_sweep'
                 ],
                 'view' => [
                     'enable' => true,
-                    'class' => ' glyphicon glyphicon-list-alt cursor-pointer',
-                    'value' => '',
+                    'class' => 'material-icons text-success cursor-pointer',
+                    'value' => 'view_list',
+                ],
+                'manager' => [
+                    'enable' => false,
+                    'class' => 'material-icons',
+                    'value' => 'create',
                 ],
             ],
         ],
