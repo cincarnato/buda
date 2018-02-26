@@ -42,6 +42,13 @@ return [
                 ],
             ],
             [
+                'label' => 'Eventos',
+                'detail' => '',
+                'icon' => '',
+                'permission' => 'general-admin',
+                'route' => 'Eventos/Evento/Grid',
+            ],
+            [
                 'label' => 'Contactos',
                 'detail' => '',
                 'icon' => '',
@@ -49,11 +56,11 @@ return [
                 'route' => 'Eventos/Contacto/Grid',
             ],
             [
-                'label' => 'Eventos',
+                'label' => 'Invitados',
                 'detail' => '',
                 'icon' => '',
                 'permission' => 'general-admin',
-                'route' => 'Eventos/Evento/Grid',
+                'route' => 'Eventos/Invitado/Grid',
             ],
         ],
     ],

@@ -84,6 +84,16 @@ class Evento
      */
     public $minutos = null;
 
+    /**
+     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Annotation\Options({"label":"detalleEvento","empty_option": "",
+     * "target_class":"\Eventos\Entity\DetalleEvento", "description":""})
+     * @ORM\ManyToOne(targetEntity="\Eventos\Entity\DetalleEvento")
+     * @ORM\JoinColumn(name="detalle_evento_id", referencedColumnName="id",
+     * nullable=true)
+     */
+    public $detalleEvento = null;
+
     public function getId()
     {
         return $this->id;
@@ -152,6 +162,16 @@ class Evento
     public function setMinutos($minutos)
     {
         $this->minutos = $minutos;
+    }
+
+    public function getDetalleEvento()
+    {
+        return $this->detalleEvento;
+    }
+
+    public function setDetalleEvento($detalleEvento)
+    {
+        $this->detalleEvento = $detalleEvento;
     }
 
     public function __toString()

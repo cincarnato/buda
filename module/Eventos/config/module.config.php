@@ -11,6 +11,7 @@ include "zfm-datagrid.detalle-evento.config.php",
 include "zfm-datagrid.evento.config.php",
 include "zfm-datagrid.flyer.config.php",
 include "zfm-datagrid.fotos.config.php",
+include "zfm-datagrid.invitado.config.php",
 include "zfm-datagrid.lugar.config.php"
 );
 

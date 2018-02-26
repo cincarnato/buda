@@ -2,12 +2,12 @@
 
 return [
     'zf-metal-datagrid.custom' => [
-        'eventos-entity-evento' => [
-            'gridId' => 'zfmdg_Evento',
+        'eventos-entity-invitado' => [
+            'gridId' => 'zfmdg_Invitado',
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [
-                    'entityName' => \Eventos\Entity\Evento::class,
+                    'entityName' => \Eventos\Entity\Invitado::class,
                     'entityManager' => 'doctrine.entitymanager.orm_default',
                 ],
             ],
@@ -22,24 +22,8 @@ return [
                 'id' => [
                     'displayName' => 'ID',
                 ],
-                'contacto' => [
+                'evento' => [
                     'type' => 'relational',
-                ],
-                'lugar' => [
-                    'type' => 'relational',
-                ],
-                'flyer' => [
-                    'type' => 'relational',
-                ],
-                'fecha' => [
-                    'type' => 'date',
-                    'format' => 'Y-m-d',
-                ],
-                'flyer' => [
-                    'hidden' => true,
-                ],
-                'detalleEvento' => [
-                    'hidden' => true,
                 ],
             ],
             'crudConfig' => [
