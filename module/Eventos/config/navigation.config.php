@@ -25,6 +25,13 @@ return [
                         'permission' => 'general-admin',
                         'route' => 'Eventos/Flyer/Grid',
                     ],
+                    [
+                        'label' => 'Fotos',
+                        'detail' => '',
+                        'icon' => '',
+                        'permission' => 'general-admin',
+                        'route' => 'Eventos/Fotos/Grid',
+                    ],
                 ],
             ],
         ],
