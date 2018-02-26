@@ -1,18 +1,25 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light justify-content-between">
+<nav class="navbar navbar-expand-md  navbar-light bg-light  justify-content-between fixed-top">
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand mr-0 mr-md-2" href="/">
         <img src="/img/buda-logo.jpg" style="width: 120px; height: 40px;" class="" ALT="BUDA BS AS">
-
-
     </a>
 
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <?= $this->renderMenu(); ?>
+        <?= $this->renderMenu(null,null,"navbar-nav mr-auto"); ?>
 
-
+        <?= $this->partial('zf-metal/security/menu/menu'); ?>
     </div>
-    <?= $this->partial('zf-metal/security/menu/menu'); ?>
+
+
+
+
+
 </nav>
