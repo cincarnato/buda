@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9711feb74fcb9012414ed1d7bbfe49a0",
+    "content-hash": "315f1d0b6880e04a8618ffac51f81438",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3744,16 +3744,16 @@
         },
         {
             "name": "zf-metal/generator",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zf-metal/generator.git",
-                "reference": "63f81556d0c2adce31f937db0b327a6a5497a2c7"
+                "reference": "de7645c2872611af158ea81a0b85c069c9fdee0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zf-metal/generator/zipball/63f81556d0c2adce31f937db0b327a6a5497a2c7",
-                "reference": "63f81556d0c2adce31f937db0b327a6a5497a2c7",
+                "url": "https://api.github.com/repos/zf-metal/generator/zipball/de7645c2872611af158ea81a0b85c069c9fdee0e",
+                "reference": "de7645c2872611af158ea81a0b85c069c9fdee0e",
                 "shasum": ""
             },
             "require": {
@@ -3800,7 +3800,7 @@
                 "routes",
                 "zf3"
             ],
-            "time": "2018-02-25T18:13:30+00:00"
+            "time": "2018-02-26T03:12:44+00:00"
         },
         {
             "name": "zf-metal/log",
