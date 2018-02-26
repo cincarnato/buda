@@ -46,7 +46,7 @@ class Flyer
      * @Annotation\Attributes({"type":"file"})
      * @Annotation\Options({"label":"imagen","absolutepath":"/var/www/buda/public/media/flyer/","webpath":"/media/flyer/",
      * "description":""})
-     * @Annotation\Filter({"name":"filerenameupload",
+     * @Annotation\Filter({"name":"\ZfMetal\Commons\Filter\RenameUpload",
      * "options":{"target":"/var/www/buda/public/media/flyer/","use_upload_name":1,"overwrite":1}})
      * @ORM\Column(type="string", length=200, unique=false, nullable=true,
      * name="imagen")
