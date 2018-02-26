@@ -1,0 +1,21 @@
+<?php $this->flashCurrent(); ?>
+    <div class="row justify-content-md-center">
+        <div class="col-md-10  col-xs-12">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <?php
+                    $form = $this->grid->getCrudForm();
+                    $form->setAttribute('onsubmit', "submit.disabled=true; return true;");
+                    $formConfig = $this->grid->getOptions()->getFormConfig();
+                    ?>
+
+                    <?php
+                    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(), $formConfig->getGroups());
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php echo $this->GridCrud($this->grid->getId()); ?>

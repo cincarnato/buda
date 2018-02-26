@@ -1,0 +1,65 @@
+<?php
+$this->notyFlash(true);
+?>
+
+
+<div class="row justify-content-md-center">
+    <div class="col-md-8  col-xs-12">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 text-center">
+                        <img src="<?= $this->basePath($this->getSecurityOptions()->getProfilePicturePathRelative()) . $user->getImg(); ?>" alt=""
+                             class="center-block img-circle img-responsive">
+                        <br>
+
+                        <?php echo $this->form()->openTag($formImg) ?>
+
+                        <div class="btn-block">
+                            <?php echo $this->formElement($formImg->get('img')); ?>
+         
+                        </div>
+                        <div class="btn-block">
+                            <?php echo $this->formElement($formImg->get('submitbtn')); ?>
+                        </div>
+
+
+                        <?php echo $this->form()->closeTag($formImg); ?>
+
+                        <br>
+
+                        <div>
+                            <a href="<?= $this->url('zf-metal.user/profile/password-update'); ?>" class="btn btn-warning btn-block"><span class="fa fa-gear"></span>
+                                Change Password
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                        <h2><?= $user->getName(); ?></h2>
+                        <p><strong>Email: </strong> <?= $user->getEmail(); ?> </p>
+
+                        <p><strong>Roles: </strong>
+                            <?php foreach ($user->getRoles() as $rol) : ?>
+                                <span class="label label-default tags"><?= $rol->getName(); ?></span>
+                            <?php endforeach; ?>
+                        </p>
+
+                        <p><strong>Permissions: </strong>
+                            <?php foreach ($user->getRoles() as $rol) : ?>
+                                <?php foreach ($rol->getPermissions() as $permission) : ?>
+
+                                    <span class="label label-success tags"><?= $rol->getName() . ' - ' . $permission->getName(); ?></span>
+
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

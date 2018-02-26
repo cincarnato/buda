@@ -1,0 +1,50 @@
+<a class="btn btn-default btn-raised" href="/admin/users">Admin Users</a>
+<div class="clearfix"></div>
+<div class="row justify-content-md-center">
+    <div class="col-md-6  col-xs-12">
+
+        <div class="card">
+            <div class="card-body">
+                <?php
+                $groups = [
+                    [
+                        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
+                        'id' => 'User',
+                        'title' => "User",
+                        'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
+                        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                        'fields' => ['name', 'username', 'email', 'password']
+                    ],
+                    [
+                        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_VERTICAL,
+                        'id' => 'enableUser',
+                        'title' => 'Enable/Disable User',
+                        'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+                        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                        'fields' => ['active']
+                    ],
+                    [
+                        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_VERTICAL,
+                        'id' => 'Roles',
+                        'title' => 'Roles',
+                        'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+                        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                        'fields' => ['roles']
+                    ],
+                    [
+                        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_VERTICAL,
+                        'id' => 'Groups',
+                        'title' => 'Groups',
+                        'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+                        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                        'fields' => ['groups']
+                    ],
+                ];
+
+                echo $this->renderForm($this->form, \ZfMetal\Commons\Consts::STYLE_VERTICAL, \ZfMetal\Commons\Consts::COLUMNS_TWO, $groups);
+                ?>
+            </div>
+
+        </div>
+    </div>
+</div>

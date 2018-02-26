@@ -1,0 +1,80 @@
+<?php $this->flashCurrent(); ?>
+<div id="<?php echo $this->grid->getId(); ?>" >    
+
+    <div class="row">
+        
+        <?php echo $this->partial($this->partialExports, array("grid" => $this->grid)); ?>
+        
+        <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
+            <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
+        <?php endif; ?> 
+
+        <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
+            <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
+        <?php endif; ?>
+
+    </div>    
+
+    <table class="table table-bordered <?php echo $this->grid->getTableClass(); ?>">
+        <thead>
+            <tr>
+                <?php foreach ($this->grid->getColumns() as $column): ?>
+                    <?php if (!$column->getHidden()): ?>
+                        <th class="<?php echo $column->getThClass(); ?>" >
+
+                            <?php echo $this->translate((string) $column); ?>
+
+                            <?php if ($column->getType() != "extra" && $column->getType() != "crud"): ?>
+
+                                <!--SORT-->
+                                <?php if ($this->grid->getSort() && $this->grid->getSort()->getBy() == $column->getName()): ?>
+                                    <?php if ($this->grid->getSort()->getDirection() == "DESC"): ?>
+                                        <i class="glyphicon glyphicon-sort-by-attributes-alt" onclick="<?php echo \ZfMetal\Datagrid\C::F_SORT . $this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "ASC") + $this->routeParams), true); ?>')"></i>
+                                    <?php elseif ($this->grid->getSort()->getDirection() == "ASC"): ?>
+                                        <i class="glyphicon glyphicon-sort-by-attributes" onclick="<?php echo \ZfMetal\Datagrid\C::F_SORT . $this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>')"></i>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <i class="glyphicon glyphicon-sort" onclick="<?php echo \ZfMetal\Datagrid\C::F_SORT . $this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>')"></i>
+                                <?php endif; ?>
+
+                            <?php endif; ?>
+
+
+                        </th>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+
+            </tr>
+        <thead>
+
+
+            <?php if (count($this->grid->getRow())): ?>
+                <?php foreach ($this->grid->getRow() as $data): ?>
+                    <tr>
+                        <?php foreach ($this->grid->getColumns() as $column): ?>
+                            <?php if (!$column->getHidden()): ?>
+                                <td class="<?php echo $column->getTdClass() ?>">
+                                    <?php echo $column->getHtmlBegin(); ?>
+
+                                    <?php echo $this->GridField($column, $data); ?>
+
+                                    <?php echo $column->getHtmlEnd(); ?>
+
+                                </td>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+    </table>
+
+
+    <?php
+    echo $this->paginationControl($this->grid->getPaginator(), 'Sliding', $this->partialPagination, array("routeParams" => $this->routeParams,
+        'route' => $this->route, 'gridId' => $this->grid->getId()));
+    ?>
+
+
+    <?php echo $this->GridCrudAjax($this->grid->getId(), $this->url($this->route, array(), array(), true)); ?>
+    
+</div>

@@ -1,0 +1,35 @@
+<a class="btn btn-default btn-raised" href="/admin/groups"><?php echo $this->translate('Admin Groups'); ?></a>
+<div class="clearfix"></div>
+<div class="row justify-content-md-center">
+    <div class="col-md-10  col-xs-12">
+
+        <div class="card">
+            <div class="card-body">
+
+                    <?php
+                    $groups = [
+                        [
+                            'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
+                            'id' => 'Group',
+                            'title' => "Group",
+                            'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+                            'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                            'fields' => ['name']
+                        ],
+                        [
+                            'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
+                            'id' => 'Users',
+                            'title' => "Users",
+                            'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+                            'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                            'fields' => ['users']
+                        ],
+                    ];
+
+                    echo $this->renderForm($this->form, \ZfMetal\Commons\Consts::STYLE_VERTICAL, \ZfMetal\Commons\Consts::COLUMNS_ONE, $groups);
+                    ?>
+
+            </div>
+        </div>
+    </div>
+</div>

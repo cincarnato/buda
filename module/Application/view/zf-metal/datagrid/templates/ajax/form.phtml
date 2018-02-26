@@ -1,0 +1,35 @@
+<?php $this->flashCurrent(); ?>
+<?php $file = false; ?>
+<div class="row container-fluid">
+
+    <?php
+    $form = $this->grid->getCrudForm();
+    $form->setAttribute('onsubmit', "submit.disabled=true; return true;");
+    $form->setAttribute("action", "javascript:" . \ZfMetal\Datagrid\C::F_FORM . $this->grid->getId() . "('" . $form->getName() . "')");
+    $formConfig = $this->grid->getOptions()->getFormConfig();
+    ?>
+
+    <?php
+    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(), $formConfig->getGroups());
+    ?>
+</div>
+
+
+<?php echo $this->GridCrudAjax($this->grid->getId(), $this->url($this->route, array(), array(), true)); ?>
+
+
+<?php if ($file): ?>
+    <?php
+//Para Imagenes
+    $url = $this->url($this->route, array(), array(), true);
+    ?>
+    <script>
+
+        $('#<?php echo $form->getName(); ?>').ajaxForm({
+            url: "<?php echo $url; ?>",
+            complete: function (xhr) {
+                $('#<?php echo $this->grid->getId(); ?>').html(xhr.responseText);
+            }
+        });
+    </script>
+<?php endif; ?>

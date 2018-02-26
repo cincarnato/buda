@@ -1,0 +1,70 @@
+<a class="btn btn-default btn-raised" href="/admin/users">Admin Users</a>
+<div class="clearfix"></div>
+
+<div class="row justify-content-md-center">
+    <div class="col-md-10  col-xs-12">
+
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-right">
+                    <tr>
+                        <th class="text-right">Id:</th>
+                        <td class="text-left"><?php echo $this->user->getId(); ?></td>
+                    </tr>
+
+                    <tr>
+                        <th class="text-right">Nombre:</th>
+                        <td class="text-left"><?php echo $this->user->getName(); ?></td>
+                    </tr>
+
+                    <tr>
+                        <th class="text-right">Usuario:</th>
+                        <td class="text-left"><?php echo $this->user->getUsername(); ?></td>
+                    </tr>
+
+                    <tr>
+                        <th class="text-right">Email:</th>
+                        <td class="text-left"><?php echo $this->user->getEmail(); ?></td>
+                    </tr>
+
+                    <tr>
+                        <th class="text-right">Active:</th>
+                        <td class="text-left"><?php echo $this->user->getActive(); ?></td>
+                    </tr>
+
+                    <tr>
+                        <th class="text-right">Roles:</th>
+                        <td class="text-left">
+                            <ul>
+                                <?php foreach ($this->user->getRoles() as $role): ?>
+                                    <li><?php echo $role->getName(); ?></li>
+
+                                <?php endforeach; ?>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="text-right">Groups:</th>
+                        <td class="text-left">
+                            <ul>
+                                <?php foreach ($this->user->getGroups() as $group): ?>
+                                    <li><?php echo $group->getName(); ?></li>
+
+                                <?php endforeach; ?>
+                            </ul>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="col-lg-4">
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
