@@ -7,7 +7,7 @@ return [
             'wow' => [
                 'type' => 'Zend\Router\Http\Hostname',
                 'options' => [
-                    'route' => 'www.buda.int',
+                    'route' => WWW_BUDA_URL,
                     'defaults' => [
                         'controller' => \WWW\Controller\MainController::CLASS,
                         'action' => 'home',
