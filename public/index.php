@@ -35,7 +35,7 @@ if (! class_exists(Application::class)) {
 }
 
 //Constants
-include 'constants.php';
+include '../config/constants.php';
 
 
 // Retrieve configuration
