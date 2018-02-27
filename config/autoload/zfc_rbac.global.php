@@ -8,6 +8,7 @@ return [
                 'Eventos*' => ['user', 'admin'],
                 'Landing*' => ['guest','user', 'admin'],
                 'HostLanding*' => ['guest','user', 'admin'],
+                'WWW*' => ['guest','user', 'admin'],
             ]
         ],
     ]

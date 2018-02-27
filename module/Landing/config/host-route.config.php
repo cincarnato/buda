@@ -1,6 +1,6 @@
 <?php
 
-define('BUDA_URL','e.buda.int');
+define('L_BUDA_URL','up.buda.int');
 
 return [
     'router' => [
@@ -8,7 +8,7 @@ return [
             'HostLanding' => [
                 'type' => 'Zend\Router\Http\Hostname',
                 'options' => [
-                    'route' => 'e.buda.int',
+                    'route' => L_BUDA_URL,
                     'defaults' => [
                         'controller' => \Landing\Controller\MainController::CLASS,
                         'action' => 'start',

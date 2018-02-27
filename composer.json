@@ -35,7 +35,8 @@
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Eventos\\": "module/Eventos/src/",
-            "Landing\\": "module/Landing/src/"
+            "Landing\\": "module/Landing/src/",
+            "WWW\\": "module/WWW/src/"
         }
     },
     "autoload-dev": {

@@ -2,13 +2,14 @@
 
 namespace ZfMetal\Security;
 
-return[
-   'zf-metal-security.options' => [
+return [
+    'zf-metal-security.options' => [
         'public_register' => true,
+        'role_default' => 'guest',
         'email_confirmation_require' => false,
         'user_state_default' => true,
         'password_recovery' => true,
-        'bcrypt_cost'=> 12,
+        'bcrypt_cost' => 12,
         'redirect_strategy' => [
             'redirect_when_connected' => true,
             'redirect_to_route_connected' => 'home',
@@ -16,6 +17,6 @@ return[
             'append_previous_uri' => true,
             'previous_uri_query_key' => 'redirect'
         ],
-       'check_db' => false
+        'check_db' => false
     ]
 ];

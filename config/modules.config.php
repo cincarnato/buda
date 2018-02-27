@@ -32,7 +32,8 @@ return [
     'ZfcRbac',
     //'ZfMetal\SecuritySocial',
     //MODULES
-    'Landing',
     'Application',
     'Eventos',
+    'Landing',
+    'WWW'
 ];
