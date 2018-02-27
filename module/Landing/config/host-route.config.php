@@ -1,6 +1,5 @@
 <?php
 
-define('L_BUDA_URL', 'up.buda.int');
 
 return [
     'router' => [

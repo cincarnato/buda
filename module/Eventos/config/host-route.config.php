@@ -1,7 +1,5 @@
 <?php
 
-define('E_BUDA_URL','ge.buda.int');
-
 return [
     'router' => [
         'routes' => [
