@@ -1,21 +1,21 @@
 <?php
 
-define('WWW_BUDA_URL','wwww.buda.int');
+define('WWW_BUDA_URL','www.buda.int');
 
 return [
     'router' => [
         'routes' => [
-            'WWW' => [
+            'wow' => [
                 'type' => 'Zend\Router\Http\Hostname',
                 'options' => [
-                    'route' => WWW_BUDA_URL,
+                    'route' => 'www.buda.int',
                     'defaults' => [
                         'controller' => \WWW\Controller\MainController::CLASS,
                         'action' => 'home',
                     ],
                 ],
                 'child_routes' => [
-                    'index' => [
+                    'home' => [
                         'type' => 'Zend\Router\Http\Literal',
                         'options' => [
                             'route' => '/',

@@ -182,6 +182,30 @@ return [
                             ],
                         ],
                     ],
+                    'Main' => [
+                        'type' => 'Literal',
+                        'mayTerminate' => false,
+                        'options' => [
+                            'route' => '/main',
+                            'defaults' => [
+                                'controller' => \Eventos\Controller\MainController::CLASS,
+                                'action' => 'home',
+                            ],
+                        ],
+                        'child_routes' => [
+                            'Home' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/home',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\MainController::CLASS,
+                                        'action' => 'home',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],

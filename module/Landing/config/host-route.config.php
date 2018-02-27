@@ -1,6 +1,6 @@
 <?php
 
-define('L_BUDA_URL','up.buda.int');
+define('L_BUDA_URL', 'up.buda.int');
 
 return [
     'router' => [
@@ -25,32 +25,40 @@ return [
                             ],
                         ],
                         'may_terminate' => true,
-                    ],
-                    'Main' => [
-                        'type' => 'Literal',
-                        'mayTerminate' => true,
-                        'options' => [
-                            'route' => '/main',
-                            'defaults' => [
-                                'controller' => \Landing\Controller\MainController::CLASS,
-                                'action' => 'start',
-                            ],
-                        ],
                         'child_routes' => [
-                            'Start' => [
-                                'type' => 'Segment',
-                                'mayTerminate' => true,
+                            'byid' => [
+                                'type' => 'Zend\Router\Http\Segment',
                                 'options' => [
-                                    'route' => '/start',
+                                    'route' => ':id',
+                                    'constraints' => [
+                                        'id' => '[0-9]+',
+                                    ],
                                     'defaults' => [
                                         'controller' => \Landing\Controller\MainController::CLASS,
                                         'action' => 'start',
                                     ],
                                 ],
+                                'may_terminate' => true,
+                            ],
+                            'byname' => [
+                                'type' => 'Zend\Router\Http\Segment',
+                                'options' => [
+                                    'route' => ':name',
+                                    'constraints' => [
+                                        'name' => '[a-zA-Z0-9_-]+',
+                                    ],
+                                    'defaults' => [
+                                        'controller' => \Landing\Controller\MainController::CLASS,
+                                        'action' => 'start',
+                                    ],
+                                ],
+                                'may_terminate' => true,
                             ],
                         ],
                     ],
+
                 ],
+
             ],
         ],
     ],

@@ -10,6 +10,7 @@ return array(
             \Eventos\Controller\EventoController::class => \Eventos\Factory\Controller\EventoControllerFactory::class,
             \Eventos\Controller\ContactoController::class => \Eventos\Factory\Controller\ContactoControllerFactory::class,
             \Eventos\Controller\InvitadoController::class => \Eventos\Factory\Controller\InvitadoControllerFactory::class,
+            \Eventos\Controller\MainController::class => \Eventos\Factory\Controller\MainControllerFactory::class,
         ),
     ),
 );

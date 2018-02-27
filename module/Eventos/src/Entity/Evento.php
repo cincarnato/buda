@@ -176,7 +176,10 @@ class Evento
 
     public function __toString()
     {
-        return  $this->contacto->getNombreCompleto();
+        if($this->contacto) {
+            return $this->contacto->getNombreCompleto();
+        }
+        return "";
     }
 
 

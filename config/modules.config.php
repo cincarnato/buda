@@ -35,5 +35,6 @@ return [
     'Application',
     'Eventos',
     'Landing',
-    'WWW'
+    'WWW',
+
 ];
