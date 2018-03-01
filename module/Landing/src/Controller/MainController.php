@@ -104,7 +104,7 @@ class MainController extends AbstractActionController
 
         if ($accessToken) {
             $this->getFu()->getFb()->setDefaultAccessToken((string)$accessToken);
-            $facebookUserData = $this->getFb()->get('/me?locale=en_US&fields=id,name,email,first_name,last_name,birthday', $accessToken)->getGraphGroup();
+            $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,first_name,last_name,birthday', $accessToken)->getGraphGroup();
             $this->getStorage()->write($facebookUserData);
 
         } else {
