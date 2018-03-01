@@ -34,11 +34,12 @@
                                 <h3 class="title">Propietario sin confirmar</h3>
                             <?php endif; ?>
 
-
+                            <form method="post">
                             <button class="btn btn-social btn-fill btn-facebook">
                                 <i class="fa fa-facebook"> </i> Confirmar
                                 <div class="ripple-container"></div>
                             </button>
+                            </form>
 
                             <?php if ($evento && $evento->getFecha()): ?>
                                 <h6><?php echo $evento->getFecha()->format("Y-m-d   "); ?></h6>

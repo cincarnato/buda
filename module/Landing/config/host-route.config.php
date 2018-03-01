@@ -14,7 +14,7 @@ return [
                     ],
                 ],
                 'child_routes' => [
-                    'index' => [
+                    'start' => [
                         'type' => 'Zend\Router\Http\Literal',
                         'options' => [
                             'route' => '/',
@@ -52,6 +52,17 @@ return [
                                     ],
                                 ],
                                 'may_terminate' => true,
+                            ],
+                        ],
+                    ],
+                    'FacebookCallback' => [
+                        'type' => 'Segment',
+                        'mayTerminate' => true,
+                        'options' => [
+                            'route' => '/facebook-callback',
+                            'defaults' => [
+                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'action' => 'facebookCallback',
                             ],
                         ],
                     ],
