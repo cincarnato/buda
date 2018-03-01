@@ -88,7 +88,7 @@ class MainController extends AbstractActionController
 
     public function facebookCallbackAction()
     {
-        $helper = $this->getFu()->getRedirectHelper();
+        $helper = $this->getFu()->getRedirectLoginHelper();
         try {
             $accessToken = $helper->getAccessToken();
         } catch (\Facebook\Exceptions\FacebookResponseException $e) {
