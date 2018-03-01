@@ -18,11 +18,13 @@ class InfoController extends AbstractActionController
 
     public function politicaPrivacidadAction()
     {
+        $this->layout()->setTemplate('landing/layout');
         return [];
     }
 
     public function condicionesUsoAction()
     {
+        $this->layout()->setTemplate('landing/layout');
         return [];
     }
 
