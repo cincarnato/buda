@@ -62,9 +62,14 @@ class MainController extends AbstractActionController
             echo "<pre>";
             var_dump($facebookUserData->getId());
             var_dump($facebookUserData->getEmail());
-            var_dump($facebookUserData->getCover());
-            var_dump($facebookUserData->getLink());
+            var_dump($facebookUserData->getFirstName());
+            var_dump($facebookUserData->getLastName());
             var_dump($facebookUserData->getName());
+            var_dump($facebookUserData->getBirthday());
+            var_dump($facebookUserData->getLocation());
+            var_dump($facebookUserData->getLink());
+            var_dump($facebookUserData->getGender());
+            var_dump($facebookUserData->getPicture());
             echo "</pre>";
 
         }
@@ -116,7 +121,7 @@ class MainController extends AbstractActionController
 
         if ($accessToken) {
             $this->getFu()->getFb()->setDefaultAccessToken((string)$accessToken);
-            $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,first_name,last_name,birthday', $accessToken)->getGraphGroup();
+            $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,first_name,last_name,birthday', $accessToken)->getGraphUser();
             $this->getStorage()->write($facebookUserData);
 
         } else {
