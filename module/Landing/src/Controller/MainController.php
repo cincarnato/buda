@@ -2,7 +2,6 @@
 
 namespace Landing\Controller;
 
-use Eventos\Entity\Contacto;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Authentication\Storage\Session;
 
@@ -31,7 +30,7 @@ class MainController extends AbstractActionController
     private $fu = null;
 
     /**
-     * @var Session
+     * @var \Zend\Authentication\Storage\Session
      */
     private $storage = null;
 
@@ -87,20 +86,19 @@ class MainController extends AbstractActionController
 
     private function crearContacto($facebookUserData, $evento)
     {
-
         $contacto = $this->getContactoRepository()->findOneByEmail($facebookUserData->getEmail());
 
-        if (!$contacto) {
-            $contacto = new Contacto();
-        }
+                if (!$contacto) {
+                    $contacto = new Contacto();
+                }
 
-        $contacto->setNombre($facebookUserData->getName());
-        $contacto->setEmail($facebookUserData->getEmail());
+                $contacto->setNombre($facebookUserData->getName());
+                $contacto->setEmail($facebookUserData->getEmail());
 
-        $this->getEm()->persist($contacto);
-        $this->getEm()->flush();
+                $this->getEm()->persist($contacto);
+                $this->getEm()->flush();
 
-        return $contacto;
+                return $contacto;
     }
 
     public function facebookCallbackAction()
@@ -128,6 +126,12 @@ class MainController extends AbstractActionController
             $this->flashMessenger()->addErrorMessage('No se aceptaron los permisos requeridos.');
         }
 
+        return $this->redirect()->toRoute('HostLanding/start');
+    }
+
+    public function facebookLogoutAction()
+    {
+        $this->getStorage()->clear();
         return $this->redirect()->toRoute('HostLanding/start');
     }
 
@@ -178,14 +182,18 @@ class MainController extends AbstractActionController
         return $this->getEm()->getRepository(self::ENTITY);
     }
 
+    /**
+     * @return \Zend\Authentication\Storage\Session
+     */
     private function getStorage()
     {
         if (!$this->storage) {
             $this->storage = new Session('FacebookUserData');
         }
         return $this->storage;
-
     }
+
+
 
 
 }

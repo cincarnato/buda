@@ -47,6 +47,17 @@ return [
                                     ],
                                 ],
                             ],
+                            'FacebookLogout' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/facebook-logout',
+                                    'defaults' => [
+                                        'controller' => \Landing\Controller\MainController::CLASS,
+                                        'action' => 'facebookLogout',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                     'Info' => [

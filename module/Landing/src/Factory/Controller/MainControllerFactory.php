@@ -7,9 +7,9 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * MainControllerFactory
- * 
- * 
- * 
+ *
+ *
+ *
  * @author
  * @license
  * @link
@@ -21,8 +21,7 @@ class MainControllerFactory implements FactoryInterface
     {
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $container->get("doctrine.entitymanager.orm_default");
-        $fu = $container->get(\Eventos\Service\FacebookUser::class);
-        return new \Landing\Controller\MainController($em,$fu);
+        return new \Landing\Controller\MainController($em);
     }
 
 
