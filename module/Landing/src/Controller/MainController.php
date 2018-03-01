@@ -62,8 +62,8 @@ class MainController extends AbstractActionController
             echo "<pre>";
             var_dump($facebookUserData->getId());
             var_dump($facebookUserData->getEmail());
-            var_dump($facebookUserData->getFirstName());
-            var_dump($facebookUserData->getLastName());
+            var_dump($facebookUserData->getCover());
+            var_dump($facebookUserData->getLink());
             var_dump($facebookUserData->getName());
             echo "</pre>";
 
