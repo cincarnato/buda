@@ -50,6 +50,12 @@ class Lugar
      */
     public $direccion = null;
 
+    /**
+     * @Annotation\Exclude()
+     * @ORM\OneToMany(targetEntity="\Eventos\Entity\Fotos", mappedBy="lugar")
+     */
+    public $fotos = null;
+
     public function getId()
     {
         return $this->id;
@@ -78,6 +84,16 @@ class Lugar
     public function setDireccion($direccion)
     {
         $this->direccion = $direccion;
+    }
+
+    public function getFotos()
+    {
+        return $this->fotos;
+    }
+
+    public function setFotos($fotos)
+    {
+        $this->fotos = $fotos;
     }
 
     public function __toString()

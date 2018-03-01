@@ -10,9 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Evento
- *
- *
- *
+ * 
+ * 
+ * 
  * @author
  * @license
  * @link
@@ -33,13 +33,13 @@ class Evento
     public $id = null;
 
     /**
-     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
-     * @Annotation\Options({"label":"contacto","empty_option": "",
-     * "target_class":"\Eventos\Entity\Contacto", "description":""})
-     * @ORM\ManyToOne(targetEntity="\Eventos\Entity\Contacto")
-     * @ORM\JoinColumn(name="contacto_id", referencedColumnName="id", nullable=true)
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"nombre", "description":"", "addon":""})
+     * @ORM\Column(type="string", length=100, unique=false, nullable=true,
+     * name="nombre")
      */
-    public $contacto = null;
+    public $nombre = null;
 
     /**
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
@@ -93,6 +93,15 @@ class Evento
      * nullable=true)
      */
     public $detalleEvento = null;
+
+    /**
+     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Annotation\Options({"label":"contacto","empty_option": "",
+     * "target_class":"\Eventos\Entity\Contacto", "description":""})
+     * @ORM\ManyToOne(targetEntity="\Eventos\Entity\Contacto")
+     * @ORM\JoinColumn(name="contacto_id", referencedColumnName="id", nullable=true)
+     */
+    public $contacto = null;
 
     public function getId()
     {
@@ -174,12 +183,19 @@ class Evento
         $this->detalleEvento = $detalleEvento;
     }
 
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
     public function __toString()
     {
-        if($this->contacto) {
-            return $this->contacto->getNombreCompleto();
-        }
-        return "";
+        return  $this->nombre;
     }
 
 

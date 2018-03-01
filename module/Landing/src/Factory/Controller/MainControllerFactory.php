@@ -7,9 +7,9 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * MainControllerFactory
- *
- *
- *
+ * 
+ * 
+ * 
  * @author
  * @license
  * @link
@@ -19,7 +19,9 @@ class MainControllerFactory implements FactoryInterface
 
     public function __invoke(\Interop\Container\ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new \Landing\Controller\MainController();
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $container->get("doctrine.entitymanager.orm_default");
+        return new \Landing\Controller\MainController($em);
     }
 
 

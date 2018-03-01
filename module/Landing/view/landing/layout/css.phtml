@@ -8,8 +8,9 @@
 
 <?php
 echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-    ->appendStylesheet('/template/material-kit/css/d.css');
-    //->appendStylesheet('/main/css/custom.css');
+    ->appendStylesheet('/template/material-kit/css/d.css')
+    ->appendStylesheet('/shared/font-awesome/css/font-awesome.min.css');
+//->appendStylesheet('/main/css/custom.css');
 
 echo $this->headStyle();
 ?>

@@ -25,12 +25,12 @@ return [
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
-                            'byid' => [
+                            'byname' => [
                                 'type' => 'Zend\Router\Http\Segment',
                                 'options' => [
-                                    'route' => ':id',
+                                    'route' => ':name',
                                     'constraints' => [
-                                        'id' => '[0-9]+',
+                                        'name' => '[a-zA-Z0-9_-]+',
                                     ],
                                     'defaults' => [
                                         'controller' => \Landing\Controller\MainController::CLASS,
@@ -39,12 +39,12 @@ return [
                                 ],
                                 'may_terminate' => true,
                             ],
-                            'byname' => [
+                            'byid' => [
                                 'type' => 'Zend\Router\Http\Segment',
                                 'options' => [
-                                    'route' => ':name',
+                                    'route' => ':id',
                                     'constraints' => [
-                                        'name' => '[a-zA-Z0-9_-]+',
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
                                         'controller' => \Landing\Controller\MainController::CLASS,

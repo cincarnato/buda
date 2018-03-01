@@ -3,7 +3,7 @@
 use Zend\Mvc\Application;
 use Zend\Stdlib\ArrayUtils;
 
-error_reporting(E_ALL|E_STRICT);
+error_reporting(E_ERROR);
 ini_set('display_errors', 'on');
   
 
