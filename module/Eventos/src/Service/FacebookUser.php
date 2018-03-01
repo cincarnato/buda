@@ -42,7 +42,7 @@ class FacebookUser
         ]);
     }
 
-    public function getRedirectHelper(){
+    public function getRedirectLoginHelper(){
        return $this->fb->getRedirectLoginHelper();
     }
 
