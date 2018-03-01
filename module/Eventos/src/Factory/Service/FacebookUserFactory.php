@@ -21,7 +21,7 @@ class FacebookUserFactory implements FactoryInterface
     {
         /** @var $eo \Eventos\Options\ModuleOptions */
         $eo = $container->get('Eventos.options');
-        return new \Eventos\FacebookUser($eo->getFacebookAppId(), $eo->getFacebookAppSecret(), $eo->getFacebookDefaultGraphVersion(), $eo->getFacebookDefaultAccessToken());
+        return new \Eventos\Service\FacebookUser($eo->getFacebookAppId(), $eo->getFacebookAppSecret(), $eo->getFacebookDefaultGraphVersion(), $eo->getFacebookDefaultAccessToken());
     }
 
 
