@@ -49,6 +49,41 @@ return [
                             ],
                         ],
                     ],
+                    'Info' => [
+                        'type' => 'Literal',
+                        'mayTerminate' => false,
+                        'options' => [
+                            'route' => '/info',
+                            'defaults' => [
+                                'controller' => \Landing\Controller\InfoController::CLASS,
+                                'action' => 'politicaPrivacidad',
+                            ],
+                        ],
+                        'child_routes' => [
+                            'PoliticaPrivacidad' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/politica-privacidad',
+                                    'defaults' => [
+                                        'controller' => \Landing\Controller\InfoController::CLASS,
+                                        'action' => 'politicaPrivacidad',
+                                    ],
+                                ],
+                            ],
+                            'CondicionesUso' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/condiciones-uso',
+                                    'defaults' => [
+                                        'controller' => \Landing\Controller\InfoController::CLASS,
+                                        'action' => 'condicionesUso',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],
