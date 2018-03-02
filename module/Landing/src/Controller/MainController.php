@@ -49,7 +49,7 @@ class MainController extends AbstractActionController
 
         if($evento) {
             $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
-            $url .='?state='.$evento->getNombre();
+            $url .='&state='.$evento->getNombre();
             var_dump($url);
         }
 
