@@ -2,6 +2,7 @@
 
 namespace Landing\Controller;
 
+use Facebook\Helpers\FacebookRedirectLoginHelper;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Authentication\Storage\Session;
 
@@ -32,7 +33,12 @@ class MainController extends AbstractActionController
     /**
      * @var \Zend\Authentication\Storage\Session
      */
-    private $storage = null;
+    private $userDataStorage = null;
+
+    /**
+     * @var \Zend\Authentication\Storage\Session
+     */
+    private $stateStorage = null;
 
     public function startAction()
     {
@@ -43,13 +49,19 @@ class MainController extends AbstractActionController
         /** @var $evento \Eventos\Entity\Evento */
         if ($id) {
             $evento = $this->getEventoRepository()->find($id);
+            if($evento) {
+                $eventoParam = $id;
+            }
         } else if ($name) {
             $evento = $this->getEventoRepository()->findOneByNombre($name);
+            if($evento) {
+                $eventoParam = $evento->getNombre;
+            }
         }
 
-        if($evento) {
+        if ($evento) {
             $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
-            $state ='&name='.$evento->getNombre();
+            $state = '&name=' . $evento->getNombre();
             var_dump($url);
         }
 
@@ -58,21 +70,19 @@ class MainController extends AbstractActionController
             //Validar Clave
             if ($data["clave"] == $evento->getClave()) {
 
+                /** @var  $helper FacebookRedirectLoginHelper */
                 $helper = $this->getFu()->getRedirectLoginHelper();
                 $permisos = ['email', 'user_birthday'];
                 $loginUrl = $helper->getLoginUrl($url, $permisos);
-                $this->redirect()->toUrl($loginUrl.$state);
+                $state = $helper->getPersistentDataHandler()->get('state');
+                $this->getStateStorage($state)->write($eventoParam);
+                $this->redirect()->toUrl($loginUrl . $state);
             } else {
                 $this->flashMessenger()->addErrorMessage('Clave incorrecta');
             }
         }
 
-        $facebookUserData = $this->getStorage()->read();
-
-        if ($facebookUserData) {
-            //  $this->showUserData($facebookUserData);
-
-        }
+        $facebookUserData = $this->getUserDataStorage()->read();
 
         if ($evento && $evento->getContacto() == null && $facebookUserData && $facebookUserData->getEmail()) {
             $contacto = $this->obtenerContacto($facebookUserData);
@@ -121,20 +131,22 @@ class MainController extends AbstractActionController
         if ($accessToken) {
             $this->getFu()->getFb()->setDefaultAccessToken((string)$accessToken);
             $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,first_name,last_name,birthday', $accessToken)->getGraphUser();
-            $this->getStorage()->write($facebookUserData);
+            $this->getUserDataStorage()->write($facebookUserData);
 
         } else {
             $this->flashMessenger()->addErrorMessage('No se aceptaron los permisos requeridos.');
         }
 
-        $name = $this->getRequest()->getQuery("name");
-        echo $name; die;
-        return $this->redirect()->toRoute('HostLanding/start',["name" => $name]);
+        //Recuperar el ID del evento
+        $state = $this->getRequest()->getQuery("state");
+        $name = $this->getStateStorage($state)->read();
+
+        return $this->redirect()->toRoute('HostLanding/start', ["name" => $name]);
     }
 
     public function facebookLogoutAction()
     {
-        $this->getStorage()->clear();
+        $this->getUserDataStorage()->clear();
         return $this->redirect()->toRoute('HostLanding/start');
     }
 
@@ -188,17 +200,29 @@ class MainController extends AbstractActionController
     /**
      * @return \Zend\Authentication\Storage\Session
      */
-    private function getStorage()
+    private function getUserDataStorage()
     {
-        if (!$this->storage) {
-            $this->storage = new Session('FacebookUserData');
+        if (!$this->userDataStorage) {
+            $this->userDataStorage = new Session('FacebookUserData');
         }
-        return $this->storage;
+        return $this->userDataStorage;
+    }
+
+    /**
+     * @return \Zend\Authentication\Storage\Session
+     */
+    private function getStateStorage($state)
+    {
+        if (!$this->stateStorage) {
+            $this->stateStorage = new Session($state);
+        }
+        return $this->stateStorage;
     }
 
 
     protected function showUserData($facebookUserData)
     {
+        $facebookUserData = $this->getUserDataStorage()->read();
         echo "<pre>";
         var_dump($facebookUserData->getId());
         var_dump($facebookUserData->getEmail());
