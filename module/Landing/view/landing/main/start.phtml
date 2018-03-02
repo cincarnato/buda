@@ -35,10 +35,10 @@
                             <?php endif; ?>
 
                             <form method="post">
-                            <button class="btn btn-social btn-fill btn-facebook">
-                                <i class="fa fa-facebook"> </i> Confirmar
-                                <div class="ripple-container"></div>
-                            </button>
+                                <button class="btn btn-social btn-fill btn-facebook">
+                                    <i class="fa fa-facebook"> </i> Confirmar
+                                    <div class="ripple-container"></div>
+                                </button>
                             </form>
 
                             <?php if ($evento && $evento->getFecha()): ?>
@@ -56,20 +56,22 @@
                 <div class="col-md-6 col-xs-12">
 
 
-
-                    <?php if ($evento && $evento->getLugar() && $evento->getLugar()->getFotos()): ?>
-                        <h4 class="title">Fotos de <?php echo $evento->getLugar(); ?></h4>
-                        <div class="row">
-                            <?php foreach ($evento->getLugar()->getFotos() as $foto): ?>
-                                <div class="col-md-6 col-xs-12 pb-3">
-                                    <img src="<?php echo $foto->getImagen_fp(); ?>" class="rounded img-fluid">
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-
                     <?php if ($evento && $evento->getLugar()): ?>
-                        <h4>Dirección: <?php echo $evento->getLugar()->getDireccion(); ?></h4>
+                        <h4 class="title"><?php echo $evento->getLugar(); ?></h4>
+
+                        <h5>  Dirección: <?php echo $evento->getLugar()->getDireccion(); ?></h5>
+                        <?php if ($evento->getLugar()->getFotos()): ?>
+
+                            <div class="row">
+                                <?php foreach ($evento->getLugar()->getFotos() as $foto): ?>
+                                    <div class="col-md-6 col-xs-12 pb-3">
+                                        <img src="<?php echo $foto->getImagen_fp(); ?>" class="rounded img-fluid">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                        <?php endif; ?>
+
                     <?php endif; ?>
 
 

@@ -48,9 +48,12 @@ class MainController extends AbstractActionController
         }
 
         if ($this->getRequest()->isPost()) {
+
+            //Validar Clave
+
             $helper = $this->getFu()->getRedirectLoginHelper();
             $permisos = ['email', 'user_birthday'];
-            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
+            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre() ], ['force_canonical' => true]);
             $loginUrl = $helper->getLoginUrl($url, $permisos);
             $this->redirect()->toUrl($loginUrl);
         }
@@ -74,7 +77,7 @@ class MainController extends AbstractActionController
         }
 
         if ($evento && $evento->getContacto() == null && $facebookUserData && $facebookUserData->getEmail()) {
-            $contacto = $this->crearContacto($facebookUserData);
+            $contacto = $this->obtenerContacto($facebookUserData);
             $evento->setContacto($contacto);
             $this->getEm()->persist($evento);
             $this->getEm()->flush();
@@ -84,7 +87,7 @@ class MainController extends AbstractActionController
         return ["evento" => $evento];
     }
 
-    private function crearContacto($facebookUserData, $evento)
+    private function obtenerContacto($facebookUserData)
     {
         $contacto = $this->getContactoRepository()->findOneByEmail($facebookUserData->getEmail());
 

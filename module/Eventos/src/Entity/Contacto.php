@@ -253,6 +253,10 @@ class Contacto
         return  $this->nombreCompleto;
     }
 
+    public function getImgProfile(){
+        return "http://graph.facebook.com/".$this->getFacebookId()."/picture?type=large";
+    }
+
 
 }
 
