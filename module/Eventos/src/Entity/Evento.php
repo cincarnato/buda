@@ -35,8 +35,9 @@ class Evento
     /**
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"nombre", "description":"", "addon":""})
-     * @ORM\Column(type="string", length=100, unique=false, nullable=true,
+     * @Annotation\Options({"label":"nombre", "description":"No se admiten espacios
+     * dado que el nombre del evento será parte del link.", "addon":""})
+     * @ORM\Column(type="string", length=100, unique=true, nullable=false,
      * name="nombre")
      */
     public $nombre = null;
@@ -46,7 +47,7 @@ class Evento
      * @Annotation\Options({"label":"lugar","empty_option": "",
      * "target_class":"\Eventos\Entity\Lugar", "description":""})
      * @ORM\ManyToOne(targetEntity="\Eventos\Entity\Lugar")
-     * @ORM\JoinColumn(name="lugar_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="lugar_id", referencedColumnName="id", nullable=false)
      */
     public $lugar = null;
 
@@ -63,7 +64,7 @@ class Evento
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Attributes({"type":"date"})
      * @Annotation\Options({"label":"fecha", "description":"", "addon":""})
-     * @ORM\Column(type="date", unique=false, nullable=true, name="fecha")
+     * @ORM\Column(type="date", unique=false, nullable=false, name="fecha")
      */
     public $fecha = null;
 
@@ -71,7 +72,7 @@ class Evento
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"hora", "description":"", "addon":""})
-     * @ORM\Column(type="string", length=2, unique=false, nullable=true, name="hora")
+     * @ORM\Column(type="string", length=2, unique=false, nullable=false, name="hora")
      */
     public $hora = null;
 
@@ -97,11 +98,21 @@ class Evento
     /**
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({"label":"contacto","empty_option": "",
-     * "target_class":"\Eventos\Entity\Contacto", "description":""})
+     * "target_class":"\Eventos\Entity\Contacto", "description":"Si el contacto aun no
+     * existe, dejarlo vacío y enviar el link de confirmación"})
      * @ORM\ManyToOne(targetEntity="\Eventos\Entity\Contacto")
      * @ORM\JoinColumn(name="contacto_id", referencedColumnName="id", nullable=true)
      */
     public $contacto = null;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"clave", "description":"Campo Opcional. Sirve para
+     * validar el contacto propietario del evento.", "addon":""})
+     * @ORM\Column(type="string", length=4, unique=false, nullable=true, name="clave")
+     */
+    public $clave = null;
 
     public function getId()
     {
@@ -191,6 +202,16 @@ class Evento
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
+    }
+
+    public function getClave()
+    {
+        return $this->clave;
+    }
+
+    public function setClave($clave)
+    {
+        $this->clave = $clave;
     }
 
     public function __toString()

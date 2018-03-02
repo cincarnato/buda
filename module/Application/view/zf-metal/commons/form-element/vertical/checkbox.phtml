@@ -17,14 +17,14 @@ if (preg_match("/form-control/", $class)) {
 
 
     <?php if ($element->getOption('description')): ?>
-        <p class="help-block"><?php echo $this->element->getOption('description') ?></p>
+        <p class="bmd-help"><?php echo $this->element->getOption('description') ?></p>
     <?php endif; ?>
 
     <?php if ($this->formElementErrors($this->element)) : ?>
         <?php
         echo $this->formElementErrors()
-                ->setMessageOpenFormat('<span class="help-block">')
-                ->setMessageSeparatorString('</span><span class="help-block">')
+                ->setMessageOpenFormat('<span class="bmd-help">')
+                ->setMessageSeparatorString('</span><span class="bmd-help">')
                 ->setMessageCloseString('</span>')
                 ->render($this->element);
         ?>

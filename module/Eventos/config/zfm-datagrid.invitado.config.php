@@ -4,6 +4,9 @@ return [
     'zf-metal-datagrid.custom' => [
         'eventos-entity-invitado' => [
             'gridId' => 'zfmdg_Invitado',
+            'title' => "Invitados",
+            'title_add' => "Creando Invitado",
+            'title_edit' => "Editando Invitado",
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [

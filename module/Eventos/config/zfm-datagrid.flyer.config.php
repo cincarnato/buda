@@ -4,6 +4,9 @@ return [
     'zf-metal-datagrid.custom' => [
         'eventos-entity-flyer' => [
             'gridId' => 'zfmdg_Flyer',
+            'title' => "Flyers",
+            'title_add' => "Creando Flyer",
+            'title_edit' => "Editando Flyer",
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [

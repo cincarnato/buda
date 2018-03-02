@@ -4,6 +4,9 @@ return [
     'zf-metal-datagrid.custom' => [
         'eventos-entity-fotos' => [
             'gridId' => 'zfmdg_Fotos',
+            'title' => "Fotos",
+            'title_add' => "Creando Foto",
+            'title_edit' => "Editando Foto",
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [

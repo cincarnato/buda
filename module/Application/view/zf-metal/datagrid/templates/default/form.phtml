@@ -4,7 +4,7 @@
 
             <div class="card">
                 <div class="card-body">
-
+                    <h3><?php echo $this->grid->get_title_form(); ?></h3>
                     <?php
                     $form = $this->grid->getCrudForm();
                     $form->setAttribute('onsubmit', "submit.disabled=true; return true;");

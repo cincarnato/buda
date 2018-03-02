@@ -4,6 +4,9 @@ return [
     'zf-metal-datagrid.custom' => [
         'eventos-entity-detalleevento' => [
             'gridId' => 'zfmdg_DetalleEvento',
+            'title' => "Detalle de Eventos",
+            'title_add' => "Creando Detalle de Evento",
+            'title_edit' => "Editando Detalle de  Evento",
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [

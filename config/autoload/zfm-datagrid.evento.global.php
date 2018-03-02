@@ -2,15 +2,15 @@
 
 return [
     'zf-metal-datagrid.custom' => [
-        'eventos-entity-lugar' => [
-            'gridId' => 'zfmdg_Lugar',
-            'title' => "Lugares",
-            'title_add' => "Creando Lugar",
-            'title_edit' => "Editando Lugar",
+        'eventos-entity-evento' => [
+            'gridId' => 'zfmdg_Evento',
+            'title' => "Eventos",
+            'title_add' => "Creando Evento",
+            'title_edit' => "Editando Evento",
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [
-                    'entityName' => \Eventos\Entity\Lugar::class,
+                    'entityName' => \Eventos\Entity\Evento::class,
                     'entityManager' => 'doctrine.entitymanager.orm_default',
                 ],
             ],
@@ -18,12 +18,47 @@ return [
                 'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
                 'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
                 'groups' => [
+                    [
+                        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
+                        'id' => 'Grupo',
+                        'title' => "",
+                        'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
+                        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                        'fields' => ['nombre','clave','lugar','flyer']
+                    ],
+                    [
+                        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
+                        'id' => 'Grupo',
+                        'title' => "",
+                        'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
+                        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                        'fields' => ['fecha','detalleEvento','hora','minutos']
+                    ],
                     
                 ],
             ],
             'columnsConfig' => [
                 'id' => [
                     'displayName' => 'ID',
+                ],
+                'contacto' => [
+                    'type' => 'relational',
+                ],
+                'lugar' => [
+                    'type' => 'relational',
+                ],
+                'flyer' => [
+                    'type' => 'relational',
+                ],
+                'fecha' => [
+                    'type' => 'date',
+                    'format' => 'Y-m-d',
+                ],
+                'flyer' => [
+                    'hidden' => true,
+                ],
+                'detalleEvento' => [
+                    'hidden' => true,
                 ],
             ],
             'crudConfig' => [

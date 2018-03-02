@@ -4,6 +4,9 @@ return [
     'zf-metal-datagrid.custom' => [
         'eventos-entity-contacto' => [
             'gridId' => 'zfmdg_Contacto',
+            'title' => "Contactos",
+            'title_add' => "Creando Contacto",
+            'title_edit' => "Editando Contacto",
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [
