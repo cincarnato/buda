@@ -53,7 +53,7 @@ class MainController extends AbstractActionController
 
             $helper = $this->getFu()->getRedirectLoginHelper();
             $permisos = ['email', 'user_birthday'];
-            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre() ], ['force_canonical' => true]);
+            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre()], ['force_canonical' => true]);
             $loginUrl = $helper->getLoginUrl($url, $permisos);
             $this->redirect()->toUrl($loginUrl);
         }
@@ -61,18 +61,7 @@ class MainController extends AbstractActionController
         $facebookUserData = $this->getStorage()->read();
 
         if ($facebookUserData) {
-            echo "<pre>";
-            var_dump($facebookUserData->getId());
-            var_dump($facebookUserData->getEmail());
-            var_dump($facebookUserData->getFirstName());
-            var_dump($facebookUserData->getLastName());
-            var_dump($facebookUserData->getName());
-            var_dump($facebookUserData->getBirthday());
-            var_dump($facebookUserData->getLocation());
-            var_dump($facebookUserData->getLink());
-            var_dump($facebookUserData->getGender());
-            var_dump($facebookUserData->getPicture());
-            echo "</pre>";
+          //  $this->showUserData($facebookUserData);
 
         }
 
@@ -91,17 +80,17 @@ class MainController extends AbstractActionController
     {
         $contacto = $this->getContactoRepository()->findOneByEmail($facebookUserData->getEmail());
 
-                if (!$contacto) {
-                    $contacto = new Contacto();
-                }
+        if (!$contacto) {
+            $contacto = new Contacto();
+        }
 
-                $contacto->setNombre($facebookUserData->getName());
-                $contacto->setEmail($facebookUserData->getEmail());
+        $contacto->setNombre($facebookUserData->getName());
+        $contacto->setEmail($facebookUserData->getEmail());
 
-                $this->getEm()->persist($contacto);
-                $this->getEm()->flush();
+        $this->getEm()->persist($contacto);
+        $this->getEm()->flush();
 
-                return $contacto;
+        return $contacto;
     }
 
     public function facebookCallbackAction()
@@ -197,6 +186,21 @@ class MainController extends AbstractActionController
     }
 
 
+    protected function showUserData($facebookUserData)
+    {
+        echo "<pre>";
+        var_dump($facebookUserData->getId());
+        var_dump($facebookUserData->getEmail());
+        var_dump($facebookUserData->getFirstName());
+        var_dump($facebookUserData->getLastName());
+        var_dump($facebookUserData->getName());
+        var_dump($facebookUserData->getBirthday());
+        var_dump($facebookUserData->getLocation());
+        var_dump($facebookUserData->getLink());
+        var_dump($facebookUserData->getGender());
+        var_dump($facebookUserData->getPicture());
+        echo "</pre>";
+    }
 
 
 }
