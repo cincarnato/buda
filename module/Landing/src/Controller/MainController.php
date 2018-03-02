@@ -48,20 +48,24 @@ class MainController extends AbstractActionController
         }
 
         if ($this->getRequest()->isPost()) {
-
+            $data = $this->getRequest()->getPost();
             //Validar Clave
+            if ($data == $evento->getClave()) {
 
-            $helper = $this->getFu()->getRedirectLoginHelper();
-            $permisos = ['email', 'user_birthday'];
-            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre()], ['force_canonical' => true]);
-            $loginUrl = $helper->getLoginUrl($url, $permisos);
-            $this->redirect()->toUrl($loginUrl);
+                $helper = $this->getFu()->getRedirectLoginHelper();
+                $permisos = ['email', 'user_birthday'];
+                $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre()], ['force_canonical' => true]);
+                $loginUrl = $helper->getLoginUrl($url, $permisos);
+                $this->redirect()->toUrl($loginUrl);
+            } else {
+                $this->flashMessenger()->addErrorMessage('Clave incorrecta');
+            }
         }
 
         $facebookUserData = $this->getStorage()->read();
 
         if ($facebookUserData) {
-          //  $this->showUserData($facebookUserData);
+            //  $this->showUserData($facebookUserData);
 
         }
 
