@@ -59,11 +59,6 @@ class MainController extends AbstractActionController
             }
         }
 
-        if ($evento) {
-            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
-            $state = '&name=' . $evento->getNombre();
-            var_dump($url);
-        }
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
@@ -76,7 +71,7 @@ class MainController extends AbstractActionController
                 $loginUrl = $helper->getLoginUrl($url, $permisos);
                 $state = $helper->getPersistentDataHandler()->get('state');
                 $this->getStateStorage($state)->write($eventoParam);
-                $this->redirect()->toUrl($loginUrl . $state);
+                $this->redirect()->toUrl($loginUrl);
             } else {
                 $this->flashMessenger()->addErrorMessage('Clave incorrecta');
             }
