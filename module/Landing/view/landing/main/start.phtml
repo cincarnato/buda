@@ -33,14 +33,19 @@
 
                             <?php else: ?>
                                 <h3 class="title">Propietario sin confirmar</h3>
-                                <p>El propietario de este evento aun no fue confirmado. Si usted es el propietario, por favor confirme el evento ingresando la clave de seguridad e iniciando sesión con facebook</p>
-                            <?php endif; ?>
+                           <?php endif; ?>
                             <?php $this->flashCurrent(); ?>
                             <form method="post">
-                                <div class="form-group bmd-form-group">
-                                    <label class="control-label bmd-label-static">Clave</label>
-                                    <input type="text" name="clave" class=" form-control" value="">
-                                </div>
+
+                                <?php if($this->evento->getClave() && !$evento->getContacto()): ?>
+                                    <p>El propietario de este evento aun no fue confirmado. Si usted es el propietario, por favor confirme el evento ingresando la clave de seguridad e iniciando sesión con facebook</p>
+
+                                    <div class="form-group bmd-form-group">
+                                        <label class="control-label bmd-label-static">Clave</label>
+                                        <input type="text" name="clave" class=" form-control" value="">
+                                    </div>
+                                <?php endif; ?>
+
                                 <button class="btn btn-social btn-fill btn-facebook">
                                     <i class="fa fa-facebook"> </i> Confirmar
                                     <div class="ripple-container"></div>
