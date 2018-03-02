@@ -48,7 +48,8 @@ class MainController extends AbstractActionController
         }
 
         if($evento) {
-            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre()], ['force_canonical' => true]);
+            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
+            $url .='?evento='.$evento->getNombre();
             var_dump($url);
         }
 
@@ -59,7 +60,6 @@ class MainController extends AbstractActionController
 
                 $helper = $this->getFu()->getRedirectLoginHelper();
                 $permisos = ['email', 'user_birthday'];
-                $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre()], ['force_canonical' => true]);
                 $loginUrl = $helper->getLoginUrl($url, $permisos);
                 $this->redirect()->toUrl($loginUrl);
             } else {
@@ -127,7 +127,8 @@ class MainController extends AbstractActionController
             $this->flashMessenger()->addErrorMessage('No se aceptaron los permisos requeridos.');
         }
 
-        return $this->redirect()->toRoute('HostLanding/start');
+        $name = $this->getRequest()->getQuery("name");
+        return $this->redirect()->toRoute('HostLanding/start',["name" => $name]);
     }
 
     public function facebookLogoutAction()
