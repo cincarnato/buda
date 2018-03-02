@@ -59,7 +59,6 @@ class MainController extends AbstractActionController
             }
         }
 
-
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             //Validar Clave
@@ -68,6 +67,7 @@ class MainController extends AbstractActionController
                 /** @var  $helper FacebookRedirectLoginHelper */
                 $helper = $this->getFu()->getRedirectLoginHelper();
                 $permisos = ['email', 'user_birthday'];
+                $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
                 $loginUrl = $helper->getLoginUrl($url, $permisos);
                 $state = $helper->getPersistentDataHandler()->get('state');
                 $this->getStateStorage($state)->write($eventoParam);
