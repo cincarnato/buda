@@ -50,7 +50,7 @@ class MainController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             //Validar Clave
-            if ($data == $evento->getClave()) {
+            if ($data["clave"] == $evento->getClave()) {
 
                 $helper = $this->getFu()->getRedirectLoginHelper();
                 $permisos = ['email', 'user_birthday'];
