@@ -59,7 +59,7 @@ return [
                         'type' => 'Segment',
                         'mayTerminate' => true,
                         'options' => [
-                            'route' => '/facebook-callback',
+                            'route' => '/facebook-callback/:name',
                             'defaults' => [
                                 'controller' => \Landing\Controller\MainController::CLASS,
                                 'action' => 'facebookCallback',

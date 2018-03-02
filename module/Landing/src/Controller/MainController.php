@@ -47,10 +47,10 @@ class MainController extends AbstractActionController
             $evento = $this->getEventoRepository()->findOneByNombre($name);
         }
 
-
-        $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre()], ['force_canonical' => true]);
-        var_dump($url);
-
+        if($evento) {
+            $url = $this->url()->fromRoute('HostLanding/FacebookCallback', ["name" => $evento->getNombre()], ['force_canonical' => true]);
+            var_dump($url);
+        }
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
