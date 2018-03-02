@@ -128,6 +128,7 @@ class MainController extends AbstractActionController
         }
 
         $name = $this->getRequest()->getQuery("name");
+        echo $name; die;
         return $this->redirect()->toRoute('HostLanding/start',["name" => $name]);
     }
 
