@@ -49,7 +49,7 @@ class MainController extends AbstractActionController
 
         if($evento) {
             $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
-            $state ='&state='.$evento->getNombre();
+            $state ='&name='.$evento->getNombre();
             var_dump($url);
         }
 
@@ -127,7 +127,7 @@ class MainController extends AbstractActionController
             $this->flashMessenger()->addErrorMessage('No se aceptaron los permisos requeridos.');
         }
 
-        $name = $this->getRequest()->getQuery("state");
+        $name = $this->getRequest()->getQuery("name");
         return $this->redirect()->toRoute('HostLanding/start',["name" => $name]);
     }
 
