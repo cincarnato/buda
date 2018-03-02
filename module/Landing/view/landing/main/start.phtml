@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 ml-auto mr-auto">
-                    <?php $this->flashCurrent(); ?>
+
                     <div class="profile">
                         <div class="avatar">
 
@@ -35,7 +35,7 @@
                                 <h3 class="title">Propietario sin confirmar</h3>
                                 <p>El propietario de este evento aun no fue confirmado. Si usted es el propietario, por favor confirme el evento ingresando la clave de seguridad e iniciando sesión con facebook</p>
                             <?php endif; ?>
-
+                            <?php $this->flashCurrent(); ?>
                             <form method="post">
                                 <div class="form-group bmd-form-group">
                                     <label class="control-label bmd-label-static">Clave</label>
