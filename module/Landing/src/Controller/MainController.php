@@ -47,22 +47,14 @@ class MainController extends AbstractActionController
         $id = $this->params("id");
         $name = $this->params("name");
         /** @var $evento \Eventos\Entity\Evento */
-        if ($id) {
-            $evento = $this->getEventoRepository()->find($id);
-            if($evento) {
-                $eventoParam = $id;
-            }
-        } else if ($name) {
+        if ($name) {
             $evento = $this->getEventoRepository()->findOneByNombre($name);
-            if($evento) {
-                $eventoParam = $evento->getNombre;
-            }
         }
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             //Validar Clave
-            if ($data["clave"] == $evento->getClave()) {
+            if ($evento && $data["clave"] == $evento->getClave()) {
 
                 /** @var  $helper FacebookRedirectLoginHelper */
                 $helper = $this->getFu()->getRedirectLoginHelper();
@@ -70,7 +62,8 @@ class MainController extends AbstractActionController
                 $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
                 $loginUrl = $helper->getLoginUrl($url, $permisos);
                 $state = $helper->getPersistentDataHandler()->get('state');
-                $this->getStateStorage($state)->write($eventoParam);
+
+                $this->getStateStorage($state)->write($evento->getNombre());
                 $this->redirect()->toUrl($loginUrl);
             } else {
                 $this->flashMessenger()->addErrorMessage('Clave incorrecta');
@@ -136,7 +129,7 @@ class MainController extends AbstractActionController
         $state = $this->getRequest()->getQuery("state");
         $name = $this->getStateStorage($state)->read();
 
-        return $this->redirect()->toRoute('HostLanding/start', ["name" => $name]);
+        return $this->redirect()->toRoute('HostLanding/start/byname', ["name" => $name], ['force_canonical' => true]);
     }
 
     public function facebookLogoutAction()
