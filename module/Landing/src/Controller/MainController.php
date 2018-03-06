@@ -2,6 +2,8 @@
 
 namespace Landing\Controller;
 
+use Eventos\Entity\Contacto;
+use Eventos\Entity\ContactoConfirmado;
 use Facebook\Helpers\FacebookRedirectLoginHelper;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Authentication\Storage\Session;
@@ -40,11 +42,21 @@ class MainController extends AbstractActionController
      */
     private $stateStorage = null;
 
+    /**
+     * @var \Facebook\GraphNodes\GraphUser
+     */
+    private $facebookUserData = null;
+
+    /**
+     * @var Contacto
+     */
+    private $contacto = null;
+
+
     public function startAction()
     {
         $this->layout()->setTemplate('landing/layout');
 
-        $id = $this->params("id");
         $name = $this->params("name");
         /** @var $evento \Eventos\Entity\Evento */
         if ($name) {
@@ -62,7 +74,6 @@ class MainController extends AbstractActionController
                 $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
                 $loginUrl = $helper->getLoginUrl($url, $permisos);
                 $state = $helper->getPersistentDataHandler()->get('state');
-
                 $this->getStateStorage($state)->write($evento->getNombre());
                 $this->redirect()->toUrl($loginUrl);
             } else {
@@ -70,34 +81,72 @@ class MainController extends AbstractActionController
             }
         }
 
-        $facebookUserData = $this->getUserDataStorage()->read();
-
-        if ($evento && $evento->getContacto() == null && $facebookUserData && $facebookUserData->getEmail()) {
-            $contacto = $this->obtenerContacto($facebookUserData);
-            $evento->setContacto($contacto);
-            $this->getEm()->persist($evento);
-            $this->getEm()->flush();
-
-        }
+        //Owner (Propietario)
+        $this->handleOwner($evento);
+        //Guest (invitado-Contacto confirmado)
+        $this->handleGuest($evento);
 
         return ["evento" => $evento];
     }
 
-    private function obtenerContacto($facebookUserData)
+    private function handleGuest($evento)
     {
-        $contacto = $this->getContactoRepository()->findOneByEmail($facebookUserData->getEmail());
-
-        if (!$contacto) {
-            $contacto = new Contacto();
+        $contacto = $this->obtenerContacto();
+        if ($contacto) {
+            $contactoConfirmado = $this->getContactoRepository()->findOneBy(["contacto" => $contacto, "evento" => $evento]);
+            if (!$contactoConfirmado) {
+                $contactoConfirmado = new ContactoConfirmado();
+                $contactoConfirmado->setContacto($contacto);
+                $contactoConfirmado->setEvento($evento);
+                $this->getEm()->persist($evento);
+                $this->getEm()->flush();
+            }
         }
 
-        $contacto->setNombre($facebookUserData->getName());
-        $contacto->setEmail($facebookUserData->getEmail());
+    }
 
-        $this->getEm()->persist($contacto);
-        $this->getEm()->flush();
+    private function handleOwner($evento)
+    {
+        if ($evento && $evento->getContacto() == null) {
+            $contacto = $this->obtenerContacto();
+            if ($contacto) {
+                $evento->setContacto($contacto);
+                $this->getEm()->persist($evento);
+                $this->getEm()->flush();
+            }
+        }
+    }
 
-        return $contacto;
+    private function getFacebookUserData()
+    {
+        if (!$this->facebookUserData) {
+            $this->facebookUserData = $this->getUserDataStorage()->read();
+        }
+        return $this->facebookUserData;
+    }
+
+    private function obtenerContacto()
+    {
+        if (!$this->contacto) {
+            if ($this->getFacebookUserData()) {
+                $contacto = $this->getContactoRepository()->findOneByEmail($this->getFacebookUserData()->getEmail());
+
+                if (!$contacto) {
+                    $contacto = new Contacto();
+                }
+
+                $contacto->setNombre($this->getFacebookUserData()->getName());
+                $contacto->setEmail($this->getFacebookUserData()->getEmail());
+
+                $this->getEm()->persist($contacto);
+                $this->getEm()->flush();
+                $this->contacto = $contacto;
+                return $this->contacto;
+            }
+        }else{
+            return $this->contacto;
+        }
+        return null;
     }
 
     public function facebookCallbackAction()
@@ -172,6 +221,11 @@ class MainController extends AbstractActionController
     public function getContactoRepository()
     {
         return $this->getEm()->getRepository('\\Eventos\\Entity\\Contacto');
+    }
+
+    public function getContactoConfirmadoRepository()
+    {
+        return $this->getEm()->getRepository('\\Eventos\\Entity\\ContactoConfirmado');
     }
 
     public function __construct(\Doctrine\ORM\EntityManager $em, \Eventos\Service\FacebookUser $fu)

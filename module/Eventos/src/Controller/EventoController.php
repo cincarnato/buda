@@ -61,6 +61,8 @@ class EventoController extends AbstractActionController
 
     public function gridAction()
     {
+        $http = "http://".L_BUDA_URL."/{{nombre}}";
+        $this->grid->addExtraColumn("link","<a target='blank' href='".$http."'>".$http."</a>");
         $this->grid->prepare();
         return array("grid" => $this->grid);
     }
