@@ -16,48 +16,28 @@
                 <div class="col-md-6 ml-auto mr-auto">
 
                     <div class="profile">
-                        <div class="avatar">
+                        <?php echo $this->partial("landing/main/partial/avatar", ["evento" => $evento]); ?>
 
-                            <?php if ($evento && $evento->getContacto()): ?>
-                                <img src="<?php echo $evento->getContacto()->getImgProfile(); ?>" alt="Circle Image"
-                                     class="img-raised rounded-circle img-fluid">
 
-                            <?php else: ?>
-                                <img src="/img/user.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
-
-                            <?php endif; ?>
-                        </div>
                         <div class="name">
                             <?php if ($evento && $evento->getContacto()): ?>
                                 <h3 class="title"><?php echo $evento->getContacto()->getNombreCompleto(); ?></h3>
 
                             <?php else: ?>
                                 <h3 class="title">Propietario sin confirmar</h3>
-                           <?php endif; ?>
-                            <?php $this->flashCurrent(); ?>
-                            <form method="post">
+                            <?php endif; ?>
 
-                                <?php if($evento && $this->evento->getClave() && !$evento->getContacto()): ?>
-                                    <p>El propietario de este evento aun no fue confirmado. Si usted es el propietario, por favor confirme el evento ingresando la clave de seguridad e iniciando sesión con facebook</p>
-
-                                    <div class="form-group bmd-form-group">
-                                        <label class="control-label bmd-label-static">Clave</label>
-                                        <input type="text" name="clave" class=" form-control" value="">
-                                    </div>
-                                <?php endif; ?>
-
-                                <button class="btn btn-social btn-fill btn-facebook">
-                                    <i class="fa fa-facebook"> </i> Confirmar
-                                    <div class="ripple-container"></div>
-                                </button>
-                            </form>
 
                             <?php if ($evento && $evento->getFecha()): ?>
-                                <h6><?php echo $evento->getFecha()->format("Y-m-d   "); ?></h6>
+                                <h5>Fecha del evento: <?php echo $evento->getFecha()->format("d-m-Y"); ?></h5>
                             <?php else: ?>
                                 <h6>Fecha: A confirmar!</h6>
                             <?php endif; ?>
-                            <h6></h6>
+
+                            <?php echo $this->partial("landing/main/partial/form", ["evento" => $evento]); ?>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -65,39 +45,16 @@
 
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-
-
-                    <?php if ($evento && $evento->getLugar()): ?>
-                        <h4 class="title"><?php echo $evento->getLugar(); ?></h4>
-
-                        <h5>  Dirección: <?php echo $evento->getLugar()->getDireccion(); ?></h5>
-                        <?php if ($evento->getLugar()->getFotos()): ?>
-
-                            <div class="row">
-                                <?php foreach ($evento->getLugar()->getFotos() as $foto): ?>
-                                    <div class="col-md-6 col-xs-12 pb-3">
-                                        <img src="<?php echo $foto->getImagen_fp(); ?>" class="rounded img-fluid">
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-
-                        <?php endif; ?>
-
-                    <?php endif; ?>
-
+                    <?php echo $this->partial("landing/main/partial/lugar", ["evento" => $evento]); ?>
+                    <?php echo $this->partial("landing/main/partial/detalle", ["evento" => $evento]); ?>
 
                 </div>
 
                 <div class="col-md-6 col-xs-12">
-                    <div>
+                    <?php echo $this->partial("landing/main/partial/confirmados", ["evento" => $evento]); ?>
 
-                        <?php if ($evento && $evento->getDetalleEvento()): ?>
-                            <?php echo nl2br($evento->getDetalleEvento()->getDetalle()); ?>
-                        <?php else: ?>
-                            <p>Detalle del evento</p>
-                        <?php endif; ?>
-                    </div>
                 </div>
+
             </div>
 
             <br><br><br><br><br>

@@ -93,12 +93,12 @@ class MainController extends AbstractActionController
     {
         $contacto = $this->obtenerContacto();
         if ($contacto) {
-            $contactoConfirmado = $this->getContactoRepository()->findOneBy(["contacto" => $contacto, "evento" => $evento]);
+            $contactoConfirmado = $this->getContactoConfirmadoRepository()->findOneBy(["contacto" => $contacto, "evento" => $evento]);
             if (!$contactoConfirmado) {
                 $contactoConfirmado = new ContactoConfirmado();
                 $contactoConfirmado->setContacto($contacto);
                 $contactoConfirmado->setEvento($evento);
-                $this->getEm()->persist($evento);
+                $this->getEm()->persist($contactoConfirmado);
                 $this->getEm()->flush();
             }
         }
@@ -135,8 +135,18 @@ class MainController extends AbstractActionController
                     $contacto = new Contacto();
                 }
 
-                $contacto->setNombre($this->getFacebookUserData()->getName());
+                $contacto->setNombreCompleto($this->getFacebookUserData()->getName());
                 $contacto->setEmail($this->getFacebookUserData()->getEmail());
+                $contacto->setFacebookId($this->getFacebookUserData()->getId());
+                $contacto->setFacebookUrl($this->getFacebookUserData()->getLink());
+                $contacto->setNombre($this->getFacebookUserData()->getFirstName());
+                $contacto->setApellido($this->getFacebookUserData()->getLastName());
+
+                $birthday = $this->getFacebookUserData()->getBirthday();
+                if (is_a($birthday, "date") || is_a($birthday, "DateTime")){
+
+                $contacto->setNacimiento($birthday);
+                }
 
                 $this->getEm()->persist($contacto);
                 $this->getEm()->flush();
@@ -167,7 +177,7 @@ class MainController extends AbstractActionController
 
         if ($accessToken) {
             $this->getFu()->getFb()->setDefaultAccessToken((string)$accessToken);
-            $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,first_name,last_name,birthday', $accessToken)->getGraphUser();
+            $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,picture,first_name,last_name,birthday', $accessToken)->getGraphUser();
             $this->getUserDataStorage()->write($facebookUserData);
 
         } else {

@@ -28,14 +28,12 @@ return [
                 'lugar' => [
                     'type' => 'relational',
                 ],
-                'flyer' => [
-                    'type' => 'relational',
-                ],
                 'fecha' => [
                     'type' => 'date',
                     'format' => 'Y-m-d',
                 ],
                 'flyer' => [
+                    'type' => 'relational',
                     'hidden' => true,
                 ],
                 'detalleEvento' => [

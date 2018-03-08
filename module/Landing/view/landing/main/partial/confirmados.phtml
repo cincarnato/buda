@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h4 class="title">Invitados</h4>
+
+        <table class="table">
+            <?php if($evento && count($evento->getInvitados())): ?>
+                <?php foreach ($evento->getInvitados() as $invitado): ?>
+                    <tr>
+                        <td><?php echo $invitado->getNombre(); ?></td>
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php else: ?>
+                Lista Vacia.
+            <?php endif; ?>
+
+
+        </table>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h4 class="title">Confirmados</h4>
+        <table class="table">
+            <?php if($evento && count($evento->getConfirmados())): ?>
+                <?php foreach ($evento->getConfirmados() as $confirmado): ?>
+                    <tr>
+                        <td><img class="img-raised img-fluid" src="<?php echo $confirmado->getContacto()->getImgProfile(); ?>"/></td>
+                        <td><?php echo $confirmado->getContacto()->getNombre(); ?></td>
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php else: ?>
+                Lista Vacia...
+            <?php endif; ?>
+
+        </table>
+    </div>
+</div>

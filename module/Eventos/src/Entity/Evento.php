@@ -114,6 +114,19 @@ class Evento
      */
     public $clave = null;
 
+    /**
+     * @Annotation\Exclude()
+     * @ORM\OneToMany(targetEntity="\Eventos\Entity\ContactoConfirmado",
+     * mappedBy="evento")
+     */
+    public $confirmados = null;
+
+    /**
+     * @Annotation\Exclude()
+     * @ORM\OneToMany(targetEntity="\Eventos\Entity\Invitado", mappedBy="evento")
+     */
+    public $invitados = null;
+
     public function getId()
     {
         return $this->id;
@@ -212,6 +225,26 @@ class Evento
     public function setClave($clave)
     {
         $this->clave = $clave;
+    }
+
+    public function getConfirmados()
+    {
+        return $this->confirmados;
+    }
+
+    public function setConfirmados($confirmados)
+    {
+        $this->confirmados = $confirmados;
+    }
+
+    public function getInvitados()
+    {
+        return $this->invitados;
+    }
+
+    public function setInvitados($invitados)
+    {
+        $this->invitados = $invitados;
     }
 
     public function __toString()

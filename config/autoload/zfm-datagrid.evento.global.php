@@ -47,9 +47,6 @@ return [
                 'lugar' => [
                     'type' => 'relational',
                 ],
-                'flyer' => [
-                    'type' => 'relational',
-                ],
                 'fecha' => [
                     'type' => 'date',
                     'format' => 'Y-m-d',
@@ -60,9 +57,16 @@ return [
                 'detalleEvento' => [
                     'hidden' => true,
                 ],
+                'confirmados' => [
+                    'hidden' => true,
+                ],
+                'invitados' => [
+                    'hidden' => true,
+                ],
             ],
             'crudConfig' => [
                 'enable' => true,
+                'side' => "left",
                 'add' => [
                     'enable' => true,
                     'class' => 'material-icons text-primary cursor-pointer',

@@ -1,0 +1,17 @@
+<?php if ($evento && $evento->getLugar()): ?>
+    <h4 class="title"><?php echo $evento->getLugar(); ?></h4>
+
+    <h5>  Dirección: <?php echo $evento->getLugar()->getDireccion(); ?></h5>
+    <?php if ($evento->getLugar()->getFotos()): ?>
+
+        <div class="row">
+            <?php foreach ($evento->getLugar()->getFotos() as $foto): ?>
+                <div class="col-md-6 col-xs-12 pb-3">
+                    <img src="<?php echo $foto->getImagen_fp(); ?>" class="rounded img-fluid">
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+    <?php endif; ?>
+
+<?php endif; ?>
