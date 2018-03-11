@@ -51,11 +51,16 @@
                 </div>
 
                 <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <?php echo $this->partial("landing/main/partial/invitados", ["evento" => $evento]); ?>
                     <?php echo $this->partial("landing/main/partial/confirmados", ["evento" => $evento]); ?>
-
+                    </div>
                 </div>
 
             </div>
+
+            <?php echo $this->partial("landing/main/partial/consultas", ["evento" => $evento,"formConsulta" => $formConsulta]); ?>
+
 
             <br><br><br><br><br>
 

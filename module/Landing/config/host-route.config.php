@@ -38,22 +38,24 @@ return [
                                     ],
                                 ],
                                 'may_terminate' => true,
+                            ]
+
+                        ],
+                    ],
+                    'addinvitado' => [
+                        'type' => 'Zend\Router\Http\Segment',
+                        'options' => [
+                            'route' => '/addinvitado/:id',
+                            'constraints' => [
+                                'id' => '[0-9]+',
                             ],
-                            'byid' => [
-                                'type' => 'Zend\Router\Http\Segment',
-                                'options' => [
-                                    'route' => ':id',
-                                    'constraints' => [
-                                        'id' => '[0-9]+',
-                                    ],
-                                    'defaults' => [
-                                        'controller' => \Landing\Controller\MainController::CLASS,
-                                        'action' => 'start',
-                                    ],
-                                ],
-                                'may_terminate' => true,
+                            'defaults' => [
+                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'action' => 'add-invitado',
                             ],
                         ],
+                        'may_terminate' => true,
+
                     ],
                     'FacebookCallback' => [
                         'type' => 'Segment',

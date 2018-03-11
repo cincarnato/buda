@@ -2,11 +2,15 @@
 
 namespace Landing\Controller;
 
+use Eventos\Entity\Consulta;
 use Eventos\Entity\Contacto;
 use Eventos\Entity\ContactoConfirmado;
+use Eventos\Entity\Evento;
+use Eventos\Entity\Invitado;
 use Facebook\Helpers\FacebookRedirectLoginHelper;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Authentication\Storage\Session;
+use Zend\View\Model\JsonModel;
 
 /**
  * MainController
@@ -52,16 +56,95 @@ class MainController extends AbstractActionController
      */
     private $contacto = null;
 
+    /**
+     * @var Evento
+     */
+    private $evento = null;
+
+
+    private function getFormConsulta()
+    {
+        $form = $this->formBuilder($this->getEm(), '\\Eventos\\Entity\\Consulta');
+        $form->get("evento")->setValue($this->getEvento()->getId());
+        $form->get("submitbtn")->setValue("Enviar");
+        return $form;
+    }
+
+    public function getEvento()
+    {
+        if (!$this->evento) {
+            $id = $this->params("id");
+            /** @var $evento \Eventos\Entity\Evento */
+            if ($id) {
+                $this->evento = $this->getEventoRepository()->find($id);
+
+            } else {
+
+                $name = $this->params("name");
+                /** @var $evento \Eventos\Entity\Evento */
+                if ($name) {
+                    $this->evento = $this->getEventoRepository()->findOneByNombre($name);
+
+                }
+            }
+
+        }
+        return $this->evento;
+    }
+
+    private function verificarPropietarioEvento()
+    {
+        if ($this->obtenerContacto() && $this->getEvento() && $this->getEvento()->getContacto()) {
+            if ($this->obtenerContacto()->getId() == $this->getEvento()->getContacto()->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function addInvitadoAction()
+    {
+        $result["status"] = false;
+        $result["evento"] = $this->getEvento()->getNombre();
+        $result["contacto"] = $this->obtenerContacto()->getNombre();
+
+        if ($this->verificarPropietarioEvento()) {
+
+            $form = $this->formBuilder($this->getEm(), Invitado::class);
+
+            if ($this->getRequest()->isPost()) {
+                $data = $this->getRequest()->getPost();
+                $form->setData($data);
+                if ($form->isValid($data)) {
+                    $invitado = new Invitado();
+                    $invitado->setNombre($data["nombre"]);
+                    $invitado->setCelular($data["celular"]);
+                    $invitado->setEmail($data["email"]);
+                    $invitado->setEvento($this->getEvento());
+
+                    $this->getEm()->persist($invitado);
+                    $this->getEm()->flush();
+                    $result["status"] = true;
+
+                }
+            }
+
+        } else {
+            //throw new \Exception("Propietario no valido...");
+            $result["message"] = "Propietario no valido";
+        }
+
+        return new JsonModel($result);
+
+    }
+
 
     public function startAction()
     {
         $this->layout()->setTemplate('landing/layout');
 
-        $name = $this->params("name");
-        /** @var $evento \Eventos\Entity\Evento */
-        if ($name) {
-            $evento = $this->getEventoRepository()->findOneByNombre($name);
-        }
+        $evento = $this->getEvento();
+
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
@@ -86,7 +169,7 @@ class MainController extends AbstractActionController
         //Guest (invitado-Contacto confirmado)
         $this->handleGuest($evento);
 
-        return ["evento" => $evento];
+        return ["evento" => $evento, "formConsulta" => $this->getFormConsulta()];
     }
 
     private function handleGuest($evento)
@@ -125,6 +208,9 @@ class MainController extends AbstractActionController
         return $this->facebookUserData;
     }
 
+    /**
+     * @return Contacto|null
+     */
     private function obtenerContacto()
     {
         if (!$this->contacto) {
@@ -143,9 +229,9 @@ class MainController extends AbstractActionController
                 $contacto->setApellido($this->getFacebookUserData()->getLastName());
 
                 $birthday = $this->getFacebookUserData()->getBirthday();
-                if (is_a($birthday, "date") || is_a($birthday, "DateTime")){
+                if (is_a($birthday, "date") || is_a($birthday, "DateTime")) {
 
-                $contacto->setNacimiento($birthday);
+                    $contacto->setNacimiento($birthday);
                 }
 
                 $this->getEm()->persist($contacto);
@@ -153,7 +239,7 @@ class MainController extends AbstractActionController
                 $this->contacto = $contacto;
                 return $this->contacto;
             }
-        }else{
+        } else {
             return $this->contacto;
         }
         return null;
@@ -272,7 +358,7 @@ class MainController extends AbstractActionController
     }
 
 
-    protected function showUserData($facebookUserData)
+    private function showUserData($facebookUserData)
     {
         $facebookUserData = $this->getUserDataStorage()->read();
         echo "<pre>";
