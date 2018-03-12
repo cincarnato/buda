@@ -42,6 +42,18 @@ return [
 
                         ],
                     ],
+                    'consulta' => [
+                        'type' => 'Zend\Router\Http\Literal',
+                        'options' => [
+                            'route' => '/consulta',
+                            'defaults' => [
+                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'action' => 'consulta',
+                            ],
+                        ],
+                        'may_terminate' => true,
+
+                    ],
                     'addinvitado' => [
                         'type' => 'Zend\Router\Http\Segment',
                         'options' => [

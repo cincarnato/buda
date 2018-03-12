@@ -61,6 +61,33 @@ class MainController extends AbstractActionController
      */
     private $evento = null;
 
+    public function consultaAction()
+    {
+        $form = $this->getFormConsulta();
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $form->setData($this->getRequest()->getPost());
+
+            if ($form->isValid()) {
+                $consulta = new Consulta();
+                $consulta->setNombre($data["nombre"]);
+                $consulta->setEmail($data["email"]);
+                $consulta->setMensaje($data["mensaje"]);
+                $evento = $this->getEventoRepository()->find($data["evento"]);
+                $consulta->setEvento($evento);
+
+
+                $this->getEm()->persist($consulta);
+                $this->getEm()->flush();
+                $result["status"] = true;
+            } else {
+                $result["status"] = false;
+
+            }
+        }
+        return new JsonModel($result);
+    }
 
     public function addInvitadoAction()
     {
@@ -165,7 +192,7 @@ class MainController extends AbstractActionController
 
     private function getFormConsulta()
     {
-        $form = $this->formBuilder($this->getEm(), '\\Eventos\\Entity\\Consulta');
+        $form = $this->formBuilder($this->getEm(), 'Eventos\Entity\Consulta',true,true);
         if ($this->getEvento()) {
             $form->get("evento")->setValue($this->getEvento()->getId());
         }
