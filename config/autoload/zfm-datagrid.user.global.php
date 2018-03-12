@@ -72,6 +72,10 @@ return [
                     'btn_tag' => 'button',
                 ],
             ],
+            "multi_search_config" => [
+                "enable" => true,
+                "properties_enabled" => ['id','username','email']
+            ],
             'multi_filter_config' => [
                 "enable" => false,
                 "properties_disabled" => []

@@ -47,8 +47,8 @@ return [
                         'options' => [
                             'route' => '/consulta',
                             'defaults' => [
-                                'controller' => \Landing\Controller\MainController::CLASS,
-                                'action' => 'consulta',
+                                'controller' => \Landing\Controller\ConsultaController::CLASS,
+                                'action' => 'register',
                             ],
                         ],
                         'may_terminate' => true,
@@ -62,7 +62,7 @@ return [
                                 'id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'controller' => \Landing\Controller\InvitadosController::CLASS,
                                 'action' => 'add-invitado',
                             ],
                         ],
@@ -77,7 +77,7 @@ return [
                                 'id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'controller' => \Landing\Controller\InvitadosController::CLASS,
                                 'action' => 'del-invitado',
                             ],
                         ],

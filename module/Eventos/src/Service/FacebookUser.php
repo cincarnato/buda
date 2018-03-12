@@ -2,6 +2,9 @@
 
 namespace Eventos\Service;
 
+use Zend\Authentication\Storage\Session;
+
+
 class FacebookUser
 {
     /**
@@ -16,6 +19,20 @@ class FacebookUser
     private $facebookDefaultGraphVersion = '';
 
     private $facebookDefaultAccessToken = '';
+
+
+    /**
+     * @var \Facebook\GraphNodes\GraphUser
+     */
+    private $facebookUserData = null;
+
+
+    /**
+     * @var \Zend\Authentication\Storage\Session
+     */
+    private $facebookUserDataStorage = null;
+
+    private $accessToken = null;
 
     /**
      * FacebookUser constructor.
@@ -40,6 +57,36 @@ class FacebookUser
             'app_secret' => $this->facebookAppSecret,
             'default_graph_version' => $this->facebookDefaultGraphVersion,
         ]);
+    }
+
+    public function requestData(){
+        $status = false;
+        if ($this->accessToken) {
+            $facebookUserData = $this->getFb()->get('/me?locale=en_US&fields=id,name,email,picture,first_name,last_name,birthday', $this->accessToken)->getGraphUser();
+            $this->getFacebookUserDataStorage()->write($facebookUserData);
+            $status = true;
+        }
+        return $status;
+    }
+
+    public function requestToken(){
+        $status = false;
+        try {
+            $this->accessToken = $this->getRedirectLoginHelper()->getAccessToken();
+        } catch (\Facebook\Exceptions\FacebookResponseException $e) {
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+        }
+
+        if ($this->accessToken) {
+            $this->getFb()->setDefaultAccessToken((string)$this->accessToken);
+            $status = true;
+        }
+
+        return $status;
     }
 
     public function getRedirectLoginHelper(){
@@ -126,6 +173,26 @@ class FacebookUser
         $this->fb = $fb;
     }
 
+
+    /**
+     * @return Session
+     */
+    public function getFacebookUserDataStorage()
+    {
+        if (!$this->facebookUserDataStorage) {
+            $this->facebookUserDataStorage = new Session('FacebookUserData');
+        }
+        return $this->facebookUserDataStorage;
+    }
+
+
+    public function getFacebookUserData()
+    {
+        if (!$this->facebookUserData) {
+            $this->facebookUserData = $this->getfacebookUserDataStorage()->read();
+        }
+        return $this->facebookUserData;
+    }
 
 
 

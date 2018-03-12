@@ -10,3 +10,4 @@ composer.lock
 public/media/*
 config/constants.php
 config/autoload/options-eventos.global.php
+config/google/client_credentials.json

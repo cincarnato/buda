@@ -14,6 +14,10 @@ return [
                     'entityManager' => 'doctrine.entitymanager.orm_default',
                 ],
             ],
+            "multi_search_config" => [
+                "enable" => true,
+                "properties_enabled" => ['id','nombre']
+            ],
             'formConfig' => [
                 'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
                 'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,

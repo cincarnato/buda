@@ -19,6 +19,10 @@ class GoogleUser
      */
     private $accessTokenStorage = null;
 
+    /**
+     * @var \Zend\Authentication\Storage\Session
+     */
+    private $googleUserDataStorage = null;
 
 
     /**
@@ -35,30 +39,39 @@ class GoogleUser
     {
         $this->gc = new \Google_Client();
         $this->gc->setAuthConfig($this->pathClientCredentials);
-        $this->gc->addScope(\Google_Service_Drive::DRIVE);
+        //$this->gc->addScope(['userinfo.email','profile','plus.me','plus.login']);
+        $this->gc->addScope([\Google_Service_Oauth2::USERINFO_EMAIL,\Google_Service_Oauth2::USERINFO_PROFILE]);
         $this->gc->setRedirectUri($this->getRedirectUrl());
     }
 
-    private function getRedirectUrl(){
-        return "http://".E_BUDA_URL.CALLBACK_PATH;
+    private function getRedirectUrl()
+    {
+        return "http://" . L_BUDA_URL . self::CALLBACK_PATH;
     }
 
-    public function fetchAccessTokenWithAuthCode($code){
+    public function fetchAccessTokenWithAuthCode($code)
+    {
         return $this->gc->fetchAccessTokenWithAuthCode($code);
     }
 
-    public function getAccessToken(){
-        if($this->getAccessTokenStorage()->read()){
-            $this->getAccessTokenStorage()->write($this->gc->getAccessToken());
-        }
-
-        return $this->accessTokenStorage->read();
+    public function requestAccessToken()
+    {
+        $at = $this->gc->getAccessToken();
+        $this->getAccessTokenStorage()->write($at);
+        return $at;
     }
 
-    public function getData(){
-        $drive = new \Google_Service_Drive($this->gc);
-        $files = $drive->files->listFiles(array())->getItems();
-        return json_encode($files);
+    public function getAccessToken()
+    {
+        return $this->getAccessTokenStorage()->read();
+    }
+
+    public function requestData()
+    {
+        $oauth2 = new \Google_Service_Oauth2($this->gc);
+        $data = $oauth2->userinfo->get();
+        $this->getGoogleUserDataStorage($data);
+        return $data;
     }
 
     /**
@@ -82,18 +95,30 @@ class GoogleUser
      */
     public function getAccessTokenStorage()
     {
-        if(!$this->accessTokenStorage){
+        if (!$this->accessTokenStorage) {
             $this->accessTokenStorage = new \Zend\Authentication\Storage\Session('googleAccessToken');
         }
         return $this->accessTokenStorage;
     }
 
+    public function clearToken(){
+        $this->getAccessTokenStorage()->clear();
+    }
 
+    public function clearUserData(){
+        $this->getGoogleUserDataStorage()->clear();
+    }
 
-
-
-
-
+    /**
+     * @return \Zend\Authentication\Storage\Session
+     */
+    private function getGoogleUserDataStorage()
+    {
+        if (!$this->googleUserDataStorage) {
+            $this->googleUserDataStorage = new Session('GoogleUserData');
+        }
+        return $this->googleUserDataStorage;
+    }
 
 
 }
