@@ -106,6 +106,28 @@ return [
                             ],
                         ],
                     ],
+                    'GoogleCallback' => [
+                        'type' => 'Segment',
+                        'mayTerminate' => true,
+                        'options' => [
+                            'route' => '/google-callback',
+                            'defaults' => [
+                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'action' => 'googleCallback',
+                            ],
+                        ],
+                    ],
+                    'GoogleLogout' => [
+                        'type' => 'Segment',
+                        'mayTerminate' => true,
+                        'options' => [
+                            'route' => '/google-logout',
+                            'defaults' => [
+                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'action' => 'googleLogout',
+                            ],
+                        ],
+                    ],
                     'Info' => [
                         'type' => 'Literal',
                         'mayTerminate' => false,

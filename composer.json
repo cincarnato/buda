@@ -30,7 +30,9 @@
         "zf-metal/datagrid": "^1.0.0",
         "zf-metal/generator": "^1.0.3",
         "zendframework/zend-mvc-console": "^1.1",
-        "facebook/graph-sdk" : "^5.0"
+        "facebook/graph-sdk" : "^5.0",
+        "google/apiclient": "^2.0"
+
     },
     "autoload": {
         "psr-4": {

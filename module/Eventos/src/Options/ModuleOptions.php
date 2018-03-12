@@ -22,6 +22,12 @@ class ModuleOptions extends \Zend\Stdlib\AbstractOptions
 
     private $facebookDefaultAccessToken = '';
 
+    private $googleClientCredentialPath = 'C:\Users\crist\Documents\Proyectos\CDI\buda\config\google\client_credentials.json';
+
+    private function getDefaultPath(){
+        return getcwd();
+    }
+
     public function getFacebookAppId()
     {
         return $this->facebookAppId;
@@ -60,6 +66,16 @@ class ModuleOptions extends \Zend\Stdlib\AbstractOptions
     public function setFacebookDefaultAccessToken($facebookDefaultAccessToken)
     {
         $this->facebookDefaultAccessToken= $facebookDefaultAccessToken;
+    }
+
+    public function getGoogleClientCredentialPath()
+    {
+        return $this->googleClientCredentialPath;
+    }
+
+    public function setGoogleClientCredentialPath($googleClientCredentialPath)
+    {
+        $this->googleClientCredentialPath= $googleClientCredentialPath;
     }
 
 

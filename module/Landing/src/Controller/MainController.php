@@ -2,11 +2,14 @@
 
 namespace Landing\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Eventos\Entity\Consulta;
 use Eventos\Entity\Contacto;
 use Eventos\Entity\ContactoConfirmado;
 use Eventos\Entity\Evento;
 use Eventos\Entity\Invitado;
+use Eventos\Service\FacebookUser;
+use Eventos\Service\GoogleUser;
 use Facebook\Helpers\FacebookRedirectLoginHelper;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Authentication\Storage\Session;
@@ -27,14 +30,20 @@ class MainController extends AbstractActionController
     const ENTITY = '\\Eventos\\Entity\\Evento';
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em = null;
 
     /**
-     * @var \Eventos\Service\FacebookUser
+     * @var FacebookUser
      */
     private $fu = null;
+
+    /**
+     * @var \Eventos\Service\GoogleUser
+     */
+    private $gu = null;
+
 
     /**
      * @var \Zend\Authentication\Storage\Session
@@ -45,6 +54,11 @@ class MainController extends AbstractActionController
      * @var \Zend\Authentication\Storage\Session
      */
     private $stateStorage = null;
+
+    /**
+     * @var \Zend\Authentication\Storage\Session
+     */
+    private $googleCodeStorage = null;
 
     /**
      * @var \Facebook\GraphNodes\GraphUser
@@ -60,6 +74,13 @@ class MainController extends AbstractActionController
      * @var Evento
      */
     private $evento = null;
+
+    public function __construct(EntityManager $em, FacebookUser $fu, GoogleUser $gu)
+    {
+        $this->em = $em;
+        $this->fu = $fu;
+        $this->gu = $gu;
+    }
 
     public function consultaAction()
     {
@@ -166,14 +187,31 @@ class MainController extends AbstractActionController
             //Validar Clave
             if ($evento && $data["clave"] == $evento->getClave()) {
 
-                /** @var  $helper FacebookRedirectLoginHelper */
-                $helper = $this->getFu()->getRedirectLoginHelper();
-                $permisos = ['email', 'user_birthday'];
-                $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
-                $loginUrl = $helper->getLoginUrl($url, $permisos);
-                $state = $helper->getPersistentDataHandler()->get('state');
-                $this->getStateStorage($state)->write($evento->getNombre());
-                $this->redirect()->toUrl($loginUrl);
+                //LOGIN TYPE "f|g"
+                if ($data["logintype"] == "f") {
+                    /** @var  $helper FacebookRedirectLoginHelper */
+                    $helper = $this->getFu()->getRedirectLoginHelper();
+                    $permisos = ['email', 'user_birthday'];
+                    $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
+                    $loginUrl = $helper->getLoginUrl($url, $permisos);
+                    $state = $helper->getPersistentDataHandler()->get('state');
+                    $this->getStateStorage($state)->write($evento->getNombre());
+                    $this->redirect()->toUrl($loginUrl);
+                }
+
+                if ($data["logintype"] == "g") {
+                    echo "Google";
+                    if ($this->gu->getAccessToken()) {
+                        echo "Google TOKEN OK";
+                        echo $this->gu->getData();
+                    } else {
+                        echo "Google REDIRECT TO AUTH";
+                        $auth_url = $this->gu->createAuthUrl();
+                        $this->redirect()->toUrl($auth_url);
+                    }
+
+                }
+
             } else {
                 $this->flashMessenger()->addErrorMessage('Clave incorrecta');
             }
@@ -189,10 +227,62 @@ class MainController extends AbstractActionController
         return ["evento" => $evento, "formConsulta" => $this->getFormConsulta()];
     }
 
+    public function googleCallbackAction()
+    {
+        $this->layout()->setTemplate('landing/layout');
+
+        $code = $this->getRequest()->getQuery("code");
+
+
+        if (!$code) {
+            $auth_url = $this->gu->createAuthUrl();
+            $this->redirect()->toUrl($auth_url);
+        } else {
+            $this->gu->fetchAccessTokenWithAuthCode($code);
+            $this->gu->getAccessToken();
+
+            $name = $this->getGoogleCodeStorage($code)->read();
+
+            return $this->redirect()->toRoute('HostLanding/start/byname', ["name" => $name], ['force_canonical' => true]);
+        }
+
+    }
+
+    public function facebookCallbackAction()
+    {
+        $this->layout()->setTemplate('landing/layout');
+        $helper = $this->getFu()->getRedirectLoginHelper();
+        try {
+            $accessToken = $helper->getAccessToken();
+        } catch (\Facebook\Exceptions\FacebookResponseException $e) {
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+
+        if ($accessToken) {
+            $this->getFu()->getFb()->setDefaultAccessToken((string)$accessToken);
+            $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,picture,first_name,last_name,birthday', $accessToken)->getGraphUser();
+            $this->getUserDataStorage()->write($facebookUserData);
+
+        } else {
+            $this->flashMessenger()->addErrorMessage('No se aceptaron los permisos requeridos.');
+        }
+
+        //Recuperar el ID del evento
+        $state = $this->getRequest()->getQuery("state");
+        $name = $this->getStateStorage($state)->read();
+
+        return $this->redirect()->toRoute('HostLanding/start/byname', ["name" => $name], ['force_canonical' => true]);
+    }
 
     private function getFormConsulta()
     {
-        $form = $this->formBuilder($this->getEm(), 'Eventos\Entity\Consulta',true,true);
+        $form = $this->formBuilder($this->getEm(), 'Eventos\Entity\Consulta', true, true);
         if ($this->getEvento()) {
             $form->get("evento")->setValue($this->getEvento()->getId());
         }
@@ -327,37 +417,6 @@ class MainController extends AbstractActionController
         return null;
     }
 
-    public function facebookCallbackAction()
-    {
-        $this->layout()->setTemplate('landing/layout');
-        $helper = $this->getFu()->getRedirectLoginHelper();
-        try {
-            $accessToken = $helper->getAccessToken();
-        } catch (\Facebook\Exceptions\FacebookResponseException $e) {
-            // When Graph returns an error
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
-        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
-            // When validation fails or other local issues
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
-        }
-
-        if ($accessToken) {
-            $this->getFu()->getFb()->setDefaultAccessToken((string)$accessToken);
-            $facebookUserData = $this->getFu()->getFb()->get('/me?locale=en_US&fields=id,name,email,picture,first_name,last_name,birthday', $accessToken)->getGraphUser();
-            $this->getUserDataStorage()->write($facebookUserData);
-
-        } else {
-            $this->flashMessenger()->addErrorMessage('No se aceptaron los permisos requeridos.');
-        }
-
-        //Recuperar el ID del evento
-        $state = $this->getRequest()->getQuery("state");
-        $name = $this->getStateStorage($state)->read();
-
-        return $this->redirect()->toRoute('HostLanding/start/byname', ["name" => $name], ['force_canonical' => true]);
-    }
 
     public function facebookLogoutAction()
     {
@@ -370,13 +429,13 @@ class MainController extends AbstractActionController
         return $this->em;
     }
 
-    public function setEm(\Doctrine\ORM\EntityManager $em)
+    public function setEm(EntityManager $em)
     {
         $this->em = $em;
     }
 
     /**
-     * @return \Eventos\Service\FacebookUser
+     * @return FacebookUser
      */
     public function getFu()
     {
@@ -384,7 +443,7 @@ class MainController extends AbstractActionController
     }
 
     /**
-     * @param \Eventos\Service\FacebookUser $fu
+     * @param FacebookUser $fu
      */
     public function setFu($fu)
     {
@@ -411,11 +470,6 @@ class MainController extends AbstractActionController
         return $this->getEm()->getRepository('\\Eventos\\Entity\\Invitado');
     }
 
-    public function __construct(\Doctrine\ORM\EntityManager $em, \Eventos\Service\FacebookUser $fu)
-    {
-        $this->em = $em;
-        $this->fu = $fu;
-    }
 
     public function getEntityRepository()
     {
@@ -444,6 +498,17 @@ class MainController extends AbstractActionController
         return $this->stateStorage;
     }
 
+    /**
+     * @return \Zend\Authentication\Storage\Session
+     */
+    private function getGoogleCodeStorage($code)
+    {
+        if (!$this->googleCodeStorage) {
+            $this->googleCodeStorage = new Session($code);
+        }
+        return $this->googleCodeStorage;
+    }
+
 
     private function showUserData($facebookUserData)
     {
@@ -460,6 +525,22 @@ class MainController extends AbstractActionController
         var_dump($facebookUserData->getGender());
         var_dump($facebookUserData->getPicture());
         echo "</pre>";
+    }
+
+    /**
+     * @return \Eventos\Service\GoogleUser
+     */
+    public function getGu()
+    {
+        return $this->gu;
+    }
+
+    /**
+     * @param \Eventos\Service\GoogleUser $gu
+     */
+    public function setGu($gu)
+    {
+        $this->gu = $gu;
     }
 
 

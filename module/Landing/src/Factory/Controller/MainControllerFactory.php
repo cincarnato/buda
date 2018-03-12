@@ -22,7 +22,8 @@ class MainControllerFactory implements FactoryInterface
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $container->get("doctrine.entitymanager.orm_default");
         $fu = $container->get(\Eventos\Service\FacebookUser::class);
-        return new \Landing\Controller\MainController($em,$fu);
+        $gu = $container->get(\Eventos\Service\GoogleUser::class);
+        return new \Landing\Controller\MainController($em,$fu,$gu);
     }
 
 
