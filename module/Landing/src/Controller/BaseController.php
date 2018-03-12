@@ -65,7 +65,7 @@ class BaseController extends AbstractActionController
         return $this->getEm()->getRepository(self::ENTITY);
     }
 
-    public function __construct(EntityManager $em, FacebookUser $fu, GoogleUser $gu)
+    public function __construct(\Doctrine\ORM\EntityManager $em, \Eventos\Service\FacebookUser $fu, \Eventos\Service\GoogleUser $gu)
     {
         $this->em = $em;
         $this->fu = $fu;

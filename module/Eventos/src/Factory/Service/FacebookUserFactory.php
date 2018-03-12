@@ -2,6 +2,7 @@
 
 namespace Eventos\Factory\Service;
 
+use Eventos\Service\FacebookUser;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
@@ -21,7 +22,7 @@ class FacebookUserFactory implements FactoryInterface
     {
         /** @var $eo \Eventos\Options\ModuleOptions */
         $eo = $container->get('Eventos.options');
-        return new \Eventos\Service\FacebookUser($eo->getFacebookAppId(), $eo->getFacebookAppSecret(), $eo->getFacebookDefaultGraphVersion(), $eo->getFacebookDefaultAccessToken());
+        return new FacebookUser($eo->getFacebookAppId(), $eo->getFacebookAppSecret(), $eo->getFacebookDefaultGraphVersion(), $eo->getFacebookDefaultAccessToken());
     }
 
 

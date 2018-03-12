@@ -42,15 +42,6 @@ class MainController extends BaseController
     private $googleCodeStorage = null;
 
 
-
-    public function __construct(EntityManager $em, FacebookUser $fu, GoogleUser $gu)
-    {
-        $this->em = $em;
-        $this->fu = $fu;
-        $this->gu = $gu;
-    }
-
-
     public function startAction()
     {
         $this->layout()->setTemplate('landing/layout');

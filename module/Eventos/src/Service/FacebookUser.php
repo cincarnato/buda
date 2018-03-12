@@ -70,9 +70,11 @@ class FacebookUser
     }
 
     public function requestToken(){
+        echo "token";
         $status = false;
+        $helper = $this->getFb()->getRedirectLoginHelper();
         try {
-            $this->accessToken = $this->getRedirectLoginHelper()->getAccessToken();
+            $this->accessToken = $helper->getAccessToken();
         } catch (\Facebook\Exceptions\FacebookResponseException $e) {
             // When Graph returns an error
             echo 'Graph returned an error: ' . $e->getMessage();
@@ -80,7 +82,7 @@ class FacebookUser
             // When validation fails or other local issues
             echo 'Facebook SDK returned an error: ' . $e->getMessage();
         }
-
+        echo "token2";
         if ($this->accessToken) {
             $this->getFb()->setDefaultAccessToken((string)$this->accessToken);
             $status = true;
@@ -90,7 +92,7 @@ class FacebookUser
     }
 
     public function getRedirectLoginHelper(){
-       return $this->fb->getRedirectLoginHelper();
+       return $this->getFb()->getRedirectLoginHelper();
     }
 
     /**

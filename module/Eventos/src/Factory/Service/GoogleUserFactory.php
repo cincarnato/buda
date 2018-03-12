@@ -2,6 +2,7 @@
 
 namespace Eventos\Factory\Service;
 
+use Eventos\Service\GoogleUser;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
@@ -21,7 +22,7 @@ class GoogleUserFactory implements FactoryInterface
     {
         /** @var $eo \Eventos\Options\ModuleOptions */
         $eo = $container->get('Eventos.options');
-        return new \Eventos\Service\GoogleUser($eo->getGoogleClientCredentialPath());
+        return new GoogleUser($eo->getGoogleClientCredentialPath());
     }
 
 
