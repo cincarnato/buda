@@ -21,7 +21,7 @@
 
                         <div class="name">
                             <?php if ($evento && $evento->getContacto()): ?>
-                                <h3 class="title"><?php echo $evento->getContacto()->getNombreCompleto(); ?></h3>
+                                <h3 class="title">Evento de <?php echo $evento->getContacto()->getNombreCompleto(); ?></h3>
 
                             <?php else: ?>
                                 <h3 class="title">Propietario sin confirmar</h3>
