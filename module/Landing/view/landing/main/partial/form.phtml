@@ -1,4 +1,7 @@
 <?php $this->flashCurrent(); ?>
+
+<?php if($this->evento && !$this->evento->getEstado()): ?>
+
 <form method="post">
 
     <?php if ($evento && $this->evento->getClave() && !$evento->getContacto()): ?>
@@ -17,3 +20,5 @@
         <div class="ripple-container"></div>
     </button>
 </form>
+
+<?php endif; ?>

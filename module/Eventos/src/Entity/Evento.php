@@ -21,6 +21,19 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Evento
 {
+    const NOBODY = 0;
+    const OWNER = 1;
+    const GUEST = 2;
+
+    /**
+     * Describe el estado actual de la sesion sobre este evento
+     * NOBODY : Nadie logueado
+     * OWNER : Propietario Logueado
+     * GUEST : Invitado Logueado
+     *
+     * @var integer
+     */
+    public $estado = self::NOBODY;
 
     /**
      * @Annotation\Type("Zend\Form\Element\Text")
@@ -252,6 +265,38 @@ class Evento
         return  $this->nombre;
     }
 
+    /**
+     * @return integer
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * @param integer $estado
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
+
+    public function isOwner(){
+        if($this->estado == self::OWNER){
+            return 'true';
+        }
+        return 'false';
+    }
+
+    public function getInvitadosJson(){
+        $a = array();
+        if($this->getInvitados()){
+            foreach($this->getInvitados() as $invitado){
+                $a[] = $invitado->toArray();
+            }
+        }
+        return json_encode($a);
+    }
 
 }
 

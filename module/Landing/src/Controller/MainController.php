@@ -62,46 +62,6 @@ class MainController extends AbstractActionController
     private $evento = null;
 
 
-    private function getFormConsulta()
-    {
-        $form = $this->formBuilder($this->getEm(), '\\Eventos\\Entity\\Consulta');
-        $form->get("evento")->setValue($this->getEvento()->getId());
-        $form->get("submitbtn")->setValue("Enviar");
-        return $form;
-    }
-
-    public function getEvento()
-    {
-        if (!$this->evento) {
-            $id = $this->params("id");
-            /** @var $evento \Eventos\Entity\Evento */
-            if ($id) {
-                $this->evento = $this->getEventoRepository()->find($id);
-
-            } else {
-
-                $name = $this->params("name");
-                /** @var $evento \Eventos\Entity\Evento */
-                if ($name) {
-                    $this->evento = $this->getEventoRepository()->findOneByNombre($name);
-
-                }
-            }
-
-        }
-        return $this->evento;
-    }
-
-    private function verificarPropietarioEvento()
-    {
-        if ($this->obtenerContacto() && $this->getEvento() && $this->getEvento()->getContacto()) {
-            if ($this->obtenerContacto()->getId() == $this->getEvento()->getContacto()->getId()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public function addInvitadoAction()
     {
         $result["status"] = false;
@@ -125,7 +85,35 @@ class MainController extends AbstractActionController
                     $this->getEm()->persist($invitado);
                     $this->getEm()->flush();
                     $result["status"] = true;
+                    $result["id"] = $invitado->getId();
 
+                }
+            }
+
+        } else {
+            //throw new \Exception("Propietario no valido...");
+            $result["message"] = "Propietario no valido";
+        }
+
+        return new JsonModel($result);
+
+    }
+
+    public function delInvitadoAction()
+    {
+        $result["status"] = false;
+        $result["evento"] = $this->getEvento()->getNombre();
+        $result["contacto"] = $this->obtenerContacto()->getNombre();
+
+        if ($this->verificarPropietarioEvento()) {
+
+            if ($this->getRequest()->isPost()) {
+                $data = $this->getRequest()->getPost();
+                $invitado = $this->getInvitadoRepository()->find($data["id"]);
+                if ($invitado) {
+                    $this->getEm()->remove($invitado);
+                    $this->getEm()->flush();
+                    $result["status"] = true;
                 }
             }
 
@@ -169,8 +157,75 @@ class MainController extends AbstractActionController
         //Guest (invitado-Contacto confirmado)
         $this->handleGuest($evento);
 
+        $this->definirEstadoEvento();
+
         return ["evento" => $evento, "formConsulta" => $this->getFormConsulta()];
     }
+
+
+    private function getFormConsulta()
+    {
+        $form = $this->formBuilder($this->getEm(), '\\Eventos\\Entity\\Consulta');
+        if ($this->getEvento()) {
+            $form->get("evento")->setValue($this->getEvento()->getId());
+        }
+        $form->get("submitbtn")->setValue("Enviar");
+        return $form;
+    }
+
+    public function getEvento()
+    {
+        if (!$this->evento) {
+            $id = $this->params("id");
+            /** @var $evento \Eventos\Entity\Evento */
+            if ($id) {
+                $this->evento = $this->getEventoRepository()->find($id);
+
+            } else {
+
+                $name = $this->params("name");
+                /** @var $evento \Eventos\Entity\Evento */
+                if ($name) {
+                    $this->evento = $this->getEventoRepository()->findOneByNombre($name);
+
+                }
+            }
+
+        }
+        return $this->evento;
+    }
+
+    private function verificarPropietarioEvento()
+    {
+        if ($this->obtenerContacto() && $this->getEvento() && $this->getEvento()->getContacto()) {
+            if ($this->obtenerContacto()->getId() == $this->getEvento()->getContacto()->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function definirEstadoEvento()
+    {
+
+        if ($this->getEvento()) {
+            if ($this->obtenerContacto()) {
+
+                if ($this->obtenerContacto()->getId() == $this->getEvento()->getContacto()->getId()) {
+                    //OWNER
+                    $this->getEvento()->setEstado(Evento::OWNER);
+                } else {
+                    //GUEST
+                    $this->getEvento()->setEstado(Evento::GUEST);
+                }
+
+            } else {
+                //NOBODY
+                $this->getEvento()->setEstado(Evento::NOBODY);
+            }
+        }
+    }
+
 
     private function handleGuest($evento)
     {
@@ -322,6 +377,11 @@ class MainController extends AbstractActionController
     public function getContactoConfirmadoRepository()
     {
         return $this->getEm()->getRepository('\\Eventos\\Entity\\ContactoConfirmado');
+    }
+
+    public function getInvitadoRepository()
+    {
+        return $this->getEm()->getRepository('\\Eventos\\Entity\\Invitado');
     }
 
     public function __construct(\Doctrine\ORM\EntityManager $em, \Eventos\Service\FacebookUser $fu)

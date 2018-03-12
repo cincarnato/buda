@@ -6,7 +6,7 @@
                 <?php foreach ($evento->getConfirmados() as $confirmado): ?>
                     <tr>
                         <td><img class="img-raised img-fluid" src="<?php echo $confirmado->getContacto()->getImgProfile(); ?>"/></td>
-                        <td><?php echo $confirmado->getContacto()->getNombre(); ?></td>
+                        <td><?php echo $confirmado->getContacto()->getNombreCompleto(); ?></td>
                     </tr>
 
                 <?php endforeach; ?>

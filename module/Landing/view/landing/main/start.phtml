@@ -58,12 +58,16 @@
                 </div>
 
             </div>
+            <div class="tab-space"></div>
+            <div class="card-footer">
 
-            <?php echo $this->partial("landing/main/partial/consultas", ["evento" => $evento,"formConsulta" => $formConsulta]); ?>
+                <?php echo $this->partial("landing/main/partial/consultas", ["evento" => $evento,"formConsulta" => $formConsulta]); ?>
+            </div>
 
-
-            <br><br><br><br><br>
+            <div class="tab-space"></div>
 
         </div>
     </div>
 </div>
+
+<?php echo $this->partial("landing/main/partial/footer", ["evento" => $evento,"formConsulta" => $formConsulta]); ?>

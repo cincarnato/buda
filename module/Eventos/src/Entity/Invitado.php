@@ -123,5 +123,20 @@ class Invitado
     }
 
 
+    public function toArray(){
+        $a = array();
+
+        $a["id"] = $this->getId();
+        $a["evento"] = $this->getEvento()->getId();
+        $a["nombre"] =  $this->getNombre();
+        $a["celular"] = $this->getCelular();
+        $a["email"] = $this->getEmail();
+        return $a;
+    }
+
+    public function toJson(){
+
+        return json_encode($this->toArray());
+    }
 }
 

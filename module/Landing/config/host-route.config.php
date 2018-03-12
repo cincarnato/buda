@@ -57,6 +57,21 @@ return [
                         'may_terminate' => true,
 
                     ],
+                    'delinvitado' => [
+                        'type' => 'Zend\Router\Http\Segment',
+                        'options' => [
+                            'route' => '/delinvitado/:id',
+                            'constraints' => [
+                                'id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => \Landing\Controller\MainController::CLASS,
+                                'action' => 'del-invitado',
+                            ],
+                        ],
+                        'may_terminate' => true,
+
+                    ],
                     'FacebookCallback' => [
                         'type' => 'Segment',
                         'mayTerminate' => true,
