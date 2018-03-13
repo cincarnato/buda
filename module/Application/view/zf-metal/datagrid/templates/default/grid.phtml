@@ -28,7 +28,7 @@
                             <?php foreach ($this->grid->getColumns() as $column): ?>
                                 <?php if (!$column->getHidden()): ?>
                                     <th class="<?php echo $column->getThClass(); ?>">
-                                        <?php echo $this->translate((string)$column); ?>
+                                        <?php echo ($column)?$column:""; ?>
                                         <?php if ($column->getType() != "extra" && $column->getType() != "crud"): ?>
                                             <!--SORT-->
                                             <?php if ($this->grid->getSort() && $this->grid->getSort()->getBy() == $column->getName()): ?>

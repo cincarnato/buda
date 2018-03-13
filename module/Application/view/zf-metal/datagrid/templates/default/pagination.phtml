@@ -1,48 +1,56 @@
-
 <?php if ($this->pageCount): ?>
 
     <div class="row">
         <div class="col-sm-6">
             <div class="dataTables_info">
-              
-                        <span><?php echo $this->translate('Records'); ?>: <?php echo $this->totalItemCount; ?> | <?php echo $this->translate('Range'); ?>: <?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?></span>
-                 
+
+                <span><?php echo $this->translate('Records'); ?>: <?php echo $this->totalItemCount; ?>
+                    | <?php echo $this->translate('Range'); ?>: <?php echo $this->firstItemNumber; ?>
+                    - <?php echo $this->lastItemNumber; ?></span>
+
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="dataTables_paginate paging_simple_numbers">
-                <ul class="pagination">
+            <div class="row">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
 
-                    <!-- First page link -->
-                    <li<?php echo (isset($this->previous)) ? 'class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
-                        <a class="page-link" href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->first) + $this->routeParams), true); ?>" >&lt;< First</a>
+                        <!-- First page link -->
+                        <li<?php echo (isset($this->previous)) ? ' class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
+                            <a class="page-link"
+                               href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->first) + $this->routeParams), true); ?>">&lt;<</a>
 
-                    </li>
-
-                    <!-- Previous page link -->
-                    <li<?php echo (isset($this->previous)) ? 'class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
-                        <a class="page-link" href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->previous) + $this->routeParams), true); ?>" >&lt;&lt; Previous</a>
-                    </li>
-
-                    <!-- Numbered page links -->
-                    <?php foreach ($this->pagesInRange as $page): ?>
-                        <li<?php echo ($page == $this->current) ? ' class="page-item paginate_button active"' : ''; ?>>
-                            <a class="page-link" href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $page) + $this->routeParams), true); ?>" ><?php echo $page; ?></a>
                         </li>
-                    <?php endforeach; ?>
 
-                    <!-- Next page link -->
-                    <li<?php echo (isset($this->next)) ? 'class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
-                        <a class="page-link" href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->next) + $this->routeParams), true); ?>" >Next &gt;&gt;</a>
-                    </li>
+                        <!-- Previous page link -->
+                        <li<?php echo (isset($this->previous)) ? ' class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
+                            <a class="page-link"
+                               href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->previous) + $this->routeParams), true); ?>">&lt;</a>
+                        </li>
 
-                    <!-- Last page link -->
-                    <li<?php echo (isset($this->next)) ? 'class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
-                        <a class="page-link" href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->last) + $this->routeParams), true); ?>" >Last &gt;&gt;</a>
+                        <!-- Numbered page links -->
+                        <?php foreach ($this->pagesInRange as $page): ?>
+                            <li<?php echo ($page == $this->current) ? ' class="page-item paginate_button active"' : ''; ?>>
+                                <a class="page-link"
+                                   href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $page) + $this->routeParams), true); ?>"><?php echo $page; ?></a>
+                            </li>
+                        <?php endforeach; ?>
 
-                    </li>
+                        <!-- Next page link -->
+                        <li<?php echo (isset($this->next)) ? ' class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
+                            <a class="page-link"
+                               href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->next) + $this->routeParams), true); ?>">&gt;</a>
+                        </li>
 
-                </ul>
+                        <!-- Last page link -->
+                        <li<?php echo (isset($this->next)) ? ' class="page-item"' : ' class="page-item paginate_button disabled"'; ?>>
+                            <a class="page-link"
+                               href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->last) + $this->routeParams), true); ?>">&gt;&gt;</a>
+
+                        </li>
+
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

@@ -5,6 +5,9 @@ return [
     'zf-metal-datagrid.custom' => [
         'eventos-entity-consulta' => [
             'gridId' => 'zfmdg_Consulta',
+            'title' => "Consultas",
+            'title_add' => "Creando Consulta",
+            'title_edit' => "Editando Consulta",
             'sourceConfig' => [
                 'type' => 'doctrine',
                 'doctrineOptions' => [
@@ -39,21 +42,25 @@ return [
                 'id' => [
                     'displayName' => 'ID',
                 ],
+                'mensaje' => [
+                    'hidden' => true,
+                ],
             ],
             'crudConfig' => [
                 'enable' => true,
+                'displayName' => "Acciones",
                 'add' => [
-                    'enable' => true,
+                    'enable' => false,
                     'class' => 'material-icons text-primary cursor-pointer',
                     'value' => 'add',
                 ],
                 'edit' => [
-                    'enable' => true,
+                    'enable' => false,
                     'class' => 'material-icons text-primary cursor-pointer',
                     'value' => 'mode_edit'
                 ],
                 'del' => [
-                    'enable' => true,
+                    'enable' => false,
                     'class' => 'material-icons text-danger cursor-pointer',
                     'value' => 'delete_sweep'
                 ],
