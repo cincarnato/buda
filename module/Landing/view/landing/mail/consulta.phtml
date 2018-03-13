@@ -1,12 +1,15 @@
 
 <h3>Consulta recibida</h3>
 
-<h4>Evento: <b><?php echo $consulta->getEvento()->getNombre(); ?></b></h4>
+<h4>Evento:</h4>
+<p><?php echo $consulta->getEvento()->getNombre(); ?></p>
 
-<h4>Nombre: <b><?php echo $consulta->getNombre(); ?></b></h4>
+<h4>Nombre:</h4>
+<p><?php echo $consulta->getNombre(); ?></p>
 
-<h4>Email: <b><?php echo $consulta->getEmail(); ?></b></h4>
+<h4>Email: </h4>
+<p><?php echo $consulta->getEmail(); ?></p>
 
-<h4>Mensaje</h4>
+<h4>Mensaje:</h4>
 
 <p><?php echo $consulta->getMensaje(); ?></p>

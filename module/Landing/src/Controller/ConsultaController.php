@@ -57,6 +57,9 @@ class ConsultaController extends BaseController
                 $this->getEm()->persist($consulta);
                 $this->getEm()->flush();
                 $result["status"] = true;
+
+                $result["mail"] = $this->enviarMail($consulta);
+
             } else {
                 $result["status"] = false;
 
@@ -85,7 +88,6 @@ class ConsultaController extends BaseController
             if ($this->mailManager()->send()) {
                 return true;
             } else {
-                $this->logger()->err("Falla al enviar mail al usuario al notificar confirmación.");
                 return false;
             }
         }

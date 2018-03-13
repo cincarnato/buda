@@ -5,12 +5,14 @@ return [
         'routes' => [
             'HostLanding' => [
                 'type' => 'Zend\Router\Http\Hostname',
+                'may_terminate' => true,
                 'options' => [
                     'route' => E_BUDA_URL,
                     'defaults' => [
                         'controller' => \Landing\Controller\MainController::CLASS,
                         'action' => 'start',
                     ],
+
                 ],
                 'child_routes' => [
                     'index' => [

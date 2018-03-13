@@ -36,12 +36,15 @@ class Evento
      * NOBODY : Nadie logueado
      * OWNER : Propietario Logueado
      * GUEST : Invitado Logueado
-     *
+     * @Annotation\Exclude()
      * @var integer
      */
     public $estado = self::NOBODY;
 
-
+    /**
+     * @var string
+     * @Annotation\Exclude()
+     * */
     public $via = null;
 
     /**

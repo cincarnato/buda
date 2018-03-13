@@ -12,8 +12,8 @@ return [
                 'options' => [
                     'route' => '/',
                     'defaults' => [
-                        'controller' => \Application\Controller\IndexController::class,
-                        'action' => 'index',
+                        'controller' => \Eventos\Controller\MainController::class,
+                        'action' => 'home',
                     ],
                 ],
             ],

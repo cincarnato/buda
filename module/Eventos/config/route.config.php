@@ -254,6 +254,30 @@ return [
                             ],
                         ],
                     ],
+                    'Ayuda' => [
+                        'type' => 'Literal',
+                        'mayTerminate' => false,
+                        'options' => [
+                            'route' => '/ayuda',
+                            'defaults' => [
+                                'controller' => \Eventos\Controller\AyudaController::CLASS,
+                                'action' => 'main',
+                            ],
+                        ],
+                        'child_routes' => [
+                            'Main' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/main',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\AyudaController::CLASS,
+                                        'action' => 'main',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],
