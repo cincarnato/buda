@@ -2,6 +2,8 @@
 
 namespace Eventos\Service;
 
+use \Zend\Authentication\Storage\Session;
+
 class GoogleUser
 {
 
@@ -24,6 +26,8 @@ class GoogleUser
      */
     private $googleUserDataStorage = null;
 
+
+    private $googleUserData = null;
 
     /**
      * GoogleUser constructor.
@@ -77,7 +81,7 @@ class GoogleUser
     {
         $oauth2 = new \Google_Service_Oauth2($this->gc);
         $data = $oauth2->userinfo->get();
-        $this->getGoogleUserDataStorage($data);
+        $this->getGoogleUserDataStorage()->write($data);
         return $data;
     }
 
@@ -127,6 +131,16 @@ class GoogleUser
             $this->googleUserDataStorage = new Session('GoogleUserData');
         }
         return $this->googleUserDataStorage;
+    }
+
+    /**
+     * @return \Google_Service_Oauth2_Userinfoplus
+     */
+    public function getGoogleUserData(){
+        if (!$this->googleUserData) {
+            $this->googleUserData = $this->getGoogleUserDataStorage()->read();
+        }
+        return $this->googleUserData;
     }
 
 

@@ -10,9 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Contacto
- *
- *
- *
+ * 
+ * 
+ * 
  * @author
  * @license
  * @link
@@ -127,6 +127,33 @@ class Contacto
      * name="facebook_url")
      */
     public $facebookUrl = null;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"googleId", "description":"", "addon":""})
+     * @ORM\Column(type="string", length=100, unique=false, nullable=true,
+     * name="google_id")
+     */
+    public $googleId = null;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"googleUrl", "description":"", "addon":""})
+     * @ORM\Column(type="string", length=120, unique=false, nullable=true,
+     * name="google_url")
+     */
+    public $googleUrl = null;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"source", "description":"", "addon":""})
+     * @ORM\Column(type="string", length=20, unique=false, nullable=true,
+     * name="source")
+     */
+    public $source = null;
 
     public function getId()
     {
@@ -248,17 +275,49 @@ class Contacto
         $this->facebookUrl = $facebookUrl;
     }
 
-    public function __toString()
+    public function getImgProfileLarge()
     {
-        return  $this->nombreCompleto;
-    }
-
-    public function getImgProfileLarge(){
         return "http://graph.facebook.com/".$this->getFacebookId()."/picture?type=large";
     }
 
-    public function getImgProfile(){
+    public function getImgProfile()
+    {
         return "http://graph.facebook.com/".$this->getFacebookId()."/picture?type=small";
+    }
+
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+
+    public function getGoogleUrl()
+    {
+        return $this->googleUrl;
+    }
+
+    public function setGoogleUrl($googleUrl)
+    {
+        $this->googleUrl = $googleUrl;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    public function setSource($source)
+    {
+        $this->source = $source;
+    }
+
+    public function __toString()
+    {
+        return  $this->nombreCompleto;
     }
 
 

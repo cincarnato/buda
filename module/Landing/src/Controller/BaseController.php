@@ -114,6 +114,7 @@ class BaseController extends AbstractActionController
                 $contacto->setFacebookUrl($this->getFu()->getFacebookUserData()->getLink());
                 $contacto->setNombre($this->getFu()->getFacebookUserData()->getFirstName());
                 $contacto->setApellido($this->getFu()->getFacebookUserData()->getLastName());
+                $contacto->setSource("facebook");
 
                 $birthday = $this->getFu()->getFacebookUserData()->getBirthday();
                 if (is_a($birthday, "date") || is_a($birthday, "DateTime")) {
@@ -126,7 +127,32 @@ class BaseController extends AbstractActionController
                 $this->contacto = $contacto;
                 return $this->contacto;
             }
+
             //GOOGLE
+            if ($this->getGu()->getGoogleUserData()) {
+                /** @var \Google_Service_Oauth2_Userinfoplus $googleUserData */
+                $googleUserData = $this->getGu()->getGoogleUserData();
+
+                $contacto = $this->getContactoRepository()->findOneByEmail($googleUserData->getEmail());
+
+                if (!$contacto) {
+                    $contacto = new Contacto();
+                }
+
+                $contacto->setNombreCompleto($googleUserData->getName());
+                $contacto->setEmail($googleUserData->getEmail());
+                $contacto->setGoogleId($googleUserData->getId());
+                $contacto->setGoogleUrl($googleUserData->getLink());
+                $contacto->setNombre($googleUserData->getGivenName());
+                $contacto->setApellido($googleUserData->getFamilyName());
+                $contacto->setSource("google");
+
+                $this->getEm()->persist($contacto);
+                $this->getEm()->flush();
+                $this->contacto = $contacto;
+                return $this->contacto;
+
+            }
 
         } else {
             return $this->contacto;
