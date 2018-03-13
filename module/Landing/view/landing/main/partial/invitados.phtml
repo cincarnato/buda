@@ -7,10 +7,11 @@
     <?php if ($this->evento): ?>
         <div id="app">
 
-            <tableguest :pevento="<?php echo $evento->getId(); ?>" :pentities='<?php echo $evento->getInvitadosJson(); ?>'
+            <tableguest :pevento="<?php echo $evento->getId(); ?>"
+                        :pentities='<?php echo $evento->getInvitadosJson(); ?>'
                         :powner='<?php echo $evento->isOwner(); ?>'></tableguest>
 
-         </div>
+        </div>
     <?php endif; ?>
 
 </div>

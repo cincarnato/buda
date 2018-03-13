@@ -2,7 +2,8 @@
 
 namespace Landing\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Eventos\Entity\Consulta;
+use Zend\View\Model\JsonModel;
 
 /**
  * ConsultaController

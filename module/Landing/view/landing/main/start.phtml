@@ -9,65 +9,68 @@
 <?php endif; ?>
 
 
-<div class="main main-raised">
-    <div class="profile-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 ml-auto mr-auto">
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
 
-                    <div class="profile">
-                        <?php echo $this->partial("landing/main/partial/avatar", ["evento" => $evento]); ?>
-
-
-                        <div class="name">
-                            <?php if ($evento && $evento->getContacto()): ?>
-                                <h3 class="title">Evento de <?php echo $evento->getContacto()->getNombreCompleto(); ?></h3>
-
-                            <?php else: ?>
-                                <h3 class="title">Propietario sin confirmar</h3>
-                            <?php endif; ?>
+                        <div class="profile">
+                            <?php echo $this->partial("landing/main/partial/avatar", ["evento" => $evento]); ?>
 
 
-                            <?php if ($evento && $evento->getFecha()): ?>
-                                <h5>Fecha del evento: <?php echo $evento->getFecha()->format("d-m-Y"); ?></h5>
-                            <?php else: ?>
-                                <h6>Fecha: A confirmar!</h6>
-                            <?php endif; ?>
+                            <div class="name">
+                                <?php if ($evento && $evento->getContacto()): ?>
+                                    <h3 class="title">Evento
+                                        de <?php echo $evento->getContacto()->getNombreCompleto(); ?></h3>
 
-                            <?php echo $this->partial("landing/main/partial/form", ["evento" => $evento]); ?>
+                                <?php else: ?>
+                                    <h3 class="title">Propietario sin confirmar</h3>
+                                <?php endif; ?>
 
 
+                                <?php if ($evento && $evento->getFecha()): ?>
+                                    <h5>Fecha del evento: <?php echo $evento->getFecha()->format("d-m-Y"); ?></h5>
+                                <?php else: ?>
+                                    <h6>Fecha: A confirmar!</h6>
+                                <?php endif; ?>
 
+                                <?php echo $this->partial("landing/main/partial/form", ["evento" => $evento]); ?>
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="tab-space"></div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <?php echo $this->partial("landing/main/partial/lugar", ["evento" => $evento]); ?>
+                        <?php echo $this->partial("landing/main/partial/detalle", ["evento" => $evento]); ?>
 
-            <div class="row">
-                <div class="col-md-6 col-xs-12">
-                    <?php echo $this->partial("landing/main/partial/lugar", ["evento" => $evento]); ?>
-                    <?php echo $this->partial("landing/main/partial/detalle", ["evento" => $evento]); ?>
-
-                </div>
-
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <?php echo $this->partial("landing/main/partial/invitados", ["evento" => $evento]); ?>
-                    <?php echo $this->partial("landing/main/partial/confirmados", ["evento" => $evento]); ?>
                     </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <div class="row">
+                            <?php echo $this->partial("landing/main/partial/confirmados", ["evento" => $evento]); ?>
+                            <?php echo $this->partial("landing/main/partial/invitados", ["evento" => $evento]); ?>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-space"></div>
+                <?php echo $this->partial("landing/main/partial/rol", ["evento" => $evento]); ?>
+                <div class="tab-space"></div>
+                <div class="card-footer">
+
+                    <?php echo $this->partial("landing/main/partial/consultas", ["evento" => $evento, "formConsulta" => $formConsulta]); ?>
                 </div>
 
+                <div class="tab-space"></div>
+
             </div>
-            <div class="tab-space"></div>
-            <div class="card-footer">
-
-                <?php echo $this->partial("landing/main/partial/consultas", ["evento" => $evento,"formConsulta" => $formConsulta]); ?>
-            </div>
-
-            <div class="tab-space"></div>
-
         </div>
     </div>
-</div>
 
-<?php echo $this->partial("landing/main/partial/footer", ["evento" => $evento,"formConsulta" => $formConsulta]); ?>
+<?php echo $this->partial("landing/main/partial/footer", ["evento" => $evento, "formConsulta" => $formConsulta]); ?>

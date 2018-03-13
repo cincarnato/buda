@@ -99,7 +99,9 @@ class BaseController extends AbstractActionController
     protected function obtenerContacto()
     {
         if (!$this->contacto) {
+           //Facebook
             if ($this->getFu()->getFacebookUserData()) {
+
                 $contacto = $this->getContactoRepository()->findOneByEmail($this->getFu()->getFacebookUserData()->getEmail());
 
                 if (!$contacto) {
@@ -124,6 +126,8 @@ class BaseController extends AbstractActionController
                 $this->contacto = $contacto;
                 return $this->contacto;
             }
+            //GOOGLE
+
         } else {
             return $this->contacto;
         }
@@ -160,14 +164,17 @@ class BaseController extends AbstractActionController
                 if ($this->obtenerContacto()->getId() == $this->getEvento()->getContacto()->getId()) {
                     //OWNER
                     $this->getEvento()->setEstado(Evento::OWNER);
+                    \Eventos\Facade\EventoLogin::setRol(Evento::OWNER);
                 } else {
                     //GUEST
                     $this->getEvento()->setEstado(Evento::GUEST);
+                    \Eventos\Facade\EventoLogin::setRol(Evento::GUEST);
                 }
 
             } else {
                 //NOBODY
                 $this->getEvento()->setEstado(Evento::NOBODY);
+                \Eventos\Facade\EventoLogin::setRol(Evento::NOBODY);
             }
         }
     }

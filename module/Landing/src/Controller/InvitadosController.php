@@ -2,7 +2,8 @@
 
 namespace Landing\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Eventos\Entity\Invitado;
+use Zend\View\Model\JsonModel;
 
 /**
  * InvitadosController
@@ -24,10 +25,6 @@ class InvitadosController extends BaseController
         return $this->getEm()->getRepository(self::ENTITY);
     }
 
-    public function __construct(\Doctrine\ORM\EntityManager $em)
-    {
-        $this->em = $em;
-    }
 
     public function addInvitadoAction()
     {

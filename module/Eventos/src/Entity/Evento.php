@@ -25,6 +25,12 @@ class Evento
     const OWNER = 1;
     const GUEST = 2;
 
+    const FACEBOOK = "Facebook";
+    const GOOGLE = "Google";
+    const MANUAL = "Manual";
+
+
+
     /**
      * Describe el estado actual de la sesion sobre este evento
      * NOBODY : Nadie logueado
@@ -34,6 +40,9 @@ class Evento
      * @var integer
      */
     public $estado = self::NOBODY;
+
+
+    public $via = null;
 
     /**
      * @Annotation\Type("Zend\Form\Element\Text")
@@ -297,6 +306,24 @@ class Evento
         }
         return json_encode($a);
     }
+
+    /**
+     * @return string
+     */
+    public function getVia()
+    {
+        return $this->via;
+    }
+
+    /**
+     * @param string $via
+     */
+    public function setVia($via)
+    {
+        $this->via = $via;
+    }
+
+
 
 }
 

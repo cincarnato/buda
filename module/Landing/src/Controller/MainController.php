@@ -29,12 +29,16 @@ class MainController extends BaseController
      */
     public $em = null;
 
-
+    /**
+     * Define el metodo de login
+     * @var \Zend\Authentication\Storage\Session
+     */
+    private $sourceLoginStorage = null;
 
     /**
      * @var \Zend\Authentication\Storage\Session
      */
-    private $stateStorage = null;
+    private $facebookStateStorage = null;
 
     /**
      * @var \Zend\Authentication\Storage\Session
@@ -62,7 +66,7 @@ class MainController extends BaseController
                     $url = $this->url()->fromRoute('HostLanding/FacebookCallback', [], ['force_canonical' => true]);
                     $loginUrl = $helper->getLoginUrl($url, $permisos);
                     $state = $helper->getPersistentDataHandler()->get('state');
-                    $this->getStateStorage($state)->write($evento->getNombre());
+                    $this->getFacebookStateStorage($state)->write($evento->getNombre());
                     $this->redirect()->toUrl($loginUrl);
                 }
 
@@ -81,7 +85,6 @@ class MainController extends BaseController
         }
 
 
-
         //Owner (Propietario)
         $this->handleOwner($evento);
         //Guest (invitado-Contacto confirmado)
@@ -97,6 +100,8 @@ class MainController extends BaseController
     {
         $this->getGu()->clearToken();
         $this->getGu()->clearUserData();
+        \Eventos\Facade\EventoLogin::setMedio("");
+        \Eventos\Facade\EventoLogin::setRol(0);
         return $this->redirect()->toRoute('HostLanding/start');
     }
 
@@ -110,7 +115,9 @@ class MainController extends BaseController
             $this->redirect()->toUrl($auth_url);
         } else {
             $this->getGu()->fetchAccessTokenWithAuthCode($code);
-            $this->getGu()->requestAccessToken();
+            if($this->getGu()->requestAccessToken()){
+                \Eventos\Facade\EventoLogin::setMedio("Google");
+            }
             $this->getGu()->requestData();
 
 
@@ -123,18 +130,23 @@ class MainController extends BaseController
     public function facebookLogoutAction()
     {
         $this->getFu()->getFacebookUserDataStorage()->clear();
+        \Eventos\Facade\EventoLogin::setMedio("");
+        \Eventos\Facade\EventoLogin::setRol(0);
         return $this->redirect()->toRoute('HostLanding/start');
     }
 
     public function facebookCallbackAction()
     {
         $this->layout()->setTemplate('landing/layout');
-        $this->getFu()->requestToken();
-        $this->getFu()->requestData();
+        if ($this->getFu()->requestToken()) {
+            $this->getFu()->requestData();
+            \Eventos\Facade\EventoLogin::setMedio("Facebook");
+        }
+
 
         //Recuperar el ID del evento
         $state = $this->getRequest()->getQuery("state");
-        $name = $this->getStateStorage($state)->read();
+        $name = $this->getFacebookStateStorage($state)->read();
 
         return $this->redirect()->toRoute('HostLanding/start/byname', ["name" => $name], ['force_canonical' => true]);
     }
@@ -142,12 +154,12 @@ class MainController extends BaseController
     /**
      * @return \Zend\Authentication\Storage\Session
      */
-    private function getStateStorage($state)
+    private function getFacebookStateStorage($state)
     {
-        if (!$this->stateStorage) {
-            $this->stateStorage = new Session($state);
+        if (!$this->facebookStateStorage) {
+            $this->facebookStateStorage = new Session($state);
         }
-        return $this->stateStorage;
+        return $this->facebookStateStorage;
     }
 
     /**
@@ -162,6 +174,16 @@ class MainController extends BaseController
     }
 
 
+    /**
+     * @return \Zend\Authentication\Storage\Session
+     */
+    private function getSourceLoginStorage()
+    {
+        if (!$this->sourceLoginStorage) {
+            $this->sourceLoginStorage = new Session("sourceLogin");
+        }
+        return $this->sourceLoginStorage;
+    }
 
 
 }

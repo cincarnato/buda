@@ -40,7 +40,7 @@ class GoogleUser
         $this->gc = new \Google_Client();
         $this->gc->setAuthConfig($this->pathClientCredentials);
         //$this->gc->addScope(['userinfo.email','profile','plus.me','plus.login']);
-        $this->gc->addScope([\Google_Service_Oauth2::USERINFO_EMAIL,\Google_Service_Oauth2::USERINFO_PROFILE]);
+        $this->gc->addScope([\Google_Service_Oauth2::USERINFO_EMAIL, \Google_Service_Oauth2::USERINFO_PROFILE]);
         $this->gc->setRedirectUri($this->getRedirectUrl());
     }
 
@@ -56,9 +56,16 @@ class GoogleUser
 
     public function requestAccessToken()
     {
-        $at = $this->gc->getAccessToken();
-        $this->getAccessTokenStorage()->write($at);
-        return $at;
+        $status = false;
+        try {
+            $at = $this->gc->getAccessToken();
+            $this->getAccessTokenStorage()->write($at);
+            $status = true;
+        } catch (\Exception $e) {
+            return $status;
+        }
+
+        return $status;
     }
 
     public function getAccessToken()
@@ -101,11 +108,13 @@ class GoogleUser
         return $this->accessTokenStorage;
     }
 
-    public function clearToken(){
+    public function clearToken()
+    {
         $this->getAccessTokenStorage()->clear();
     }
 
-    public function clearUserData(){
+    public function clearUserData()
+    {
         $this->getGoogleUserDataStorage()->clear();
     }
 

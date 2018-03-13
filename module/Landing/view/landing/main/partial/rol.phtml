@@ -1,0 +1,6 @@
+<h6 class="text-primary text-center">
+    <?php if(\Eventos\Facade\EventoLogin::getRol()): ?>
+        Sesión activa via <b><?php echo \Eventos\Facade\EventoLogin::getMedio(); ?></b> como <b><?php echo \Eventos\Facade\EventoLogin::getRolString(); ?></b>
+    <?php endif; ?>
+
+</h6>

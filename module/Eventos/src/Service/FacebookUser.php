@@ -56,6 +56,7 @@ class FacebookUser
             'app_id' => $this->facebookAppId,
             'app_secret' => $this->facebookAppSecret,
             'default_graph_version' => $this->facebookDefaultGraphVersion,
+            'http_client_handler' => 'stream'
         ]);
     }
 
@@ -191,7 +192,7 @@ class FacebookUser
     public function getFacebookUserData()
     {
         if (!$this->facebookUserData) {
-            $this->facebookUserData = $this->getfacebookUserDataStorage()->read();
+            $this->facebookUserData = $this->getFacebookUserDataStorage()->read();
         }
         return $this->facebookUserData;
     }
