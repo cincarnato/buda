@@ -59,5 +59,21 @@ class ConsultaController extends BaseController
         return new JsonModel($result);
     }
 
+    public function enviarMail($consulta){
+        $this->mailManager()->setTemplate('landing/mail/consulta', ["consulta" => $consulta]);
+        $this->mailManager()->setFrom('ci.sys@gmail.com');
+
+        //$this->mailManager()->addTo($user->getEmail(), $user->getName());
+
+        $this->mailManager()->setSubject('Consulta de evento'. $consulta->getEvento()->getNombre());
+
+        if ($this->mailManager()->send()) {
+            return true;
+        } else {
+            $this->logger()->err("Falla al enviar mail al usuario al notificar confirmación.");
+            return false;
+        }
+    }
+
 }
 
