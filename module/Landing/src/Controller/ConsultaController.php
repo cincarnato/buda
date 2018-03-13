@@ -3,6 +3,7 @@
 namespace Landing\Controller;
 
 use Eventos\Entity\Consulta;
+use Eventos\Entity\CorreoDestinoConsulta;
 use Zend\View\Model\JsonModel;
 
 /**
@@ -23,6 +24,11 @@ class ConsultaController extends BaseController
     public function getEntityRepository()
     {
         return $this->getEm()->getRepository(self::ENTITY);
+    }
+
+    public function getCorreoDestinoConsultaRepository()
+    {
+        return $this->getEm()->getRepository(CorreoDestinoConsulta::class);
     }
 
     public function __construct(\Doctrine\ORM\EntityManager $em)
@@ -60,19 +66,31 @@ class ConsultaController extends BaseController
     }
 
     public function enviarMail($consulta){
-        $this->mailManager()->setTemplate('landing/mail/consulta', ["consulta" => $consulta]);
-        $this->mailManager()->setFrom('ci.sys@gmail.com');
 
-        //$this->mailManager()->addTo($user->getEmail(), $user->getName());
 
-        $this->mailManager()->setSubject('Consulta de evento'. $consulta->getEvento()->getNombre());
+        $correos = $this->getCorreoDestinoConsultaRepository()->findAll();
 
-        if ($this->mailManager()->send()) {
-            return true;
-        } else {
-            $this->logger()->err("Falla al enviar mail al usuario al notificar confirmación.");
-            return false;
+        if($correos){
+
+            $this->mailManager()->setTemplate('landing/mail/consulta', ["consulta" => $consulta]);
+            $this->mailManager()->setFrom('ci.sys@gmail.com');
+
+            foreach($correos as $correo){
+                $this->mailManager()->addTo($correo->getCorreo());
+            }
+
+
+            $this->mailManager()->setSubject('Consulta de evento'. $consulta->getEvento()->getNombre());
+
+            if ($this->mailManager()->send()) {
+                return true;
+            } else {
+                $this->logger()->err("Falla al enviar mail al usuario al notificar confirmación.");
+                return false;
+            }
         }
+
+
     }
 
 }

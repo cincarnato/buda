@@ -8,7 +8,6 @@ return [
                 'detail' => '',
                 'icon' => '',
                 'permission' => 'general-admin',
-                'route' => 'Eventos/Lugar/Grid',
                 'uri' => '',
                 'pages' => [
                     [
@@ -39,14 +38,14 @@ return [
                         'permission' => 'general-admin',
                         'route' => 'Eventos/DetalleEvento/Grid',
                     ],
+                    [
+                        'label' => 'Correo destino Consulta',
+                        'detail' => '',
+                        'icon' => '',
+                        'permission' => 'general-admin',
+                        'route' => 'Eventos/CorreoDestinoConsulta/Grid',
+                    ],
                 ],
-            ],
-            [
-                'label' => 'Contactos',
-                'detail' => '',
-                'icon' => '',
-                'permission' => 'general-admin',
-                'route' => 'Eventos/Contacto/Grid',
             ],
             [
                 'label' => 'Eventos',
@@ -54,6 +53,13 @@ return [
                 'icon' => '',
                 'permission' => 'general-admin',
                 'route' => 'Eventos/Evento/Grid',
+            ],
+            [
+                'label' => 'Contactos',
+                'detail' => '',
+                'icon' => '',
+                'permission' => 'general-admin',
+                'route' => 'Eventos/Contacto/Grid',
             ],
             [
                 'label' => 'Invitados',

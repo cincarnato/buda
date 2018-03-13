@@ -230,6 +230,30 @@ return [
                             ],
                         ],
                     ],
+                    'CorreoDestinoConsulta' => [
+                        'type' => 'Literal',
+                        'mayTerminate' => false,
+                        'options' => [
+                            'route' => '/correo-destino-consulta',
+                            'defaults' => [
+                                'controller' => \Eventos\Controller\CorreoDestinoConsultaController::CLASS,
+                                'action' => 'grid',
+                            ],
+                        ],
+                        'child_routes' => [
+                            'Grid' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/grid',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\CorreoDestinoConsultaController::CLASS,
+                                        'action' => 'grid',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],

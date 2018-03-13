@@ -12,6 +12,7 @@ return array(
             \Eventos\Controller\InvitadoController::class => \Eventos\Factory\Controller\InvitadoControllerFactory::class,
             \Eventos\Controller\MainController::class => \Eventos\Factory\Controller\MainControllerFactory::class,
             \Eventos\Controller\ConsultaController::class => \Eventos\Factory\Controller\ConsultaControllerFactory::class,
+            \Eventos\Controller\CorreoDestinoConsultaController::class => \Eventos\Factory\Controller\CorreoDestinoConsultaControllerFactory::class,
         ),
     ),
 );
