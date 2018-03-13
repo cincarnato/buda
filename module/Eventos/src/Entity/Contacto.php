@@ -10,9 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Contacto
- * 
- * 
- * 
+ *
+ *
+ *
  * @author
  * @license
  * @link
@@ -155,6 +155,15 @@ class Contacto
      */
     public $source = null;
 
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"googlePicture", "description":"", "addon":""})
+     * @ORM\Column(type="string", length=200, unique=false, nullable=true,
+     * name="google_picture")
+     */
+    public $googlePicture = null;
+
     public function getId()
     {
         return $this->id;
@@ -277,12 +286,28 @@ class Contacto
 
     public function getImgProfileLarge()
     {
-        return "http://graph.facebook.com/".$this->getFacebookId()."/picture?type=large";
+        if ($this->getSource() == "facebook") {
+            return "http://graph.facebook.com/" . $this->getFacebookId() . "/picture?type=large";
+        }
+
+        if ($this->getSource() == "google") {
+            return $this->getGooglePicture();
+        }
+
+        return "http://graph.facebook.com/" . $this->getFacebookId() . "/picture?type=large";
     }
 
     public function getImgProfile()
     {
-        return "http://graph.facebook.com/".$this->getFacebookId()."/picture?type=small";
+        if ($this->getSource() == "facebook") {
+            return "http://graph.facebook.com/" . $this->getFacebookId() . "/picture?type=small";
+        }
+
+        if ($this->getSource() == "google") {
+            return $this->getGooglePicture();
+        }
+
+        return "http://graph.facebook.com/" . $this->getFacebookId() . "/picture?type=small";
     }
 
     public function getGoogleId()
@@ -315,9 +340,19 @@ class Contacto
         $this->source = $source;
     }
 
+    public function getGooglePicture()
+    {
+        return $this->googlePicture;
+    }
+
+    public function setGooglePicture($googlePicture)
+    {
+        $this->googlePicture = $googlePicture;
+    }
+
     public function __toString()
     {
-        return  $this->nombreCompleto;
+        return $this->nombreCompleto;
     }
 
 

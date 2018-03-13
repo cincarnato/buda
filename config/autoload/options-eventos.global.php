@@ -6,6 +6,6 @@ return [
         "facebook_app_secret" => "49bacaeea920b8344bb112b4ccc8b4d1",
         "facebook_default_graph_version" => "v2.12",
         "facebook_default_access_token" => "",
-        "google_client_credential_path" => 'C:\Users\crist\Documents\Proyectos\CDI\buda\config\google\client_credentials.json'
+        "google_client_credential_path" => '/var/www/buda/config/google/client_credentials.json'
     ]
 ];

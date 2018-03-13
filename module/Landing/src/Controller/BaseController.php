@@ -3,6 +3,7 @@
 namespace Landing\Controller;
 
 use Eventos\Entity\Contacto;
+use Eventos\Entity\ContactoConfirmado;
 use Eventos\Entity\Evento;
 use Zend\Mvc\Controller\AbstractActionController;
 use Eventos\Service\FacebookUser;
@@ -145,6 +146,7 @@ class BaseController extends AbstractActionController
                 $contacto->setGoogleUrl($googleUserData->getLink());
                 $contacto->setNombre($googleUserData->getGivenName());
                 $contacto->setApellido($googleUserData->getFamilyName());
+                $contacto->setGooglePicture($googleUserData->getPicture());
                 $contacto->setSource("google");
 
                 $this->getEm()->persist($contacto);

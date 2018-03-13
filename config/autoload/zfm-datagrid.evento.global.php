@@ -67,6 +67,7 @@ return [
                 'invitados' => [
                     'hidden' => true,
                 ],
+
             ],
             'crudConfig' => [
                 'enable' => true,

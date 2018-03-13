@@ -47,6 +47,18 @@ return [
                 'facebookId' => [
                     'hidden' => true
                 ],
+                'googleUrl' => [
+                    'hidden' => true
+                ],
+                'googleId' => [
+                    'hidden' => true
+                ],
+                'source' => [
+                    'hidden' => true
+                ],
+                'googlePicture' => [
+                    'hidden' => true
+                ],
             ],
             'crudConfig' => [
                 'enable' => true,
