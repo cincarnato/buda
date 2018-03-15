@@ -27,7 +27,16 @@ class GoogleUser
     private $googleUserDataStorage = null;
 
 
+    /**
+     * @var \Zend\Authentication\Storage\Session
+     */
+    private $googleUserData2Storage = null;
+
+
     private $googleUserData = null;
+
+    private $googleUserData2 = null;
+
 
     /**
      * GoogleUser constructor.
@@ -44,7 +53,7 @@ class GoogleUser
         $this->gc = new \Google_Client();
         $this->gc->setAuthConfig($this->pathClientCredentials);
         //$this->gc->addScope(['userinfo.email','profile','plus.me','plus.login']);
-        $this->gc->addScope([\Google_Service_Oauth2::USERINFO_EMAIL, \Google_Service_Oauth2::USERINFO_PROFILE]);
+        $this->gc->addScope([\Google_Service_Oauth2::USERINFO_EMAIL, \Google_Service_Oauth2::USERINFO_PROFILE, \Google_Service_Oauth2::PLUS_ME,\Google_Service_Oauth2::PLUS_LOGIN]);
         $this->gc->setRedirectUri($this->getRedirectUrl());
     }
 
@@ -79,9 +88,16 @@ class GoogleUser
 
     public function requestData()
     {
+        //GMAIL
         $oauth2 = new \Google_Service_Oauth2($this->gc);
         $data = $oauth2->userinfo->get();
+
+        //PLUS-PEOPLE
+        $plus = new \Google_Service_Plus($this->gc);
+        $data2 = $plus->people->get('me');
+
         $this->getGoogleUserDataStorage()->write($data);
+        $this->getGoogleUserData2Storage()->write($data2);
         return $data;
     }
 
@@ -120,6 +136,7 @@ class GoogleUser
     public function clearUserData()
     {
         $this->getGoogleUserDataStorage()->clear();
+        $this->getGoogleUserData2Storage()->clear();
     }
 
     /**
@@ -134,14 +151,37 @@ class GoogleUser
     }
 
     /**
+     * @return \Zend\Authentication\Storage\Session
+     */
+    private function getGoogleUserData2Storage()
+    {
+        if (!$this->googleUserData2Storage) {
+            $this->googleUserData2Storage = new Session('GoogleUserData2');
+        }
+        return $this->googleUserData2Storage;
+    }
+
+
+    /**
      * @return \Google_Service_Oauth2_Userinfoplus
      */
-    public function getGoogleUserData(){
+    public function getGoogleUserData()
+    {
         if (!$this->googleUserData) {
             $this->googleUserData = $this->getGoogleUserDataStorage()->read();
         }
         return $this->googleUserData;
     }
 
+    /**
+     * @return \Google_Service_Plus_Person
+     */
+    public function getGoogleUserData2()
+    {
+        if (!$this->googleUserData2) {
+            $this->googleUserData2 = $this->getGoogleUserData2Storage()->read();
+        }
+        return $this->googleUserData2;
+    }
 
 }

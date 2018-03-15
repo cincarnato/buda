@@ -50,8 +50,6 @@ class BaseController extends AbstractActionController
     protected $gu = null;
 
 
-
-
     public function getEm()
     {
         return $this->em;
@@ -73,7 +71,6 @@ class BaseController extends AbstractActionController
         $this->fu = $fu;
         $this->gu = $gu;
     }
-
 
 
     protected function getEvento()
@@ -101,7 +98,7 @@ class BaseController extends AbstractActionController
     protected function obtenerContacto()
     {
         if (!$this->contacto) {
-           //Facebook
+            //Facebook
             if ($this->getFu()->getFacebookUserData()) {
 
                 $contacto = $this->getContactoRepository()->findOneByEmail($this->getFu()->getFacebookUserData()->getEmail());
@@ -170,6 +167,34 @@ class BaseController extends AbstractActionController
                 $contacto->setGooglePicture($googleUserData->getPicture());
                 $contacto->setSource("google");
 
+
+                $plus = $this->getGu()->getGoogleUserData2();
+
+                if ($plus && $plus->getBirthday()) {
+                    $birthday = new \DateTime($plus->getBirthday());
+                    if (is_a($birthday, \DateTime::class)) {
+                        $contacto->setNacimiento($birthday);
+
+
+                        $month = $birthday->format("m");
+                        $day = $birthday->format("d");
+                        $birthdayText = $day . " de " . $this->getMes($month);
+                        $birthdayNum = $month . $day;
+
+                        $contacto->setCumple($birthdayNum);
+                        $contacto->setCumpleTexto($birthdayText);
+
+                        $nowDateTime = new \DateTime("now");
+                        $interval = $nowDateTime->diff($birthday);
+                        $age = $interval->format("%y");
+                        if ($age) {
+                            $contacto->setEdad($age);
+                        }
+                    }
+
+                }
+
+
                 $this->getEm()->persist($contacto);
                 $this->getEm()->flush();
                 $this->contacto = $contacto;
@@ -183,7 +208,8 @@ class BaseController extends AbstractActionController
         return null;
     }
 
-    protected function getMes($mes){
+    protected function getMes($mes)
+    {
         $meses = array('01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo', '04' => 'Abril',
             '05' => 'Mayo', '06' => 'Junio', '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
             '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
@@ -317,8 +343,6 @@ class BaseController extends AbstractActionController
     {
         $this->gu = $gu;
     }
-
-
 
 
     private function showUserData($facebookUserData)
