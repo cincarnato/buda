@@ -116,9 +116,10 @@ class MainController extends BaseController
         } else {
             $this->getGu()->fetchAccessTokenWithAuthCode($code);
             if($this->getGu()->requestAccessToken()){
+                $this->getGu()->requestData();
                 \Eventos\Facade\EventoLogin::setMedio("Google");
+                \Eventos\Facade\EventoLogin::setUsuario($this->obtenerContacto());
             }
-            $this->getGu()->requestData();
 
 
             $name = $this->getGoogleCodeStorage("google_event")->read();
@@ -141,6 +142,7 @@ class MainController extends BaseController
         if ($this->getFu()->requestToken()) {
             $this->getFu()->requestData();
             \Eventos\Facade\EventoLogin::setMedio("Facebook");
+            \Eventos\Facade\EventoLogin::setUsuario($this->obtenerContacto());
         }
 
 

@@ -30,16 +30,21 @@
 
 
                                 <?php if ($evento && $evento->getFecha()): ?>
-                                    <h5>Fecha del evento: <?php echo $evento->getFecha()->format("d-m-Y"); ?></h5>
+                                    <h5>Fecha y hora: <?php echo $evento->getFecha()->format("d-m-Y "); ?><?php echo $evento->getHora(); ?>:<?php echo $evento->getMinutos(); ?></h5>
+                                    <?php echo $this->partial("landing/main/partial/countdown", ["evento" => $evento]); ?>
                                 <?php else: ?>
                                     <h6>Fecha: A confirmar!</h6>
                                 <?php endif; ?>
-
-                                <?php echo $this->partial("landing/main/partial/form", ["evento" => $evento]); ?>
-
-
                             </div>
+
                         </div>
+                        <div class="text-center">
+                            <?php echo $this->partial("landing/main/partial/form", ["evento" => $evento]); ?>
+                        </div>
+
+
+
+
                     </div>
                 </div>
                 <div class="tab-space"></div>
@@ -59,8 +64,7 @@
                     </div>
 
                 </div>
-                <div class="tab-space"></div>
-                <?php echo $this->partial("landing/main/partial/rol", ["evento" => $evento]); ?>
+
                 <div class="tab-space"></div>
                 <div class="card-footer">
 

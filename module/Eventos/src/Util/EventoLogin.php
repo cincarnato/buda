@@ -13,6 +13,7 @@ class EventoLogin
 
     protected $rol = '';
     protected $medio = "";
+    protected $usuario = null;
 
     /**
      * EventoLogin constructor.
@@ -74,6 +75,24 @@ class EventoLogin
     {
         $this->medio = $medio;
     }
+
+    /**
+     * @return null
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * @param null $usuario
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+    }
+    
+    
 
 
 }

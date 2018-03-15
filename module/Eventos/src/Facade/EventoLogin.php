@@ -2,6 +2,7 @@
 
 namespace Eventos\Facade;
 
+use Eventos\Entity\Contacto;
 use Zend\Authentication\Storage\Session;
 
 class EventoLogin
@@ -19,14 +20,17 @@ class EventoLogin
 
     public static function setRol($rol)
     {
-        /** @var  \Eventos\Util\EventoLogin $el */
         self::getEventoLogin()->read()->setRol($rol);
     }
 
     public static function setMedio($medio)
     {
-        /** @var  \Eventos\Util\EventoLogin $el */
         self::getEventoLogin()->read()->setMedio($medio);
+    }
+
+    public static function setUsuario(Contacto $usuario)
+    {
+        self::getEventoLogin()->read()->setUsuario($usuario);
     }
 
     public static function getRol()
@@ -42,6 +46,11 @@ class EventoLogin
     public static function getMedio()
     {
         return self::getEventoLogin()->read()->getMedio();
+    }
+
+    public static function getUsuario()
+    {
+        return self::getEventoLogin()->read()->getUsuario();
     }
 
 }

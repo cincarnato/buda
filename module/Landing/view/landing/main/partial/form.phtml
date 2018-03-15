@@ -1,21 +1,21 @@
 <?php $this->flashCurrent(); ?>
 
-<?php if($this->evento && !$this->evento->getEstado()): ?>
+<?php if ($this->evento && !$this->evento->getEstado()): ?>
 
-<form method="post" name="formAsistencia" id="formAsistencia" >
+    <form method="post" name="formAsistencia" id="formAsistencia">
 
-    <?php if ($evento && $this->evento->getClave() && !$evento->getContacto()): ?>
-        <p>El propietario de este evento aun no fue confirmado. Si usted es el propietario,
-            por favor confirme el evento ingresando la clave de seguridad e iniciando sesión
-            con facebook</p>
+        <?php if ($evento && $this->evento->getClave() && !$evento->getContacto()): ?>
+            <p>El propietario de este evento aun no fue confirmado. Si usted es el propietario,
+                por favor confirme el evento ingresando la clave de seguridad e iniciando sesión
+                con facebook</p>
 
-        <div class="form-group bmd-form-group">
-            <label class="control-label bmd-label-static">Clave</label>
-            <input type="text" name="clave" class=" form-control" value="">
-        </div>
-    <?php endif; ?>
-    <input type="hidden" name="logintype" id="loginType">
-</form>
+            <div class="form-group bmd-form-group">
+                <label class="control-label bmd-label-static">Clave</label>
+                <input type="text" name="clave" class=" form-control" value="">
+            </div>
+        <?php endif; ?>
+        <input type="hidden" name="logintype" id="loginType">
+    </form>
 
 
     <button class="btn btn-social btn-fill btn-facebook" onclick="confirmarAsistencia('f')">
@@ -27,14 +27,16 @@
         <i class="fa fa-google"> </i> Confirmar asistencia
         <div class="ripple-container"></div>
     </button>
+<?php else: ?>
 
+    <?php echo $this->partial("landing/main/partial/sesion", ["evento" => $evento]); ?>
 
 <?php endif; ?>
 
 
 <script>
-    function confirmarAsistencia(t){
-        $('input[name=logintype]').val(t);
-        $('#formAsistencia').submit();
-    }
+  function confirmarAsistencia(t) {
+    $('input[name=logintype]').val(t);
+    $('#formAsistencia').submit();
+  }
 </script>
