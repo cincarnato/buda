@@ -5,6 +5,7 @@ namespace Landing\Controller;
 use Eventos\Entity\Contacto;
 use Eventos\Entity\ContactoConfirmado;
 use Eventos\Entity\Evento;
+use Facebook\GraphNodes\Birthday;
 use Zend\Mvc\Controller\AbstractActionController;
 use Eventos\Service\FacebookUser;
 use Eventos\Service\GoogleUser;
@@ -117,10 +118,30 @@ class BaseController extends AbstractActionController
                 $contacto->setApellido($this->getFu()->getFacebookUserData()->getLastName());
                 $contacto->setSource("facebook");
 
+                /** @var Birthday $birthday */
                 $birthday = $this->getFu()->getFacebookUserData()->getBirthday();
-                if (is_a($birthday, "date") || is_a($birthday, "DateTime")) {
+
+                if (is_a($birthday, \DateTime::class)) {
 
                     $contacto->setNacimiento($birthday);
+
+
+                    $month = $birthday->format("m");
+                    $day = $birthday->format("d");
+                    $birthdayText = $day . " de " . $this->getMes($month);
+                    $birthdayNum = $month . $day;
+
+                    $contacto->setCumple($birthdayNum);
+                    $contacto->setCumpleTexto($birthdayText);
+
+                    $nowDateTime = new \DateTime("now");
+                    $interval = $nowDateTime->diff($birthday);
+                    $age = $interval->format("%y");
+                    if ($age) {
+                        $contacto->setEdad($age);
+                    }
+
+
                 }
 
                 $this->getEm()->persist($contacto);
@@ -160,6 +181,14 @@ class BaseController extends AbstractActionController
             return $this->contacto;
         }
         return null;
+    }
+
+    protected function getMes($mes){
+        $meses = array('01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo', '04' => 'Abril',
+            '05' => 'Mayo', '06' => 'Junio', '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
+        );
+        return $meses[$mes];
     }
 
     protected function getFormConsulta()
