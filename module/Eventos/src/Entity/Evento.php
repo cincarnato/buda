@@ -142,15 +142,21 @@ class Evento
     /**
      * @Annotation\Exclude()
      * @ORM\OneToMany(targetEntity="\Eventos\Entity\ContactoConfirmado",
-     * mappedBy="evento")
+     * mappedBy="evento", cascade="remove")
      */
     public $confirmados = null;
 
     /**
      * @Annotation\Exclude()
-     * @ORM\OneToMany(targetEntity="\Eventos\Entity\Invitado", mappedBy="evento")
+     * @ORM\OneToMany(targetEntity="\Eventos\Entity\Invitado", mappedBy="evento", cascade="remove")
      */
     public $invitados = null;
+
+    /**
+     * @Annotation\Exclude()
+     * @ORM\OneToMany(targetEntity="\Eventos\Entity\Consulta", mappedBy="evento", cascade="remove")
+     */
+    public $consultas = null;
 
     public function getId()
     {
@@ -271,6 +277,24 @@ class Evento
     {
         $this->invitados = $invitados;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getConsultas()
+    {
+        return $this->consultas;
+    }
+
+    /**
+     * @param mixed $consultas
+     */
+    public function setConsultas($consultas)
+    {
+        $this->consultas = $consultas;
+    }
+
+
 
     public function __toString()
     {
