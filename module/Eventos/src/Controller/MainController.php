@@ -21,6 +21,7 @@ class MainController extends AbstractActionController
         if (!$this->identity()) {
             $this->redirect()->toUrl("/user/login");
         }
+
     }
 
 

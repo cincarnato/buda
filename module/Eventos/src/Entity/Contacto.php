@@ -164,6 +164,14 @@ class Contacto
      */
     public $googlePicture = null;
 
+
+    /**
+     * @Annotation\Exclude()
+     * @ORM\OneToMany(targetEntity="\Eventos\Entity\ContactoConfirmado",
+     * mappedBy="contacto", cascade="remove")
+     */
+    public $confirmados = null;
+
     public function getId()
     {
         return $this->id;
@@ -354,6 +362,23 @@ class Contacto
     {
         return $this->nombreCompleto;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmados()
+    {
+        return $this->confirmados;
+    }
+
+    /**
+     * @param mixed $confirmados
+     */
+    public function setConfirmados($confirmados)
+    {
+        $this->confirmados = $confirmados;
+    }
+
 
 
 }

@@ -26,7 +26,7 @@
         "zf-metal/mail": "^1.0.0",
         "zf-metal/security": "^1.0.0",
         "zf-metal/security-social": "^1.0.0",
-        "zf-metal/commons": "^1.0.0",
+        "zf-metal/commons": "^1.1.0",
         "zf-metal/datagrid": "^1.0.0",
         "zf-metal/generator": "^1.0.3",
         "zendframework/zend-mvc-console": "^1.1",
