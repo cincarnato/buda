@@ -1,0 +1,80 @@
+<?php if ($evento && $evento->getFlyer()): ?>
+    <div class="page-header header-filter" data-parallax="true"
+         style="background-image: url( <?php echo $evento->getFlyer()->getImagen_fp(); ?> ); transform: translate3d(0px, 0px, 0px);">
+    </div>
+<?php else: ?>
+    <div class="page-header header-filter" data-parallax="true"
+         style="background-image: url(/img/city.jpg); transform: translate3d(0px, 0px, 0px);">
+    </div>
+<?php endif; ?>
+
+
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
+
+                        <div class="profile">
+                            <?php echo $this->partial("landing/template/one/partial/avatar", ["evento" => $evento]); ?>
+
+
+                            <div class="name">
+                                <?php if ($evento && $evento->getContacto()): ?>
+                                    <h3 class="title">Evento
+                                        de <?php echo $evento->getContacto()->getNombreCompleto(); ?></h3>
+
+                                <?php else: ?>
+                                    <h3 class="title">Propietario sin confirmar</h3>
+                                <?php endif; ?>
+
+
+                                <?php if ($evento && $evento->getFecha()): ?>
+                                    <h5>Fecha y hora: <?php echo $evento->getFecha()->format("d-m-Y "); ?><?php echo $evento->getHora(); ?>:<?php echo $evento->getMinutos(); ?></h5>
+                                    <?php echo $this->partial("landing/template/one/partial/countdown", ["evento" => $evento]); ?>
+                                <?php else: ?>
+                                    <h6>Fecha: A confirmar!</h6>
+                                <?php endif; ?>
+                            </div>
+
+                        </div>
+                        <div class="text-center">
+                            <?php echo $this->partial("landing/template/one/partial/form", ["evento" => $evento]); ?>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div class="tab-space"></div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <?php echo $this->partial("landing/template/one/partial/lugar", ["evento" => $evento]); ?>
+                        <?php echo $this->partial("landing/template/one/partial/detalle", ["evento" => $evento]); ?>
+
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <div class="row">
+                            <?php echo $this->partial("landing/template/one/partial/confirmados", ["evento" => $evento]); ?>
+                            <?php echo $this->partial("landing/template/one/partial/invitados", ["evento" => $evento]); ?>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab-space"></div>
+                <div class="card-footer">
+
+                    <?php echo $this->partial("landing/template/one/partial/consultas", ["evento" => $evento, "formConsulta" => $formConsulta]); ?>
+                </div>
+
+                <div class="tab-space"></div>
+
+            </div>
+        </div>
+    </div>
+
+<?php echo $this->partial("landing/template/one/partial/footer", ["evento" => $evento, "formConsulta" => $formConsulta]); ?>

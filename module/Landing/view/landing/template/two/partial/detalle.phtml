@@ -1,0 +1,8 @@
+<div class="text-center">
+
+    <?php if ($evento && $evento->getDetalleEvento()): ?>
+        <?php echo nl2br($evento->getDetalleEvento()->getDetalle()); ?>
+    <?php else: ?>
+        <p>Detalle del evento</p>
+    <?php endif; ?>
+</div>

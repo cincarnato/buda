@@ -1,0 +1,19 @@
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h4 class="title">Confirmados</h4>
+        <table class="table">
+            <?php if($evento && count($evento->getConfirmados())): ?>
+                <?php foreach ($evento->getConfirmados() as $confirmado): ?>
+                    <tr>
+                        <td><img class="img-raised img-fluid" src="<?php echo $confirmado->getContacto()->getImgProfile(); ?>" style="width: 50px; height: 50px;"/></td>
+                        <td><?php echo $confirmado->getContacto()->getNombreCompleto(); ?></td>
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php else: ?>
+                Lista Vacia...
+            <?php endif; ?>
+
+        </table>
+    </div>

@@ -1,0 +1,105 @@
+<!--    HEADER-->
+<div class="main m-2 p-1">
+
+    <div class="row">
+
+        <!--FOTOS-->
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+            <div class="col-lg-12 col-xs-12 p-0 m-0 text-center">
+                <img src="<?php echo $evento->getFlyer()->getImagen_fp(); ?>" class="img-fluid" />
+            </div>
+
+            <div class="col-xs-12 pl-3 pr-3">
+                <div class="row">
+                    <?php echo $this->partial("landing/template/two/partial/fotos", ["evento" => $evento]); ?>
+                </div>
+            </div>
+
+
+        </div>
+        <!--AVATAR-->
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
+
+            <div id="nombre">
+                <?php if ($evento && $evento->getContacto()): ?>
+                    <h3 class="title">Evento
+                        de <?php echo $evento->getContacto()->getNombreCompleto(); ?></h3>
+
+                <?php else: ?>
+                    <h3 class="title">Propietario sin confirmar</h3>
+                <?php endif; ?>
+            </div>
+
+            <div id="avatar">
+                <?php echo $this->partial("landing/template/two/partial/avatar", ["evento" => $evento]); ?>
+            </div>
+
+            <div id="fecha">
+                <?php if ($evento && $evento->getFecha()): ?>
+                    <h5>
+
+                        <?php echo $this->translate($this->evento->getFecha()->format("l")); ?>
+                        <?php echo $this->translate($this->evento->getFecha()->format("d")); ?> de
+                        <?php echo $this->translate($this->evento->getFecha()->format("F")); ?>
+
+                        <?php echo $evento->getHora(); ?>:<?php echo $evento->getMinutos(); ?>
+
+                    </h5>
+                    <?php echo $this->partial("landing/template/two/partial/countdown", ["evento" => $evento]); ?>
+                <?php else: ?>
+                    <h6>Fecha: A confirmar!</h6>
+                <?php endif; ?>
+            </div>
+
+            <div class="text-center">
+                <?php echo $this->partial("landing/template/two/partial/form", ["evento" => $evento]); ?>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<!--LUGAR-->
+<div class="main m-2 p-1">
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 text-center">
+            <h4 class="title"><?php echo $evento->getLugar(); ?></h4>
+
+            <h5> Dirección: <?php echo $evento->getLugar()->getDireccion(); ?></h5>
+        </div>
+    </div>
+</div>
+
+<!--    DETAIL-->
+<div class="main m-2 p-1">
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 text-center">
+            <?php echo $this->partial("landing/template/two/partial/detalle", ["evento" => $evento]); ?>
+        </div>
+    </div>
+</div>
+
+<!--    INVITADOS-->
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <div class="main m-2 p-1">
+            <?php echo $this->partial("landing/template/two/partial/invitados", ["evento" => $evento]); ?>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="main m-2 p-1">
+            <?php echo $this->partial("landing/template/two/partial/confirmados", ["evento" => $evento]); ?>
+        </div>
+    </div>
+</div>
+
+<!--Consulta-->
+<div class="main m-2 p-1">
+    <?php echo $this->partial("landing/template/two/partial/consultas", ["evento" => $evento, "formConsulta" => $formConsulta]); ?>
+</div>
+
+
+<?php //echo $this->partial("landing/template/two/partial/footer", ["evento" => $evento, "formConsulta" => $formConsulta]); ?>

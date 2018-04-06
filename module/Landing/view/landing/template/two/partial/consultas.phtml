@@ -1,0 +1,36 @@
+<div class="container-fluid">
+<h3>Consultas</h3>
+<p>Envianos cualquier duda o consulta sobre el evento, te responderemos lo antes posible al email ingresado. </p>
+<?php
+$groups = [
+    [
+        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
+        'id' => 'Contacto',
+        'title' => "",
+        'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
+        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+        'fields' => ['nombre','email']
+    ],
+    [
+        'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
+        'id' => 'msg',
+        'title' => "",
+        'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+        'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+        'fields' => ['mensaje']
+    ],
+];
+
+$formConsulta->setAttribute("action","javascript:enviarConsulta()");
+?>
+<div id="consulta-zone">
+<?php echo $this->renderForm($formConsulta, \ZfMetal\Commons\Consts::STYLE_VERTICAL, \ZfMetal\Commons\Consts::COLUMNS_ONE, $groups); ?>
+</div>
+</div>
+<script>
+    function enviarConsulta(){
+      $.post('/consulta', $('#Consulta').serialize(),function() {
+        $("#consulta-zone").html("<h4>Consulta Registrada!</h4>");
+      });
+    }
+</script>

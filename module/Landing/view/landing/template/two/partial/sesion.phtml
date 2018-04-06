@@ -1,0 +1,30 @@
+<?php $u = \Eventos\Facade\EventoLogin::getUsuario(); ?>
+
+<div class="">
+    <div class="row">
+
+        <div class="col-12">
+            <hr class="m-3">
+
+            <img src="<?php echo $u->getImgProfile(); ?>" alt="Circle Image"
+                 class="img-raised rounded-circle img-fluid" style="width: 35px; height: 35px;">
+            +
+            <!--Icono-->
+            <?php $origen = \Eventos\Facade\EventoLogin::getMedio(); ?>
+            <?php if ($origen == "Google"): ?>
+                <button type="button" class="btn btn-social  btn-fill btn-google bmd-btn-icon">
+                    <i class="fa fa-google"> </i>
+                </button>
+            <?php endif; ?>
+            <?php if ($origen == "Facebook"): ?>
+                <button type="button" class="btn btn-social btn-fill btn-facebook bmd-btn-icon">
+                    <i class="fa fa-facebook"> </i>
+                </button>
+            <?php endif; ?>
+            <div class="clearfix"></div>
+
+            <h5 class="mt-1 mb-0"><?php echo $u->getNombreCompleto(); ?></h5>
+            <h6 class="m-0 p-0 font-weight-bold grey-text"><?php echo \Eventos\Facade\EventoLogin::getRolString(); ?></h6>
+        </div>
+    </div>
+</div>
