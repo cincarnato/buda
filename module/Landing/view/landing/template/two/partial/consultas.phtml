@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <h3>Consultas</h3>
 <p>Envianos cualquier duda o consulta sobre el evento, te responderemos lo antes posible al email ingresado. </p>
 <?php
@@ -25,7 +26,7 @@ $formConsulta->setAttribute("action","javascript:enviarConsulta()");
 <div id="consulta-zone">
 <?php echo $this->renderForm($formConsulta, \ZfMetal\Commons\Consts::STYLE_VERTICAL, \ZfMetal\Commons\Consts::COLUMNS_ONE, $groups); ?>
 </div>
-
+</div>
 <script>
     function enviarConsulta(){
       $.post('/consulta', $('#Consulta').serialize(),function() {

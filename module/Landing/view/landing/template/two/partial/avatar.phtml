@@ -1,8 +1,8 @@
-<div class="avatar">
+<div class="p-4 text-center">
 
     <?php if ($evento && $evento->getContacto()): ?>
         <img src="<?php echo $evento->getContacto()->getImgProfileLarge(); ?>" alt="Circle Image"
-             class="img-raised rounded-circle img-fluid">
+             class=" rounded-circle img-fluid">
 
     <?php else: ?>
         <img src="/img/user.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
