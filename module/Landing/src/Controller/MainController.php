@@ -93,7 +93,7 @@ class MainController extends BaseController
 
         $this->definirEstadoEvento();
         $viewModel = new ViewModel(["evento" => $evento, "formConsulta" => $this->getFormConsulta()]);
-        $viewModel->setTemplate('landing/template/one/start');
+        $viewModel->setTemplate('landing/template/two/start');
         return $viewModel;
     }
 
