@@ -18,15 +18,19 @@
     </form>
 
 
-    <button class="btn btn-social btn-fill btn-facebook" onclick="confirmarAsistencia('f')">
-        <i class="fa fa-facebook"> </i> Confirmar asistencia
-        <div class="ripple-container"></div>
-    </button>
+    <?php if ($this->landingOptions()->getFacebookLogin()): ?>
+        <button class="btn btn-social btn-fill btn-facebook" onclick="confirmarAsistencia('f')">
+            <i class="fa fa-facebook"> </i> Confirmar asistencia
+            <div class="ripple-container"></div>
+        </button>
+    <?php endif; ?>
 
-    <button class="btn btn-social btn-fill btn-google" onclick="confirmarAsistencia('g')">
-        <i class="fa fa-google"> </i> Confirmar asistencia
-        <div class="ripple-container"></div>
-    </button>
+    <?php if ($this->landingOptions()->getGoogleLogin()): ?>
+        <button class="btn btn-social btn-fill btn-google" onclick="confirmarAsistencia('g')">
+            <i class="fa fa-google"> </i> Confirmar asistencia
+            <div class="ripple-container"></div>
+        </button>
+    <?php endif; ?>
 <?php else: ?>
 
     <?php echo $this->partial("landing/template/one/partial/sesion", ["evento" => $evento]); ?>
