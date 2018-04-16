@@ -61,6 +61,12 @@ class InvitadoController extends AbstractActionController
 
     public function gridAction()
     {
+
+        $idEvento = $this->params("idEvento");
+        if($idEvento) {
+            $this->grid->getSource()->getQb()->where("u.evento = :idEvento")->setParameter("idEvento", $idEvento);
+        }
+
         $this->grid->prepare();
         return array("grid" => $this->grid);
     }

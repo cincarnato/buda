@@ -156,6 +156,17 @@ return [
                                     ],
                                 ],
                             ],
+                            'Confirmados' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/confirmados/:idEvento',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\ContactoController::CLASS,
+                                        'action' => 'confirmados',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                     'Invitado' => [
@@ -174,6 +185,17 @@ return [
                                 'mayTerminate' => true,
                                 'options' => [
                                     'route' => '/grid',
+                                    'defaults' => [
+                                        'controller' => \Eventos\Controller\InvitadoController::CLASS,
+                                        'action' => 'grid',
+                                    ],
+                                ],
+                            ],
+                            'Evento' => [
+                                'type' => 'Segment',
+                                'mayTerminate' => true,
+                                'options' => [
+                                    'route' => '/evento/:idEvento',
                                     'defaults' => [
                                         'controller' => \Eventos\Controller\InvitadoController::CLASS,
                                         'action' => 'grid',

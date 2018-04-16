@@ -66,5 +66,14 @@ class ContactoController extends AbstractActionController
     }
 
 
+    public function confirmadosAction()
+    {
+        $idEvento = $this->params("idEvento");
+        $this->grid->getSource()->getQb()->join("u.confirmados", "c")->where("c.evento = :idEvento")->setParameter("idEvento",$idEvento);
+
+        $this->grid->prepare();
+        return array("grid" => $this->grid);
+    }
+
 }
 

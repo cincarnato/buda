@@ -16,7 +16,7 @@ return [
             ],
             "multi_search_config" => [
                 "enable" => true,
-                "properties_enabled" => ['id','nombre']
+                "properties_enabled" => ['id', 'nombre']
             ],
             'formConfig' => [
                 'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
@@ -28,7 +28,7 @@ return [
                         'title' => "",
                         'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
                         'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
-                        'fields' => ['nombre','clave','lugar','flyer']
+                        'fields' => ['nombre', 'clave', 'lugar', 'flyer']
                     ],
                     [
                         'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_HORIZONTAL,
@@ -36,14 +36,18 @@ return [
                         'title' => "",
                         'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
                         'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
-                        'fields' => ['fecha','detalleEvento','hora','minutos']
+                        'fields' => ['fecha', 'detalleEvento', 'hora', 'minutos']
                     ],
-                    
+
                 ],
             ],
             'columnsConfig' => [
                 'id' => [
                     'displayName' => 'ID',
+                    'priority' => 1
+                ],
+                'nombre' => [
+                    'priority' => 2
                 ],
                 'contacto' => [
                     'type' => 'relational',
@@ -67,7 +71,12 @@ return [
                 'invitados' => [
                     'hidden' => true,
                 ],
-
+                'consultas' => [
+                    'hidden' => true,
+                ],
+                'clave' => [
+                    'hidden' => true,
+                ]
             ],
             'crudConfig' => [
                 'enable' => true,

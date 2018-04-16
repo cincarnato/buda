@@ -9,6 +9,7 @@ use Eventos\Entity\Evento;
 use Facebook\Helpers\FacebookRedirectLoginHelper;
 use Zend\Authentication\Storage\Session;
 use Zend\View\Model\JsonModel;
+use Zend\View\Model\ViewModel;
 
 /**
  * MainController
@@ -91,8 +92,9 @@ class MainController extends BaseController
         $this->handleGuest($evento);
 
         $this->definirEstadoEvento();
-
-        return ["evento" => $evento, "formConsulta" => $this->getFormConsulta()];
+        $viewModel = new ViewModel(["evento" => $evento, "formConsulta" => $this->getFormConsulta()]);
+        $viewModel->setTemplate('landing/template/one/start');
+        return $viewModel;
     }
 
 

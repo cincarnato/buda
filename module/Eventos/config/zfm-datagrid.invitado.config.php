@@ -21,6 +21,14 @@ return [
                     
                 ],
             ],
+            'multi_filter_config' => [
+                "enable" => true,
+                "properties_disabled" => []
+            ],
+            "multi_search_config" => [
+                "enable" => true,
+                "properties_enabled" => ['email','nombre', 'celular']
+            ],
             'columnsConfig' => [
                 'id' => [
                     'displayName' => 'ID',

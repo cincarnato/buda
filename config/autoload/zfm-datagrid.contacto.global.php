@@ -21,6 +21,14 @@ return [
                     
                 ],
             ],
+            'multi_filter_config' => [
+                "enable" => true,
+                "properties_disabled" => []
+            ],
+            "multi_search_config" => [
+                "enable" => true,
+                "properties_enabled" => ['nombre', 'apellido','cumpleTexto', 'nacimiento','edad']
+            ],
             'columnsConfig' => [
                 'id' => [
                     'displayName' => 'ID',

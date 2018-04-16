@@ -1,0 +1,29 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <h4 class="title">Invitados</h4>
+    <?php if ($this->evento && $this->evento->getEstado() === \Eventos\Entity\Evento::OWNER): ?>
+        <p>Gestiona tu lista de invitados. Te asistiremos en perdirles que confirmen el evento enviando las
+            instrucciones a los datos de contacto.</p>
+    <?php endif; ?>
+    <?php if ($this->evento): ?>
+        <div id="app">
+
+            <tableguest :pevento="<?php echo $evento->getId(); ?>"
+                        :pentities='<?php echo $evento->getInvitadosJson(); ?>'
+                        :powner='<?php echo $evento->isOwner(); ?>'></tableguest>
+
+        </div>
+    <?php endif; ?>
+
+</div>
+
+
+<?php
+$this->headScript()
+    ->appendFile('/shared/vuejs/vue.js', 'text/javascript')
+    ->appendFile('/main/vue/invitados/rowGuest.js', 'text/javascript')
+    ->appendFile('/main/vue/invitados/tableGuest.js', 'text/javascript')
+    ->appendFile('/main/vue/invitados/formGuest.js', 'text/javascript')
+    ->appendFile('/main/vue/invitados/app.js', 'text/javascript');
+
+?>
+

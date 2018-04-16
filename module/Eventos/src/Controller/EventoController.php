@@ -61,8 +61,10 @@ class EventoController extends AbstractActionController
 
     public function gridAction()
     {
-        $http = "http://".L_BUDA_URL."/{{nombre}}";
-        $this->grid->addExtraColumn("link","<a target='_blank' href='".$http."'>".$http."</a>", "right");
+        $httpLink = "http://".L_BUDA_URL."/{{nombre}}";
+        $this->grid->addExtraColumn("<span  class='material-icons'  data-toggle='tooltip' data-placement='top' title='Confirmados'>face</span>","<a target='_blank' href='/eventos/contacto/confirmados/{{id}}' class='material-icons text-center'>face</a>", "right");
+        $this->grid->addExtraColumn("<span  class='material-icons'  data-toggle='tooltip' data-placement='top' title='Invitados'>record_voice_over</span>","<a target='_blank' href='/eventos/invitado/evento/{{id}}' class='material-icons text-center'>record_voice_over</a>", "right");
+        $this->grid->addExtraColumn("Link","<a target='_blank' href='".$httpLink."'>".$httpLink."</a>", "right");
         $this->grid->prepare();
         return array("grid" => $this->grid);
     }
